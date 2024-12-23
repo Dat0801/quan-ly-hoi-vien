@@ -1,0 +1,172 @@
+body {
+    background-image: url('/images/BG-app.png') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-attachment: fixed !important;
+    background-color: #FFF2E7 !important;
+    margin: 0 !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+}
+
+.logo {
+    max-width: 178px;
+    height: auto;
+}
+
+.title-header {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    color: #803B03;
+    font-size: 36px;
+}
+
+.form-container {
+    width: 540px;
+    max-width: 100%;
+    background-color: #FFE3CD;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+@media (max-width: 767px) {
+    .title-header {
+        font-size: 28px; 
+    }
+
+    .logo {
+        max-width: 150px; 
+    }
+
+    .container-content {
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 90% !important;
+    }
+
+    .form-container {
+        width: 100%;
+        max-width: 90%;
+    }
+
+    .layer-image {
+        display: none;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .container-content {
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        top: 15% !important;  
+        width: 90% !important;
+    }
+
+    .title-header {
+        font-size: 32px;
+    }
+
+    .logo {
+        max-width: 160px; 
+    }
+
+    .form-container {
+        width: 90%;
+        max-width: 500px; 
+    }
+
+    .layer-image {
+        display: none;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1400px) {
+    .container-content {
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        top: 10% !important;  
+        width: 90% !important;
+    }
+
+    .title-header {
+        font-size: 36px;
+    }
+
+    .logo {
+        max-width: 178px;
+    }
+
+    .form-container {
+        width: 540px;  
+        max-width: 100%;
+    }
+
+    .layer-image {
+        display: none;
+    }
+}
+
+@media (min-width: 1401px) {
+    .container-content {
+        left: 20%;
+        transform: translateX(-50%);
+        top: 10%;
+        width: 90%;
+        max-width: 540px;
+    }
+
+    .title-header {
+        font-size: 36px;
+    }
+
+    .logo {
+        max-width: 178px;
+    }
+
+    .form-container {
+        width: 540px;
+        max-width: 100%;
+    }
+
+    .layer-image {
+        display: block;
+    }
+}
+
+.copyright {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Màu nền khi hover */
+.nav-link:hover {
+    background-color: #FFE3CD !important;
+    color: #FF7506 !important;
+}
+
+/* Màu khi đang chọn */
+.nav-pills .nav-link.active {
+    background-color: #FF7506 !important;
+    color: white !important;
+}
+
+/* Mũi tên màu vàng */
+.fas.fa-chevron-down, .fas.fa-chevron-up {
+    color: #FF7506 !important;
+}
+
+.nav-pills .nav-link.active #arrow {
+    color: white !important;
+}
+
+/* Responsive: Khi màn hình nhỏ hơn */
+@media (max-width: 768px) {
+    #sidebar {
+        width: 100%;
+        height: auto;
+    }
+}
+

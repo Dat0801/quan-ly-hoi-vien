@@ -17,7 +17,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        session(['title' => 'Đăng nhập']);
+        session()->flash('title', 'Đăng nhập');
         return view('auth.login');
     }
 

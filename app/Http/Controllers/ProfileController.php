@@ -24,6 +24,7 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
+    /*
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
@@ -35,6 +36,42 @@ class ProfileController extends Controller
         $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+    */
+
+    // Hiển thị thông tin người dùng
+    public function show()
+    {
+        return view('profile.show', [
+            'user' => Auth::user(),
+        ]);
+    }
+
+    // Cập nhật thông tin người dùng
+    public function update(Request $request)
+    {
+        $user = Auth::user();
+
+        // Validate the incoming request
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:15',
+            'password' => 'required|string|min:6',
+        ]);
+
+        // Update user data
+        $user->name = $request->input('name');
+        $user->phone_number = $request->input('phone_number');
+
+        // Update password if provided
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->input('password'));
+        }
+
+        $user->save();
+
+        // Redirect back with a success message
+        return redirect()->route('profile.edit')->with('success', 'Thông tin đã được cập nhật.');
     }
 
     /**

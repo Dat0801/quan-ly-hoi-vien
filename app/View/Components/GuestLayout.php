@@ -12,6 +12,7 @@ class GuestLayout extends Component
      */
     public function render(): View
     {
+        session()->flash('title', 'Đăng nhập');
         return view('layouts.guest');
     }
 }

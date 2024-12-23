@@ -15,7 +15,7 @@ class PasswordResetLinkController extends Controller
      */
     public function create(): View
     {
-        session(['title' => 'Quên mật khẩu']);
+        session()->flash('title', 'Quên mật khẩu');
         return view('auth.forgot-password');
     }
 

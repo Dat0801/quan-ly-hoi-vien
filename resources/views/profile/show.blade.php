@@ -1,14 +1,4 @@
 <x-app-layout :hideSidebar="true">
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
-
     <div class="d-flex align-items-start" style="margin-left: 2%;">
         <div class="p-4 bg-white shadow-sm rounded-lg d-flex">
             <!-- Left div with profile picture and information -->
@@ -32,59 +22,48 @@
         
             <!-- Right div with form inputs -->
             <div class="flex-grow-1 p-4">
-                <!-- Form for editing profile -->
-                <form method="POST" action="{{ route('profile.update') }}">
-                    @csrf
-                    @method('PUT')
-
-                    <div class="row">
-                        <!-- User Name Input -->
-                        <div class="col-md-6 mb-3">
-                            <label for="fullname" class="form-label">Tên người dùng</label>
-                            <input type="text" id="fullname" name="name" value="{{ $user->name }}" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" required>
-                        </div>
-
-                        <!-- Username Input -->
+                <div class="row">
+                    <!-- User Name Input -->
+                    <div class="col-md-6 mb-3">
+                        <label for="fullname" class="form-label">Tên người dùng</label>
+                        <input type="text" id="fullname" name="fullname" value="{{ $user->name }}" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" disabled>
+                    </div>
+        
+                    <!-- Username Input -->
                     <div class="col-md-6 mb-3">
                         <label for="username" class="form-label">Tên đăng nhập</label>
                         <input type="text" id="username" name="username" value="{{ $user->email }}" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" disabled>
                     </div>
         
-                        <!-- Phone Number Input -->
-                        <div class="col-md-6 mb-3">
-                            <label for="phone" class="form-label">Số điện thoại</label>
-                            <input type="text" id="phone" name="phone_number" value="{{ $user->phone_number }}" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" required>
-                        </div>
+                    <!-- Phone Number Input -->
+                    <div class="col-md-6 mb-3">
+                        <label for="phone" class="form-label">Số điện thoại</label>
+                        <input type="text" id="phone" name="phone" value="{{ $user->phone_number }}" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" disabled>
+                    </div>
         
-                        <!-- Password Input -->
-                        <div class="col-md-6 mb-3">
-                            <label for="password" class="form-label">Mật khẩu</label>
-                            <div class="position-relative">
-                                <input type="password" id="password" name="password" value="{{ $user->password }}" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" required>
-                                <button type="button" id="togglePassword" class="position-absolute ranslate-middle-y text-muted" style="right: 10px; top: 10px;">
-                                    <i class="fas fa-eye-slash"></i>
-                                </button>
-                            </div>
-                        </div>
-        
-                        <!-- Email Input -->
-                        <div class="col-md-12 mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" id="email" name="email" value="{{ $user->email }}" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" disabled>
-                        </div>
-        
-                        <!-- Role Input -->
-                        <div class="col-md-12 mb-3">
-                            <label for="role" class="form-label">Vai trò</label>
-                            <input type="text" id="role" name="role" value="{{ $user->role->role_name }}" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" disabled>
+                    <!-- Password Input -->
+                    <div class="col-md-6 mb-3">
+                        <label for="password" class="form-label">Mật khẩu</label>
+                        <div class="position-relative">
+                            <input type="password" id="password" name="password" value="{{ $user->password }}" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" disabled>
+                            <button type="button" id="togglePassword" class="position-absolute ranslate-middle-y text-muted" style="right: 10px; top: 10px;">
+                                <i class="fas fa-eye-slash"></i>
+                            </button>
                         </div>
                     </div>
-                    
-                    <!-- Submit Button -->
+        
+                    <!-- Email Input -->
                     <div class="col-md-12 mb-3">
-                        <button type="submit" class="btn btn-primary w-100 py-3 sm:rounded-lg">Lưu thay đổi</button>
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" name="email" value="{{ $user->email }}" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" disabled>
                     </div>
-                </form>
+        
+                    <!-- Role Input -->
+                    <div class="col-md-12 mb-3">
+                        <label for="role" class="form-label">Vai trò</label>
+                        <input type="text" id="role" name="role" value="{{ $user->role->role_name }}" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" disabled>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -111,7 +90,6 @@
         </div>
     </div>
 </x-app-layout>
-
 <script>
     // Toggle password visibility
     document.getElementById('togglePassword').addEventListener('click', function () {
@@ -185,4 +163,5 @@
         
         // Now, the cleaned phone number will be submitted (without spaces and non-numeric characters)
     });
+
 </script>

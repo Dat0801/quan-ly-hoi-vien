@@ -8,7 +8,7 @@
         <!-- Email Address -->
         <div>
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" 
-            style="height: 72px;"
+            style="height: 60px;"
             placeholder="Tên đăng nhập"
             />
         </div>
@@ -19,16 +19,16 @@
                           type="password"
                           name="password"
                           required autocomplete="current-password" 
-                          style="height: 72px"
+                          style="height: 60px"
                           placeholder="Mật khẩu"
             />
-            <button type="button" id="togglePassword" class="absolute inset-y-0 right-0 px-3 py-2 text-sm text-gray-500" style="top: 20px">
+            <button type="button" id="togglePassword" class="absolute inset-y-0 right-0 px-3 py-2 text-sm text-gray-500" style="top: 15px">
                 <i id="eyeIcon" class="fas fa-eye-slash"></i> 
             </button>
             <x-input-error :messages="$errors->get('email') + $errors->get('password')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-between mt-4">
+        <div class="flex items-center justify-between mt-2">
             <div class="inline-flex items-center">
                 <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
                 <span class="ml-2 text-sm text-gray-600">{{ __('Ghi nhớ mật khẩu') }}</span>
@@ -45,7 +45,7 @@
         </div>
 
         <div class="mt-4">
-            <x-primary-button class="w-full flex justify-center items-center" style="padding: 10px 24px; background-color: #FF7506;">
+            <x-primary-button class="w-full flex justify-center items-center" style="background-color: #FF7506;">
                 {{ __('Đăng nhập') }}
             </x-primary-button>
         </div>
