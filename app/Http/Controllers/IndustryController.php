@@ -4,10 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\IndustryRequest;
+use App\Models\Field;
 use App\Models\Industry;
 
 class IndustryController extends Controller
 {
+    public function index(Request $request)
+    {
+        $search = $request->input('search'); 
+        $industries = Industry::when($search, function ($query, $search) {
+            return $query->where('industry_name', 'LIKE', '%' . $search . '%');
+        })->paginate(5); 
+        return view('category.industry.index', compact('industries'));
+    }
     public function create()
     {
         return view('category.industry.create'); 
@@ -16,7 +25,7 @@ class IndustryController extends Controller
     public function store(IndustryRequest $request)
     {
         Industry::create($request->all());
-        return redirect()->route('category.index')->with('success', 'Thêm ngành thành công.');
+        return redirect()->route('industry.index')->with('success', 'Thêm ngành thành công.');
     }
 
     public function show($id)
@@ -40,13 +49,13 @@ class IndustryController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('category.index')->with('success', 'Cập nhật ngành thành công!');
+        return redirect()->route('industry.index')->with('success', 'Cập nhật ngành thành công!');
     }
 
 
     public function destroy(Industry $industry)
     {
         $industry->delete();
-        return redirect()->route('category.index')->with('success', 'Xóa ngành thành công.');
+        return redirect()->route('industry.index')->with('success', 'Xóa ngành thành công.');
     }
 }

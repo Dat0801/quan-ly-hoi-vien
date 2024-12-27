@@ -42,10 +42,9 @@ Route::middleware('auth')->group(function () {
 
     //Categories
     Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
-    Route::get('/category/industries', [CategoryController::class, 'loadIndustries'])->name('category.industries');
-    Route::get('/category/fields', [CategoryController::class, 'loadFields'])->name('category.fields');
 
     //Industries
+    Route::get('/category/industry', [IndustryController::class, 'index'])->name('industry.index'); 
     Route::get('/industry/create', [IndustryController::class, 'create'])->name('industry.create'); 
     Route::post('/industry', [IndustryController::class, 'store'])->name('industry.store');
     Route::get('/industry/{id}', [IndustryController::class, 'show'])->name('industry.show');
@@ -54,10 +53,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/industry/{industry}', [IndustryController::class, 'destroy'])->name('industry.destroy');
 
     //Fields
+    Route::get('/category/field', [FieldController::class, 'index'])->name('field.index');
     Route::get('field/create', [FieldController::class, 'create'])->name('field.create');
     Route::post('field', [FieldController::class, 'store'])->name('field.store');
-    Route::get('fields', [FieldController::class, 'index'])->name('field.index');
-    Route::delete('/fields/{field}', [FieldController::class, 'destroy'])->name('field.destroy');
+    Route::delete('/field/{field}', [FieldController::class, 'destroy'])->name('field.destroy');
     Route::delete('field/sub-groups/{id}', [FieldController::class, 'destroySubGroup'])->name('field.destroySubGroup');
     
 });

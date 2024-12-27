@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center gap-3">
-                    <a href="{{ route('category.index') }}" class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Đóng</a>
+                    <a href="{{ route('industry.index') }}" class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Đóng</a>
                     <a href="{{ route('industry.edit', $industry->id) }}" class="btn btn-primary w-48 py-3 sm:rounded-lg" style="cursor: pointer;">
                         Chỉnh sửa
                     </a>

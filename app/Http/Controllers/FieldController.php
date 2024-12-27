@@ -9,6 +9,23 @@ use App\Models\SubGroup;
 
 class FieldController extends Controller
 {
+    public function index(Request $request)
+    {
+        $search = $request->input('search');
+        $industryId = $request->input('industry_id');
+
+        $industries = Industry::all();
+
+        $fields = Field::when($search, function($query, $search) {
+            return $query->where('name', 'like', "%{$search}%");
+        })
+        ->when($industryId, function($query, $industryId) {
+            return $query->where('industry_id', $industryId);
+        })->paginate(5);
+
+        return view('category.field.index', compact('fields', 'industries', 'search', 'industryId'));
+    }
+
     // Trang tạo mới lĩnh vực
     public function create()
     {
@@ -48,7 +65,7 @@ class FieldController extends Controller
             }
         }
 
-        return redirect()->route('category.index', ['tab' => 'fields'])
+        return redirect()->route('field.index', ['tab' => 'fields'])
                  ->with('success', 'Thêm lĩnh vực thành công!');
     }
 
@@ -74,8 +91,7 @@ class FieldController extends Controller
         $field->delete();
 
         // Redirect về trang danh sách với thông báo thành công
-        return redirect()->route('category.index' , ['tab' => 'fields'])
+        return redirect()->route('field.index' , ['tab' => 'fields'])
         ->with('success', 'Lĩnh vực và các nhóm con đã được xóa thành công!');
     }
-
 }
