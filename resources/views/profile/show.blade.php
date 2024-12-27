@@ -1,15 +1,17 @@
 <x-app-layout :hideSidebar="true">
-    <div class="d-flex align-items-start" style="margin-left: 2%;">
+    <div class="d-flex align-items-start">
         <div class="p-4 bg-white shadow-sm rounded-lg d-flex">
             <!-- Left div with profile picture and information -->
             <div class="flex-shrink-0 w-25 p-4 text-center">
                 <div class="position-relative w-100">
                     <!-- Circle image -->
-                    <img src="{{ asset('/images/avt.png') }}" alt="Profile Picture" class="rounded-circle" 
-                    style="width: 265px; height: 265px; object-fit: cover; margin: 0 auto;">
+                    <img src="{{ Auth::check() && Auth::user()->avatar ? '/images/' . Auth::user()->avatar : '/images/avt.png' }}"
+                        alt="Profile Picture" class="rounded-circle" 
+                        style="width: 265px; height: 265px; object-fit: cover; margin: 0 auto;">
                     
                     <!-- Change picture button -->
-                    <button class="position-absolute bottom-0 end-0 btn btn-warning rounded-circle" style="transform: translate(-200%, 0%); width: 45px; height: 45px;">
+                    <button class="position-absolute bottom-0 start-50 btn btn-warning rounded-circle" 
+                        style="transform: translateX(-50%); width: 45px; height: 45px;">
                         <i class="fas fa-camera"></i>
                     </button>
                 </div>
@@ -78,11 +80,12 @@
             <!-- Divider (Horizontal line) -->
             <div class="border-bottom mb-2" style="border-color: #FF7506;"></div>
 
-            <!-- Logout Button with smaller size -->
-            <form method="POST" action="{{ route('logout') }}">
+            <!-- Logout Button -->
+            <form method="POST" action="{{ route('logout') }}" id="logoutForm">
                 @csrf
-                <button type="submit" class="btn btn-white w-100 d-flex flex-column align-items-center justify-content-center border-0 py-3 sm:rounded-lg"
-                    style="color: #FF7506; border-color: #FF7506; width: 80px; text-align: center;">
+                <button type="button" class="btn btn-white w-100 d-flex flex-column align-items-center justify-content-center border-0 py-3 sm:rounded-lg"
+                    style="color: #FF7506; border-color: #FF7506; width: 80px; text-align: center;" 
+                    onclick="showModal('Bạn có chắc chắn muốn đăng xuất khỏi hệ thống?', function() { submitLogoutForm(); }, function() { /* Do nothing, just close the modal */ })">
                     <i class="fas fa-sign-out-alt fa-lg text-danger"></i>
                     <span class="text-danger mt-3" style="font-size: 12px; word-wrap: break-word;">Đăng xuất</span>
                 </button>

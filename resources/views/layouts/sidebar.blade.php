@@ -1,4 +1,3 @@
-<!-- Sidebar -->
 <div class="bg-white text-gray-500" id="sidebar" style="width: 240px; height: 100vh;">
     <!-- Logo -->
     <div class="d-flex justify-content-center align-items-center py-3">
@@ -18,42 +17,20 @@
         <li><a href="#" class="nav-link text-gray-500">Lịch</a></li>
         <li>
             <a class="nav-link text-gray-500 d-flex justify-content-between" href="#" id="settingsToggle" role="button">
-                Cài đặt 
+                Cài đặt
                 <i id="arrow" class="fas fa-chevron-down ms-auto mt-1"></i>
             </a>
-            <div class="collapse" id="settingsSubmenu">
+            <div class="collapse {{ session('settingsSubmenuOpen') == 'true' ? 'show' : '' }}" id="settingsSubmenu">
                 <ul class="list-unstyled ps-3">
                     <li><a href="#" class="text-gray-500 nav-link text-decoration-none">Hạng thành viên</a></li>
                     <li><a href="#" class="text-gray-500 nav-link text-decoration-none">Quản lý người dùng</a></li>
-                    <li><a href="#" class="text-gray-500 nav-link text-decoration-none">Danh mục</a></li>
+                    <li>
+                        <a href="{{ route('category.index') }}" class="text-gray-500 nav-link text-decoration-none">
+                            <span class="category-text" id="categoryText">Danh mục</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </li>
     </ul>
 </div>
-
-<script>
-// Lấy các phần tử cần thiết
-const settingsLink = document.getElementById('settingsToggle');
-const settingsSubmenu = document.getElementById('settingsSubmenu');
-const arrow = document.getElementById('arrow');
-
-// Thêm sự kiện click vào nút "Cài đặt"
-settingsLink.addEventListener('click', function(event) {
-    // Ngừng sự kiện mặc định của thẻ <a>
-    event.preventDefault();
-
-    // Toggle 'active' class để thay đổi màu
-    settingsLink.classList.toggle('active');
-    settingsSubmenu.classList.toggle('show');
-
-    // Thay đổi mũi tên khi mở và đóng menu
-    if (settingsSubmenu.classList.contains('show')) {
-        arrow.classList.remove('fa-chevron-down');
-        arrow.classList.add('fa-chevron-up');
-    } else {
-        arrow.classList.remove('fa-chevron-up');
-        arrow.classList.add('fa-chevron-down');
-    }
-});
-</script>

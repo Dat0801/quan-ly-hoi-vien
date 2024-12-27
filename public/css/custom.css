@@ -1,3 +1,32 @@
+:root {
+    --bs-primary: #FF7506!important; 
+}
+
+.btn-primary {
+    background-color: var(--bs-primary)!important;
+    border-color: var(--bs-primary)!important;
+}
+
+.btn-primary:hover {
+    background-color: rgba(255, 117, 6, 0.8)!important; /* Slightly darkened color using opacity */
+    border-color: rgba(255, 117, 6, 0.8)!important;
+}
+
+.btn-outline-primary {
+    color: var(--bs-primary)!important; 
+    border-color: var(--bs-primary)!important; 
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--bs-primary)!important; 
+    color: #fff!important; 
+    border-color: var(--bs-primary)!important; 
+}
+
+.text-primary {
+    color: var(--bs-primary)!important; 
+}
+
 body {
     background-image: url('/images/BG-app.png') !important;
     background-size: cover !important;
@@ -170,3 +199,11 @@ body {
     }
 }
 
+.category-text {
+    color: gray; 
+}
+
+.category-text.active {
+    color: #BF5805; 
+    font-weight: bold;
+}

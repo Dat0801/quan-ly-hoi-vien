@@ -18,16 +18,20 @@
 
     <!-- Vite -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="d-flex" style="height: 100vh;">
-        <!-- Sidebar -->
         @if(!isset($hideSidebar) || !$hideSidebar)
             @include('layouts.sidebar')
         @endif
+        
         <!-- Main Content -->
-        <div class="flex-grow-1 p-4 main-content">
-            @include('layouts.navigation')
+        <div class="flex-grow-1 main-content" style="margin-left: 24px; margin-top: 24px;">
+
+            <div style="margin-right: 110px;">
+                @include('layouts.navigation')
+            </div>
 
             @if (isset($header))
                 <header class="bg-light p-3 shadow-sm mb-4">
@@ -43,7 +47,27 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
+    <div class="modal fade" id="dynamicModal" tabindex="-1" aria-labelledby="dynamicModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #FF7506; color: white; text-align: center; justify-content: center; border: none;">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 48px;"></i>
+                </div>
+                
+                <div class="modal-body mt-3" style="background-color: white; text-align: center;">
+                    <p id="modalMessage" style="color: #333; font-size: 18px;"></p>
+                </div>
+                
+                <div class="modal-footer" style="justify-content: center; border-top: none;">
+                    <button type="button" class="btn btn-outline-primary" id="cancelButton" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" id="confirmButton">Đồng ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ '/js/modal.js' }}"></script>
+    <script src="{{ '/js/sidebar.js' }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

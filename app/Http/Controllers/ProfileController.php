@@ -52,25 +52,40 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        // Validate the incoming request
         $request->validate([
             'name' => 'required|string|max:255',
             'phone_number' => 'required|string|max:15',
-            'password' => 'required|string|min:6',
+            'password' => 'nullable|string|min:6',
+            'profile_image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
 
-        // Update user data
         $user->name = $request->input('name');
         $user->phone_number = $request->input('phone_number');
 
-        // Update password if provided
         if ($request->filled('password')) {
-            $user->password = bcrypt($request->input('password'));
+            $plainPassword = trim($request->input('password'));
+
+            if (strlen($plainPassword) < 60 || !preg_match('/^\$2y\$/', $plainPassword)) {
+                $user->password = bcrypt($plainPassword);
+            } 
         }
 
-        $user->save();
+        if ($request->hasFile('profile_image')) {
+            if ($user->profile_image) {
+                $imagePath = public_path('images/' . $user->profile_image);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
 
-        // Redirect back with a success message
+            $image = $request->file('profile_image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+            $user->avatar = $imageName; 
+        }
+
+        $user->save(); 
+
         return redirect()->route('profile.edit')->with('success', 'Thông tin đã được cập nhật.');
     }
 
