@@ -45,9 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/category/industries', [CategoryController::class, 'loadIndustries'])->name('category.industries');
     Route::get('/category/fields', [CategoryController::class, 'loadFields'])->name('category.fields');
 
-
     //Industries
-    Route::get('/industry', [IndustryController::class, 'index'])->name('industry.index');
     Route::get('/industry/create', [IndustryController::class, 'create'])->name('industry.create'); 
     Route::post('/industry', [IndustryController::class, 'store'])->name('industry.store');
     Route::get('/industry/{id}', [IndustryController::class, 'show'])->name('industry.show');

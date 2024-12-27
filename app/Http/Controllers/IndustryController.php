@@ -8,13 +8,6 @@ use App\Models\Industry;
 
 class IndustryController extends Controller
 {
-    public function index()
-    {
-        $industries = Industry::all();
-        return view('category.industry.partials.index', compact('industries'));
-        
-    }
-
     public function create()
     {
         return view('category.industry.create'); 
@@ -40,12 +33,6 @@ class IndustryController extends Controller
 
     public function update(IndustryRequest $request, $id)
     {
-        $request->validate([
-            'industry_code' => "required|unique:industries,industry_code,{$id}",
-            'industry_name' => 'required',
-            'description' => 'nullable',
-        ]);
-
         $industry = Industry::findOrFail($id);
         $industry->update([
             'industry_code' => $request->industry_code,

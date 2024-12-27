@@ -17,12 +17,13 @@
             text-decoration-skip-ink: none;
             color: #BF5805;"
             class="mb-1"
-        >Danh sách Lĩnh Vực</h1>
+        >Ngành</h1>
 
         <div class="d-flex align-items-center">
-            <form action="{{ route('field.index') }}" method="GET">
+            <form id="fieldSearchForm">
+                <input type="hidden" name="tab" value="{{ request('tab', 'fields') }}"> 
                 <div class="input-group">
-                    <input type="text" class="form-control" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm lĩnh vực...">
+                    <input type="text" class="form-control" name="search_fields" value="{{ request('search_fields') }}" placeholder="Tìm kiếm lĩnh vực...">
                     <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
                 </div>
             </form>
@@ -65,8 +66,8 @@
                     @endforeach
                 </tbody>
             </table>
-            <div class="pagination-wrapper">
-                {{ $fields->links() }}
+            <div class="d-flex justify-content-center">
+                {{ $fields->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>

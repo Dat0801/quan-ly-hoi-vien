@@ -48,18 +48,11 @@
                         <input type="text" id="code" name="code" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" required>
                     </div>
 
-                    
-
                     <!-- Mô tả và Ngành -->
                     <div class="col-md-6 mb-3">
                         <label for="description" class="form-label">Mô tả</label>
                         <textarea id="description" name="description" rows="3" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500"></textarea>
                     </div>
-                   
-
-                    
-
-                    
                 </div>
 
                 <!-- Nhóm con dạng lưới -->
@@ -77,7 +70,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center gap-3">
-                    <a href="{{ route('category.index') }}" class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Quay lại</a>
+                    <a href="{{ route('category.index') }}?tab={{ request()->get('tab', 'fields') }}" class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Hủy</a>
                     <button type="submit" class="btn btn-primary w-48 py-3 sm:rounded-lg">Thêm lĩnh vực</button>
                 </div>
             </form>

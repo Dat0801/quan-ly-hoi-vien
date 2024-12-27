@@ -18,18 +18,20 @@
             color: #BF5805;"
             class="mb-1"
         >Tìm kiếm</h1>
-
+                
         <div class="d-flex align-items-center">
-            <form action="{{ route('industry.index') }}" method="GET">
+            <form id="industrySearchForm" method="GET">
+                <input type="hidden" name="tab" value="{{ request('tab', 'industry') }}"> 
                 <div class="input-group">
-
-                    <input type="text" class="form-control" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm...">
+                    <input type="text" class="form-control" name="search_industry" value="{{ request('search_industry') }}" placeholder="Tìm kiếm ngành...">
                     <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
                 </div>
             </form>
         </div>
-
+        
+        
         <div class="table-responsive">
+            @if ($industries->isNotEmpty())
             <table class="table mt-3 table-sm w-100">
                 <thead style="background-color: #FFE3CD; color: #803B03;">
                     <tr>
@@ -48,14 +50,14 @@
                             <td>{{ $industry->industry_name }}</td>
                             <td>{{ $industry->description ?? '-' }}</td>
                             <td class="text-center">
-                                <a href="{{ route('industry.show', $industry->id) }}" class="text-primary me-1" style="cursor: pointer">
-                                    <i class="fas fa-circle-info"></i>
+                                <a href="{{ route('industry.show', $industry->id) }}" class="me-1" style="cursor: pointer">
+                                    <i class="fas fa-circle-info" style="color: #FF7506"></i>
                                 </a>
                                 <form action="{{ route('industry.destroy', $industry->id) }}" method="POST" style="display:inline;" id="deleteIndustryForm-{{ $industry->id }}">
                                     @csrf
                                     @method('DELETE')
                                     <button type="button" class="btn-sm text-danger"
-                                            onclick="showModal('Bạn có muốn xóa ngành này?', function() { submitIndustryForm('{{ $industry->id }}'); }, function() { })">
+                                            onclick="showModal('Bạn có chắc chắn muốn xóa ngành này?', function() { submitIndustryForm('{{ $industry->id }}'); }, function() { })">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </form>
@@ -65,8 +67,11 @@
                 </tbody>
             </table>
             <div class="d-flex justify-content-center">
-                {{ $industries->links('pagination::bootstrap-5') }}
+                {{ $industries->links('pagination::bootstrap-5')}}
             </div>
+            @else
+                <p>Không tìm thấy kết quả phù hợp.</p>
+            @endif
         </div>
     </div>
 </div>

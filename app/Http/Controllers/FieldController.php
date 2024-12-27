@@ -48,14 +48,8 @@ class FieldController extends Controller
             }
         }
 
-        return redirect()->route('category.index')->with('success', 'Thêm lĩnh vực thành công!');
-    }
-
-    // Xem tất cả các lĩnh vực
-    public function index()
-    {
-        $fields = Field::with('industry', 'subGroups')->get(); // Lấy danh sách lĩnh vực
-        return view('category.field.partial.index', compact('fields'));
+        return redirect()->route('category.index', ['tab' => 'fields'])
+                 ->with('success', 'Thêm lĩnh vực thành công!');
     }
 
     // Xóa nhóm con
@@ -80,7 +74,8 @@ class FieldController extends Controller
         $field->delete();
 
         // Redirect về trang danh sách với thông báo thành công
-        return redirect()->route('category.index')->with('success', 'Lĩnh vực và các nhóm con đã được xóa thành công!');
+        return redirect()->route('category.index' , ['tab' => 'fields'])
+        ->with('success', 'Lĩnh vực và các nhóm con đã được xóa thành công!');
     }
 
 }

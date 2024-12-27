@@ -1,7 +1,24 @@
+<style>
+    .pagination .page-link {
+        color: #FF7506;
+        border-color: #FF7506;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #FF7506; 
+        color: #fff; 
+        border-color: #FF7506;
+    }
+
+    .pagination .page-link:hover {
+        background-color: #FFE3CD; 
+        color: #803B03; 
+    }
+
+</style>
 @if ($paginator->hasPages())
     <nav>
         <ul class="pagination justify-content-center">
-            {{-- Previous Page Link --}}
             @if ($paginator->onFirstPage())
                 <li class="page-item disabled">
                     <span class="page-link">&laquo;</span>
@@ -12,7 +29,6 @@
                 </li>
             @endif
 
-            {{-- Pagination Elements --}}
             @foreach ($elements as $element)
                 @if (is_string($element))
                     <li class="page-item disabled"><span class="page-link">{{ $element }}</span></li>
@@ -29,7 +45,6 @@
                 @endif
             @endforeach
 
-            {{-- Next Page Link --}}
             @if ($paginator->hasMorePages())
                 <li class="page-item">
                     <a class="page-link" href="{{ $paginator->nextPageUrl() }}" rel="next">&raquo;</a>

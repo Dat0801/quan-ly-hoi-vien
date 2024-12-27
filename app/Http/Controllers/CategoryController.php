@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Industry;
 use App\Models\Field;
+use Illuminate\Support\Facades\Log;
 
 class CategoryController extends Controller
 {
@@ -16,18 +17,24 @@ class CategoryController extends Controller
 
     public function loadIndustries(Request $request)
     {
-        $industries = Industry::paginate(perPage: 1);
+        $search = $request->input('search'); 
+        $industries = Industry::when($search, function ($query, $search) {
+            return $query->where('industry_name', 'LIKE', '%' . $search . '%');
+        })->paginate(5); 
 
         if ($request->ajax()) {
             return view('category.industry.partial.index', compact('industries'))->render();
         }
-
         return view('category.index', compact('industries'));
     }
 
     public function loadFields(Request $request)
     {
-        $fields = Field::paginate(1);
+        $search = $request->input('search');
+
+        $fields = Field::when($search, function ($query, $search) {
+            $query->where('name', 'LIKE', '%' . $search . '%');
+        })->paginate(5);
 
         if ($request->ajax()) {
             return view('category.field.partial.index', compact('fields'))->render();
@@ -35,4 +42,5 @@ class CategoryController extends Controller
 
         return view('category.index', compact('fields'));
     }
+
 }
