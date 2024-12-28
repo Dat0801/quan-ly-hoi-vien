@@ -65,3 +65,48 @@ function submitFieldForm(fieldId) {
     }
 }
 
+function submitMarketForm(marketId) {
+    const form = document.getElementById(`deleteMarketForm-${marketId}`);
+    if (form) {
+        form.submit();
+    } else {
+        console.error("Form không tìm thấy!");
+    }
+}
+
+function submitGroupForm(groupId) {
+    const form = document.getElementById(`deleteGroupForm-${groupId}`);
+    if (form) {
+        form.submit();
+    } else {
+        console.error("Form không tìm thấy!");
+    }
+}
+
+function submitCertificateForm(certificateId) {
+    const form = document.getElementById(`deleteCertificateForm-${certificateId}`);
+    if (form) {
+        form.submit();
+    } else {
+        console.error("Form không tìm thấy!");
+    }
+}
+
+function submitOrganizationForm(organizationId) {
+    const form = document.getElementById(`deleteOrganizationForm-${organizationId}`);
+    if (form) {
+        form.submit();
+    } else {
+        console.error("Form không tìm thấy!");
+    }
+}
+
+function submitBusinessForm(businessId) {
+    const form = document.getElementById(`deleteBusinessForm-${businessId}`);
+    if (form) {
+        form.submit();
+    } else {
+        console.error("Form không tìm thấy!");
+    }
+}
+

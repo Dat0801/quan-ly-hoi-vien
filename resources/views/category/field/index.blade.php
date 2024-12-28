@@ -72,12 +72,12 @@
                                                 <td>{{ $field->description ?? '-' }}</td>
                                                 <td>{{ $field->industry->industry_name ?? '-' }}</td>
                                                 <td class="text-center">
-                                                    <a href="" class="text-info me-1" style="cursor: pointer;">
-                                                        <i class="fas fa-edit"></i>
+                                                    <a href="{{ route('field.show', $field->id) }}" class="me-1" style="cursor: pointer">
+                                                        <i class="fas fa-circle-info" style="color: #FF7506"></i>
                                                     </a>
                                                     <form action="{{ route('field.destroy', $field->id) }}" method="POST" style="display:inline;" id="deleteFieldForm-{{ $field->id }}">
                                                         @csrf
-                                                        @method('DELETE')
+                                                        @method('DELETE')   
                                                         <button type="button" class="btn-sm text-danger"
                                                                 onclick="showModal('Bạn có muốn xóa lĩnh vực này?', function() { submitFieldForm('{{ $field->id }}'); }, function() { })">
                                                             <i class="fas fa-trash-alt"></i>

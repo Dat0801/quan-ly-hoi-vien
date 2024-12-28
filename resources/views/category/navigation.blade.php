@@ -13,4 +13,39 @@
            role="tab" 
            style="color: #803B03;">Lĩnh vực</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('market.index') ? 'active' : '' }}" 
+           id="market-tab" 
+           href="{{ route('market.index') }}" 
+           role="tab" 
+           style="color: #803B03;">Thị trường</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('target_customer_group.index') ? 'active' : '' }}" 
+           id="market-tab" 
+           href="{{ route('target_customer_group.index') }}" 
+           role="tab" 
+           style="color: #803B03;">Khách hàng mục tiêu</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('certificates.index') ? 'active' : '' }}" 
+           id="market-tab" 
+           href="{{ route('certificates.index') }}" 
+           role="tab" 
+           style="color: #803B03;">Chứng chỉ</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('organizations.index') ? 'active' : '' }}" 
+           id="market-tab" 
+           href="{{ route('organizations.index') }}" 
+           role="tab" 
+           style="color: #803B03;">Tổ chức</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('business.index') ? 'active' : '' }}" 
+           id="market-tab" 
+           href="{{ route('business.index') }}" 
+           role="tab" 
+           style="color: #803B03;">Doanh nghiệp</a>
+    </li>
 </ul>

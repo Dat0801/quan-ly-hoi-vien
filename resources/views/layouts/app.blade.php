@@ -69,5 +69,33 @@
     <script src="{{ '/js/modal.js' }}"></script>
     <script src="{{ '/js/sidebar.js' }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let subGroupIndex = 0; // Chỉ số nhóm con bắt đầu
+    
+        // Hàm thêm nhóm con
+        function addSubGroup() {
+            const subGroupsRow = document.getElementById('sub_groups');
+    
+            const newCol = document.createElement('div');
+            newCol.className = 'col-md-4 mb-3';
+            newCol.innerHTML = `
+                <input type="text" name="sub_groups[${subGroupIndex}][name]" placeholder="Tên nhóm con" class="form-control mb-2" required>
+                <textarea name="sub_groups[${subGroupIndex}][description]" placeholder="Mô tả nhóm con" class="form-control mb-2"></textarea>
+                <button type="button" class="btn btn-outline-danger w-100" onclick="removeSubGroup(this)">Xóa nhóm</button>
+            `;
+            subGroupsRow.appendChild(newCol);
+            subGroupIndex++; // Tăng chỉ số sau mỗi lần thêm nhóm con
+        }
+    
+        // Hàm xóa nhóm con
+        function removeSubGroup(button) {
+            button.closest('.col-md-4').remove();
+        }
+    
+        // Khởi tạo chỉ số nhóm con ban đầu từ dữ liệu hiện có
+        function initializeSubGroupIndex(existingCount) {
+            subGroupIndex = existingCount || 0;
+        }
+    </script>
 </body>
 </html>

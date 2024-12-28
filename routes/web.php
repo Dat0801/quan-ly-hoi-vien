@@ -5,6 +5,12 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\IndustryController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FieldController;
+use App\Http\Controllers\MarketController;
+use App\Http\Controllers\TargetCustomerGroupController;
+use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\OrganizationController;
+use App\Http\Controllers\BusinessController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,22 +49,29 @@ Route::middleware('auth')->group(function () {
     //Categories
     Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
 
-    //Industries
-    Route::get('/category/industry', [IndustryController::class, 'index'])->name('industry.index'); 
-    Route::get('/industry/create', [IndustryController::class, 'create'])->name('industry.create'); 
-    Route::post('/industry', [IndustryController::class, 'store'])->name('industry.store');
-    Route::get('/industry/{id}', [IndustryController::class, 'show'])->name('industry.show');
-    Route::get('/industry/{id}/edit', [IndustryController::class, 'edit'])->name('industry.edit'); 
-    Route::put('/industry/{id}', [IndustryController::class, 'update'])->name('industry.update');
-    Route::delete('/industry/{industry}', [IndustryController::class, 'destroy'])->name('industry.destroy');
+    Route::prefix('category')->group(function () {
+        //Industries
+        Route::resource('industry', IndustryController::class);
 
-    //Fields
-    Route::get('/category/field', [FieldController::class, 'index'])->name('field.index');
-    Route::get('field/create', [FieldController::class, 'create'])->name('field.create');
-    Route::post('field', [FieldController::class, 'store'])->name('field.store');
-    Route::delete('/field/{field}', [FieldController::class, 'destroy'])->name('field.destroy');
-    Route::delete('field/sub-groups/{id}', [FieldController::class, 'destroySubGroup'])->name('field.destroySubGroup');
-    
+        //Fields
+        Route::resource('field', FieldController::class);
+
+        //Markets
+        Route::resource('market', MarketController::class);
+
+        //Target Customer Groups
+        Route::resource('target_customer_group', TargetCustomerGroupController::class);
+
+        //Certificates
+        Route::resource('certificates', CertificateController::class);
+
+        //Organizations
+        Route::resource('organizations', OrganizationController::class);
+
+        //Businesses
+        Route::resource('business', BusinessController::class);
+    });
+   
 });
 
 require __DIR__.'/auth.php';

@@ -26,14 +26,12 @@ class FieldController extends Controller
         return view('category.field.index', compact('fields', 'industries', 'search', 'industryId'));
     }
 
-    // Trang tạo mới lĩnh vực
     public function create()
     {
-        $industries = Industry::all(); // Lấy tất cả các ngành
+        $industries = Industry::all(); 
         return view('category.field.create', compact('industries'));
     }
 
-    // Lưu lĩnh vực và nhóm con
     public function store(Request $request)
     {
         $request->validate([
@@ -42,11 +40,10 @@ class FieldController extends Controller
             'description' => 'nullable',
             'industry_id' => 'required',
             'sub_groups' => 'nullable|array',
-            'sub_groups.*.name' => 'required|string', // Tên nhóm con bắt buộc
-            'sub_groups.*.description' => 'nullable|string', // Mô tả nhóm con tùy chọn
+            'sub_groups.*.name' => 'required|string', 
+            'sub_groups.*.description' => 'nullable|string', 
         ]);
 
-        // Tạo lĩnh vực mới
         $field = Field::create([
             'name' => $request->name,
             'code' => $request->code,
@@ -54,12 +51,11 @@ class FieldController extends Controller
             'industry_id' => $request->industry_id,
         ]);
 
-        // Tạo nhóm con nếu có
         if ($request->has('sub_groups')) {
             foreach ($request->sub_groups as $sub_group_data) {
                 SubGroup::create([
                     'name' => $sub_group_data['name'],
-                    'description' => $sub_group_data['description'], // Lưu mô tả nhóm con
+                    'description' => $sub_group_data['description'],
                     'field_id' => $field->id,
                 ]);
             }
@@ -69,7 +65,76 @@ class FieldController extends Controller
                  ->with('success', 'Thêm lĩnh vực thành công!');
     }
 
-    // Xóa nhóm con
+    public function show($id)
+    {
+        $field = Field::with('subGroups')->findOrFail($id); 
+
+        return view('category.field.show', compact('field'));
+    }
+
+    public function edit($id)
+    {
+        $field = Field::with('subGroups')->findOrFail($id); 
+        $industries = Industry::all();
+        return view('category.field.edit', compact('field', 'industries'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $field = Field::with('subGroups')->findOrFail($id);
+
+        // Validate dữ liệu
+        $request->validate([
+            'name' => 'required',
+            'code' => "required|unique:fields,code,{$id}",
+            'description' => 'nullable',
+            'industry_id' => 'required',
+            'sub_groups' => 'nullable|array',
+            'sub_groups.*.id' => 'nullable|exists:sub_groups,id',
+            'sub_groups.*.name' => 'required|string',
+            'sub_groups.*.description' => 'nullable|string',
+        ]);
+
+        // Cập nhật thông tin lĩnh vực
+        $field->update([
+            'name' => $request->name,
+            'code' => $request->code,
+            'description' => $request->description,
+            'industry_id' => $request->industry_id,
+        ]);
+
+        $existingSubGroupIds = $field->subGroups->pluck('id')->toArray(); // Lấy danh sách ID nhóm con hiện có
+        $submittedSubGroupIds = $request->input('sub_groups.*.id', []); // Lấy danh sách ID nhóm con từ yêu cầu
+
+        // Cập nhật hoặc tạo nhóm con
+        if ($request->has('sub_groups')) {
+            foreach ($request->sub_groups as $subGroupData) {
+                if (isset($subGroupData['id']) && in_array($subGroupData['id'], $existingSubGroupIds)) {
+                    // Nếu nhóm con đã tồn tại, cập nhật
+                    SubGroup::where('id', $subGroupData['id'])->update([
+                        'name' => $subGroupData['name'],
+                        'description' => $subGroupData['description'],
+                    ]);
+                } else {
+                    // Nếu nhóm con chưa tồn tại, tạo mới
+                    SubGroup::create([
+                        'name' => $subGroupData['name'],
+                        'description' => $subGroupData['description'],
+                        'field_id' => $field->id,
+                    ]);
+                }
+            }
+        }
+
+        // Xóa các nhóm con không được gửi trong yêu cầu (nếu cần)
+        $subGroupsToDelete = array_diff($existingSubGroupIds, $submittedSubGroupIds);
+        SubGroup::whereIn('id', $subGroupsToDelete)->delete();
+
+        return redirect()->route('field.index', ['tab' => 'fields'])
+            ->with('success', 'Cập nhật lĩnh vực thành công!');
+    }
+
+
     public function destroySubGroup($id)
     {
         $subGroup = SubGroup::findOrFail($id);
@@ -79,18 +144,14 @@ class FieldController extends Controller
 
     public function destroy($id)
     {
-        // Tìm lĩnh vực cần xóa
         $field = Field::findOrFail($id);
 
-        // Xóa tất cả các nhóm con liên kết với lĩnh vực này
         foreach ($field->subGroups as $subGroup) {
-            $subGroup->delete();  // Xóa từng nhóm con
+            $subGroup->delete(); 
         }
 
-        // Xóa lĩnh vực
         $field->delete();
 
-        // Redirect về trang danh sách với thông báo thành công
         return redirect()->route('field.index' , ['tab' => 'fields'])
         ->with('success', 'Lĩnh vực và các nhóm con đã được xóa thành công!');
     }
