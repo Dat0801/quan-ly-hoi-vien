@@ -1,4 +1,4 @@
-<x-app-layout :hideSidebar="true">
+<x-app-layout>
     <div style="margin-right: 110px;">
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -26,10 +26,11 @@
                 @method('PUT')
 
                 <div class="row">
-                    <!-- Tên lĩnh vực -->
+                    
+                    <!-- Mã lĩnh vực -->
                     <div class="col-md-6 mb-3">
-                        <label for="name_edit" class="form-label">Tên lĩnh vực</label>
-                        <input type="text" id="name_edit" name="name" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" value="{{ $field->name }}" required>
+                        <label for="code_edit" class="form-label">Mã lĩnh vực</label>
+                        <input type="text" id="code_edit" name="code" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" value="{{ $field->code }}" required>
                     </div>
 
                     <!-- Ngành -->
@@ -44,10 +45,10 @@
                         </select>
                     </div>
 
-                    <!-- Mã lĩnh vực -->
+                    <!-- Tên lĩnh vực -->
                     <div class="col-md-6 mb-3">
-                        <label for="code_edit" class="form-label">Mã lĩnh vực</label>
-                        <input type="text" id="code_edit" name="code" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" value="{{ $field->code }}" required>
+                        <label for="name_edit" class="form-label">Tên lĩnh vực</label>
+                        <input type="text" id="name_edit" name="name" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" value="{{ $field->name }}" required>
                     </div>
 
                     <!-- Mô tả -->
@@ -77,7 +78,7 @@
 
                 <!-- Nút hành động -->
                 <div class="d-flex justify-content-center gap-3">
-                    <a href="{{ route('field.show', $field->id) }}" class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Quay lại</a>
+                    <a href="{{ route('field.show', $field->id) }}" class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Hủy</a>
                     <button type="submit" class="btn btn-primary w-48 py-3 sm:rounded-lg">Lưu</button>
                 </div>
             </form>

@@ -1,4 +1,4 @@
-<x-app-layout :hideSidebar="true">
+<x-app-layout>
     <div style="margin-right: 110px;">
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -19,9 +19,10 @@
             <!-- Form Show -->
             <div>
                 <div class="row">
+                    
                     <div class="col-md-6 mb-3">
-                        <label for="name" class="form-label">Tên lĩnh vực</label>
-                        <input type="text" id="name" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" value="{{ $field->name }}" disabled>
+                        <label for="code" class="form-label">Mã lĩnh vực</label>
+                        <input type="text" id="code" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" value="{{ $field->code }}" disabled>
                     </div>
 
                     <div class="col-md-6 mb-3">
@@ -30,8 +31,8 @@
                     </div>
 
                     <div class="col-md-6 mb-3">
-                        <label for="code" class="form-label">Mã lĩnh vực</label>
-                        <input type="text" id="code" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" value="{{ $field->code }}" disabled>
+                        <label for="name" class="form-label">Tên lĩnh vực</label>
+                        <input type="text" id="name" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" value="{{ $field->name }}" disabled>
                     </div>
 
                     <div class="col-md-6 mb-3">
@@ -51,7 +52,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center gap-3">
-                    <a href="{{ route('field.index') }}?tab={{ request()->get('tab', 'fields') }}" class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Quay lại</a>
+                    <a href="{{ route('field.index') }}?tab={{ request()->get('tab', 'fields') }}" class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Đóng</a>
                     <a href="{{ route('field.edit', $field->id) }}" class="btn btn-primary w-48 py-3 sm:rounded-lg">Chỉnh sửa</a>
                 </div>
             </div>

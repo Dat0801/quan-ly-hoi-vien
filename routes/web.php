@@ -63,10 +63,10 @@ Route::middleware('auth')->group(function () {
         Route::resource('target_customer_group', TargetCustomerGroupController::class);
 
         //Certificates
-        Route::resource('certificates', CertificateController::class);
+        Route::resource('certificate', CertificateController::class);
 
         //Organizations
-        Route::resource('organizations', OrganizationController::class);
+        Route::resource('organization', OrganizationController::class);
 
         //Businesses
         Route::resource('business', BusinessController::class);

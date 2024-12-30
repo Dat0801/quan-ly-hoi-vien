@@ -21,7 +21,7 @@ class FieldController extends Controller
         })
         ->when($industryId, function($query, $industryId) {
             return $query->where('industry_id', $industryId);
-        })->paginate(5);
+        })->paginate(3);
 
         return view('category.field.index', compact('fields', 'industries', 'search', 'industryId'));
     }

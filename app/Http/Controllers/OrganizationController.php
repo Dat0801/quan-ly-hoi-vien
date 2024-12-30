@@ -19,9 +19,9 @@ class OrganizationController extends Controller
                 $query->where('organization_name', 'like', '%' . $search . '%')
                       ->orWhere('organization_code', 'like', '%' . $search . '%');
             })
-            ->paginate(10);
+            ->paginate(perPage: 3);
 
-        return view('organizations.index', compact('organizations', 'search'));
+        return view('category.organization.index', compact('organizations', 'search'));
     }
 
     /**
@@ -29,7 +29,7 @@ class OrganizationController extends Controller
      */
     public function create()
     {
-        return view('organizations.create');
+        return view('category.organization.create');
     }
 
     /**
@@ -45,7 +45,7 @@ class OrganizationController extends Controller
 
         Organization::create($validatedData);
 
-        return redirect()->route('organizations.index')->with('success', 'Tổ chức đã được thêm thành công!');
+        return redirect()->route('organization.index')->with('success', 'Tổ chức đã được thêm thành công!');
     }
 
     /**
@@ -53,7 +53,7 @@ class OrganizationController extends Controller
      */
     public function show(Organization $organization)
     {
-        return view('organizations.show', compact('organization'));
+        return view('category.organization.show', compact('organization'));
     }
 
     /**
@@ -61,7 +61,7 @@ class OrganizationController extends Controller
      */
     public function edit(Organization $organization)
     {
-        return view('organizations.edit', compact('organization'));
+        return view('category.organization.edit', compact('organization'));
     }
 
     /**
@@ -77,7 +77,7 @@ class OrganizationController extends Controller
 
         $organization->update($validatedData);
 
-        return redirect()->route('organizations.index')->with('success', 'Tổ chức đã được cập nhật thành công!');
+        return redirect()->route('organization.index')->with('success', 'Tổ chức đã được cập nhật thành công!');
     }
 
     /**
@@ -87,6 +87,6 @@ class OrganizationController extends Controller
     {
         $organization->delete();
 
-        return redirect()->route('organizations.index')->with('success', 'Tổ chức đã được xóa thành công!');
+        return redirect()->route('organization.index')->with('success', 'Tổ chức đã được xóa thành công!');
     }
 }

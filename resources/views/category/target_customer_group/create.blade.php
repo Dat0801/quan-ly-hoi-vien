@@ -1,4 +1,4 @@
-<x-app-layout :hideSidebar="true">
+<x-app-layout>
     <div style="margin-right: 110px;">
         @if ($errors->any())
             <div class="alert alert-danger">

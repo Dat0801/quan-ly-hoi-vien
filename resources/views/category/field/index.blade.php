@@ -79,7 +79,7 @@
                                                         @csrf
                                                         @method('DELETE')   
                                                         <button type="button" class="btn-sm text-danger"
-                                                                onclick="showModal('Bạn có muốn xóa lĩnh vực này?', function() { submitFieldForm('{{ $field->id }}'); }, function() { })">
+                                                                onclick="showModal('Bạn có chắc chắn muốn xóa lĩnh vực này?', function() { submitFieldForm('{{ $field->id }}'); }, function() { })">
                                                             <i class="fas fa-trash-alt"></i>
                                                         </button>
                                                     </form>

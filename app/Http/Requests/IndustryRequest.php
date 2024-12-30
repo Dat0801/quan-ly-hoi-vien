@@ -23,9 +23,9 @@ class IndustryRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->route('id'); // Lấy ID từ route, nếu không có nghĩa là đang tạo mới
-        $industryCodeRule = $id ? "unique:industries,industry_code,{$id}" : 'unique:industries';
-        $industryNameRule = $id ? "unique:industries,industry_name,{$id}" : 'unique:industries';
+        $id = $this->route('industry');
+        $industryCodeRule = $id ? "unique:industries,industry_code,{$id},id" : 'unique:industries';
+        $industryNameRule = $id ? "unique:industries,industry_name,{$id},id" : 'unique:industries';
 
         return [
             'industry_code' => "required|{$industryCodeRule}|max:10",

@@ -1,4 +1,4 @@
-<x-app-layout :hideSidebar="true">
+<x-app-layout>
     <div style="margin-right: 110px;">
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -21,12 +21,13 @@
             <form action="{{ route('field.store') }}" method="POST">
                 @csrf
                 <div class="row">
-                    <!-- Tên lĩnh vực -->
+                    
+                    <!-- Mã lĩnh vực -->
                     <div class="col-md-6 mb-3">
-                        <label for="name" class="form-label">Tên lĩnh vực</label>
-                        <input type="text" id="name" name="name" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" required>
+                        <label for="code" class="form-label">Mã lĩnh vực <span class="text-danger">*</span></label>
+                        <input type="text" id="code" name="code" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" required>
                     </div>
-
+                    
                     <div class="col-md-6 mb-3">
                         <label for="industry" class="form-label">Ngành</label>
                         <select id="industry" name="industry_id" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" required>
@@ -36,10 +37,10 @@
                         </select>
                     </div>
 
-                    <!-- Mã lĩnh vực -->
+                    <!-- Tên lĩnh vực -->
                     <div class="col-md-6 mb-3">
-                        <label for="code" class="form-label">Mã lĩnh vực</label>
-                        <input type="text" id="code" name="code" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" required>
+                        <label for="name" class="form-label">Tên lĩnh vực <span class="text-danger">*</span></label>
+                        <input type="text" id="name" name="name" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500" required>
                     </div>
 
                     <!-- Mô tả -->

@@ -12,9 +12,11 @@ class IndustryController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search'); 
+
         $industries = Industry::when($search, function ($query, $search) {
             return $query->where('industry_name', 'LIKE', '%' . $search . '%');
-        })->paginate(5); 
+        })->paginate(perPage: 3); 
+
         return view('category.industry.index', compact('industries'));
     }
     public function create()

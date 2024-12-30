@@ -12,7 +12,7 @@ class TargetCustomerGroupController extends Controller
         $search = $request->input('search');
         $groups = TargetCustomerGroup::when($search, function ($query, $search) {
             return $query->where('group_name', 'LIKE', '%' . $search . '%');
-        })->paginate(5);
+        })->paginate(perPage: 3);
         return view('category.target_customer_group.index', compact('groups'));
     }
 

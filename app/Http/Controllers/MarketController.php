@@ -13,7 +13,7 @@ class MarketController extends Controller
         $search = $request->input('search');
         $markets = Market::when($search, function ($query, $search) {
             return $query->where('market_name', 'LIKE', '%' . $search . '%');
-        })->paginate(5);
+        })->paginate(3);
 
         return view('category.market.index', compact('markets'));
     }

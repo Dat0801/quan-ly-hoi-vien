@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
+use App\Services\BreadcrumbService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,8 +23,11 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(BreadcrumbService $breadcrumbService) // Inject service vào
     {
-        //
+        View::composer('*', function ($view) use ($breadcrumbService) {
+            $breadcrumbs = $breadcrumbService->getBreadcrumbs();
+            $view->with('breadcrumbs', $breadcrumbs);
+        });
     }
 }

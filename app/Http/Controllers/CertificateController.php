@@ -13,14 +13,14 @@ class CertificateController extends Controller
         $search = $request->get('search');
         $certificates = Certificate::when($search, function ($query, $search) {
             $query->where('certificate_name', 'like', "%$search%");
-        })->paginate(10);
+        })->paginate(3);
 
-        return view('category.certificates.index', compact('certificates'));
+        return view('category.certificate.index', compact('certificates'));
     }
 
     public function create()
     {
-        return view('category.certificates.create');
+        return view('category.certificate.create');
     }
 
     public function store(Request $request)
@@ -32,17 +32,17 @@ class CertificateController extends Controller
 
         Certificate::create($request->all());
 
-        return redirect()->route('certificates.index')->with('success', 'Thêm chứng chỉ thành công.');
+        return redirect()->route('certificate.index')->with('success', 'Thêm chứng chỉ thành công.');
     }
 
     public function show(Certificate $certificate)
     {
-        return view('category.certificates.show', compact('certificate'));
+        return view('category.certificate.show', compact('certificate'));
     }
 
     public function edit(Certificate $certificate)
     {
-        return view('category.certificates.edit', compact('certificate'));
+        return view('category.certificate.edit', compact('certificate'));
     }
 
     public function update(Request $request, Certificate $certificate)
@@ -54,13 +54,13 @@ class CertificateController extends Controller
 
         $certificate->update($request->all());
 
-        return redirect()->route('certificates.index')->with('success', 'Cập nhật chứng chỉ thành công.');
+        return redirect()->route('certificate.index')->with('success', 'Cập nhật chứng chỉ thành công.');
     }
 
     public function destroy(Certificate $certificate)
     {
         $certificate->delete();
 
-        return redirect()->route('certificates.index')->with('success', 'Xóa chứng chỉ thành công.');
+        return redirect()->route('certificate.index')->with('success', 'Xóa chứng chỉ thành công.');
     }
 }

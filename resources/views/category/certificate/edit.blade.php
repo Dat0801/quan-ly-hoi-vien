@@ -1,4 +1,4 @@
-<x-app-layout :hideSidebar="true">
+<x-app-layout>
     <div style="margin-right: 110px;">
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -20,7 +20,7 @@
                 Chỉnh Sửa Chứng Chỉ
             </h1>
 
-            <form action="{{ route('certificates.update', $certificate->id) }}" method="POST">
+            <form action="{{ route('certificate.update', $certificate->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="row">
@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center gap-3">
-                    <a href="{{ route('certificates.show', $certificate->id) }}" class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Hủy</a>
+                    <a href="{{ route('certificate.show', $certificate->id) }}" class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Hủy</a>
                     <button type="submit" class="btn btn-primary w-48 py-3 sm:rounded-lg">Lưu</button>
                 </div>
             </form>

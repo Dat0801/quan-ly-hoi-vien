@@ -30,7 +30,7 @@
         <div class="flex-grow-1 main-content" style="margin-left: 24px; margin-top: 24px;">
 
             <div style="margin-right: 110px;">
-                @include('layouts.navigation')
+                @include('layouts.navigation') 
             </div>
 
             @if (isset($header))

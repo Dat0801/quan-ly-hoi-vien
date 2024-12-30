@@ -1,17 +1,24 @@
+<!-- resources/views/layouts/navigation.blade.php -->
+
 <nav x-data="{ open: false }">
     <div class="d-flex justify-content-between align-items-center h-16 w-full">
-        <!-- Logo và Breadcrumb nằm cùng một hàng -->
         <div class="d-flex align-items-center">
-            <!-- Breadcrumb chỉ hiển thị nếu không phải trang chủ -->
             @if (!request()->is('dashboard'))
-            <div>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Trang chủ</a></li>
-                        <li class="breadcrumb-item active" aria-current="page" style="color: #FF7506; font-weight: bold;">Thông tin cơ bản</li>
-                    </ol>
-                </nav>
-            </div>
+                <div>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0">
+                            @foreach ($breadcrumbs as $breadcrumb)
+                                <li class="breadcrumb-item @if ($breadcrumb['active']) active @endif">
+                                    @if (!$breadcrumb['active'])
+                                        <a href="{{ $breadcrumb['url'] }}" style="color: grey; font-weight:bold">{{ $breadcrumb['name'] }}</a>
+                                    @else
+                                        <span style="color: #FF7506; font-weight: bold;">{{ $breadcrumb['name'] }}</span>
+                                    @endif
+                                </li>
+                            @endforeach
+                        </ol>
+                    </nav>
+                </div>
             @endif
         </div>
 

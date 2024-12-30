@@ -18,10 +18,10 @@ class BusinessController extends Controller
             // Nếu có, tìm kiếm theo mã doanh nghiệp hoặc tên doanh nghiệp
             $businesses = Business::where('business_code', 'like', '%' . $search . '%')
                 ->orWhere('business_name', 'like', '%' . $search . '%')
-                ->paginate(10);
+                ->paginate(3);
         } else {
             // Nếu không có từ khóa tìm kiếm, hiển thị tất cả các doanh nghiệp
-            $businesses = Business::paginate(10);
+            $businesses = Business::paginate(3);
         }
 
         return view('category.businesses.index', compact('businesses', 'search'));

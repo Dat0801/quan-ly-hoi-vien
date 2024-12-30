@@ -28,16 +28,16 @@
            style="color: #803B03;">Khách hàng mục tiêu</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link {{ request()->routeIs('certificates.index') ? 'active' : '' }}" 
+        <a class="nav-link {{ request()->routeIs('certificate.index') ? 'active' : '' }}" 
            id="market-tab" 
-           href="{{ route('certificates.index') }}" 
+           href="{{ route('certificate.index') }}" 
            role="tab" 
            style="color: #803B03;">Chứng chỉ</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link {{ request()->routeIs('organizations.index') ? 'active' : '' }}" 
+        <a class="nav-link {{ request()->routeIs('organization.index') ? 'active' : '' }}" 
            id="market-tab" 
-           href="{{ route('organizations.index') }}" 
+           href="{{ route('organization.index') }}" 
            role="tab" 
            style="color: #803B03;">Tổ chức</a>
     </li>

@@ -17,7 +17,7 @@
     <div class="d-flex align-items-start" style="margin-right: 110px;">
         <div class="p-4 bg-white shadow-sm rounded-lg w-100">
             <h1 class="mb-4" style="font-family: 'Roboto', sans-serif; font-size: 32px; font-weight: 700; line-height: 38.4px; color: #803B03;">
-                Thêm Doanh Nghiệp Mới
+                Thêm doanh nghiệp mới
             </h1>
 
             <form action="{{ route('business.store') }}" method="POST">

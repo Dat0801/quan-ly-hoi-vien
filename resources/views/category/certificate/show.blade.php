@@ -1,4 +1,4 @@
-<x-app-layout :hideSidebar="true">
+<x-app-layout>
     <div style="margin-right: 110px;">
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -39,8 +39,8 @@
                 </div>
 
                 <div class="d-flex justify-content-center gap-3">
-                    <a href="{{ route('certificates.index') }}" class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Đóng</a>
-                    <a href="{{ route('certificates.edit', $certificate->id) }}" class="btn btn-primary w-48 py-3 sm:rounded-lg">Chỉnh sửa</a>
+                    <a href="{{ route('certificate.index') }}" class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Đóng</a>
+                    <a href="{{ route('certificate.edit', $certificate->id) }}" class="btn btn-primary w-48 py-3 sm:rounded-lg">Chỉnh sửa</a>
                 </div>
             </form>
         </div>
