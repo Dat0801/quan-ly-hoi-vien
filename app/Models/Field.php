@@ -20,4 +20,9 @@ class Field extends Model
     {
         return $this->hasMany(SubGroup::class);
     }
+
+    public function clubs()
+    {
+        return $this->hasMany(Club::class);
+    }
 }

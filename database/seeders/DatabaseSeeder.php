@@ -28,6 +28,10 @@ class DatabaseSeeder extends Seeder
             IndustrySeeder::class,
             FieldSubGroupSeeder::class,
             MarketSeeder::class,
+            TargetCustomerGroupSeeder::class,
+            CertificateSeeder::class,
+            OrganizationSeeder::class,
+            BusinessSeeder::class,
         ]);
         
     }

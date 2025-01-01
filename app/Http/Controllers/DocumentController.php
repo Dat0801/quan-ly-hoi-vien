@@ -39,21 +39,17 @@ class DocumentController extends Controller
     // Thêm tài liệu mới
     public function store(Request $request)
     {
-        // Kiểm tra xem tệp có tồn tại không
         if ($request->hasFile('document')) {
             $file = $request->file('document');
             
-            // Lấy tên gốc của tệp
             $fileName = $file->getClientOriginalName();
             
-            // Lưu tệp với tên gốc vào thư mục 'documents'
-            $path = $file->storeAs('documents', $fileName);  // Lưu vào 'storage/app/documents'
+            $path = $file->storeAs('documents', $fileName, 'public');  
             
-            // Lưu thông tin tệp vào cơ sở dữ liệu
             $document = new Document();
             $document->file_name = $fileName;
             $document->file_extension = $file->extension();
-            $document->file_path = $path;  // Lưu đường dẫn tệp
+            $document->file_path = $path; 
             $document->save();
 
             return back()->with('success', 'Tài liệu đã được thêm thành công');
@@ -67,10 +63,12 @@ class DocumentController extends Controller
     {
         $document = Document::findOrFail($id);
         
-        // Xóa file khỏi storage
-        Storage::delete($document->file_path);
+        $filePath = $document->file_path; 
+
+        if (Storage::disk('public')->exists($filePath)) {
+            Storage::disk('public')->delete($filePath);  
+        } 
         
-        // Xóa tài liệu trong cơ sở dữ liệu
         $document->delete();
 
         return redirect()->route('dashboard')->with('success', 'Tài liệu đã được xóa thành công!');
@@ -80,14 +78,12 @@ class DocumentController extends Controller
     public function download($id)
     {
         $document = Document::findOrFail($id);
-        
-        // Tạo đường dẫn chính xác tới tệp
-        $filePath = storage_path('app/' . $document->file_path);
-        // Kiểm tra nếu tệp tồn tại
-        if (file_exists($filePath)) {
-            return response()->download($filePath);
+
+        $filePath = $document->file_path; 
+
+        if (Storage::exists('public/' . $filePath)) {
+            return Storage::download('public/' . $filePath);
         } else {
-            dd('Tệp không tồn tại.');
             return redirect()->route('dashboard')->with('error', 'Tệp không tồn tại.');
         }
     }

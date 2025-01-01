@@ -215,3 +215,14 @@ body {
     color: #FF7506!important; 
     background-color: #FFE3CD!important; 
 }
+
+.hidden {
+    display: none;
+}
+
+.avatar-preview {
+    background-color: #f0f0f0; /* Light grey background */
+}
+
+
+

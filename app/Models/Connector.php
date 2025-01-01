@@ -5,17 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Market extends Model
+class Connector extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'market_code',
-        'market_name',
-        'description',
+        'name',
+        'position',
+        'phone',
+        'gender',
+        'email',
+        'club_id'
     ];
 
     public function clubs()
     {
-        return $this->hasMany(Club::class);
+        return $this->belongsTo(Club::class);
     }
 }

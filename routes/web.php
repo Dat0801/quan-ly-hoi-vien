@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BoardCustomerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\IndustryController;
@@ -10,7 +11,9 @@ use App\Http\Controllers\TargetCustomerGroupController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\BusinessController;
+use App\Http\Controllers\ClubController;
 
+use App\Models\BoardCustomer;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -71,6 +74,15 @@ Route::middleware('auth')->group(function () {
         //Businesses
         Route::resource('business', BusinessController::class);
     });
+
+    Route::prefix('customer')->group(function () {
+        //Board Customers
+        Route::resource('board_customer', BoardCustomerController::class);
+    });
+
+    //Clubs
+    Route::resource('club', ClubController::class);
+
    
 });
 

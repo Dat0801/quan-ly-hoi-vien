@@ -15,4 +15,9 @@ class Industry extends Model
     {
         return $this->hasMany(Field::class);
     }
+
+    public function clubs()
+    {
+        return $this->hasMany(Club::class);
+    }
 }

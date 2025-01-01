@@ -69,19 +69,20 @@ class ProfileController extends Controller
                 $user->password = bcrypt($plainPassword);
             } 
         }
-
+       
         if ($request->hasFile('profile_image')) {
-            if ($user->profile_image) {
-                $imagePath = public_path('images/' . $user->profile_image);
-                if (file_exists($imagePath)) {
-                    unlink($imagePath);
+            if ($user->avatar) {
+                $oldImagePath = public_path('storage/' . $user->avatar);
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);  
                 }
             }
-
             $image = $request->file('profile_image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images'), $imageName);
-            $user->avatar = $imageName; 
+            $fileName = $image->getClientOriginalName();
+            $uniqueFileName = uniqid() . '_' . $fileName;
+            $imagePath = $image->storeAs('avatars', $uniqueFileName, 'public');
+            $user->avatar = $imagePath; 
+
         }
 
         $user->save(); 

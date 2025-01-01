@@ -29,7 +29,7 @@
                 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                 <!-- Avatar -->
                 <div class="flex items-center space-x-3">
-                    <img src="{{ Auth::check() && Auth::user()->avatar ? '/images/' . Auth::user()->avatar : '/images/avt.png' }}" alt="User Avatar" 
+                    <img src="{{ Auth::check() && Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : '/images/avt.png' }}" alt="User Avatar" 
                     class="w-8 h-8 mr-2" style="border-radius: 50%; object-fit: cover;">
                     <div class="text-left">
                         <div style="color: #803B03;">{{ Auth::user()->name }}</div>

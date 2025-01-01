@@ -110,3 +110,12 @@ function submitBusinessForm(businessId) {
     }
 }
 
+function submitClubForm(clubId) {
+    const form = document.getElementById(`deleteClubForm-${clubId}`);
+    if (form) {
+        form.submit();
+    } else {
+        console.error("Form không tìm thấy!");
+    }
+}
+

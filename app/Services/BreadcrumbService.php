@@ -13,6 +13,8 @@ class BreadcrumbService
         'certificate' => ['name' => 'Chứng chỉ', 'routes' => ['index', 'create', 'edit', 'show']],
         'organization' => ['name' => 'Tổ chức', 'routes' => ['index', 'create', 'edit', 'show']],
         'business' => ['name' => 'Doanh nghiệp', 'routes' => ['index', 'create', 'edit', 'show']],
+        'club' => ['name' => 'Câu lạc bộ', 'routes' => ['index', 'create', 'edit', 'show']],
+        'board_customer' => ['name' => 'Ban chấp hành', 'routes' => ['index', 'create', 'edit', 'show']],
     ];
 
     public function getBreadcrumbs()
@@ -29,6 +31,22 @@ class BreadcrumbService
             $breadcrumbs[] = ['name' => 'Cài đặt', 'url' => route('category.index'), 'active' => false];
             $breadcrumbs[] = ['name' => 'Danh mục', 'url' => route('category.index'), 'active' => false];
 
+            foreach ($this->breadcrumbConfigs as $key => $config) {
+                if (strpos($url, $key) !== false) {
+                    $breadcrumbs = array_merge($breadcrumbs, $this->generateBreadcrumbs($key, $route, $config));
+                    break;
+                }
+            }
+        } else if(strpos($url, 'customer') !== false) {
+            $breadcrumbs[] = ['name' => 'Khách hàng', 'url' => route('board_customer.index'), 'active' => false];
+
+            foreach ($this->breadcrumbConfigs as $key => $config) {
+                if (strpos($url, $key) !== false) {
+                    $breadcrumbs = array_merge($breadcrumbs, $this->generateBreadcrumbs($key, $route, $config));
+                    break;
+                }
+            }
+        } else {
             foreach ($this->breadcrumbConfigs as $key => $config) {
                 if (strpos($url, $key) !== false) {
                     $breadcrumbs = array_merge($breadcrumbs, $this->generateBreadcrumbs($key, $route, $config));

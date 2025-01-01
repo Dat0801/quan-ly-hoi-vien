@@ -3,7 +3,7 @@
         <div class="p-4 bg-white shadow-sm rounded-lg d-flex">
             <div class="flex-shrink-0 w-25 p-4 text-center">
                 <div class="position-relative w-100">
-                    <img src="{{ Auth::check() && Auth::user()->avatar ? '/images/' . Auth::user()->avatar : '/images/avt.png' }}"
+                    <img src="{{ Auth::check() && Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : '/images/avt.png' }}"
                         alt="Profile Picture" class="rounded-circle" 
                         style="width: 265px; height: 265px; object-fit: cover; margin: 0 auto;">
                     
