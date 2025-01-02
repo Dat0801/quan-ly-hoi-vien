@@ -12,8 +12,8 @@ use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\ClubController;
+use App\Http\Controllers\BusinessCustomerController;
 
-use App\Models\BoardCustomer;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -78,6 +78,9 @@ Route::middleware('auth')->group(function () {
     Route::prefix('customer')->group(function () {
         //Board Customers
         Route::resource('board_customer', BoardCustomerController::class);
+
+        Route::resource('business_customer', BusinessCustomerController::class);
+
     });
 
     //Clubs

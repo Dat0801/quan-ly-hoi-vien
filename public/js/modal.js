@@ -119,3 +119,12 @@ function submitClubForm(clubId) {
     }
 }
 
+function submitBoardCustomerForm(boardCustomerId) {
+    const form = document.getElementById(`deleteBoardCustomerForm-${boardCustomerId}`);
+    if (form) {
+        form.submit();
+    } else {
+        console.error("Form không tìm thấy!");
+    }
+}
+

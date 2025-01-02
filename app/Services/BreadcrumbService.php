@@ -15,13 +15,13 @@ class BreadcrumbService
         'business' => ['name' => 'Doanh nghiệp', 'routes' => ['index', 'create', 'edit', 'show']],
         'club' => ['name' => 'Câu lạc bộ', 'routes' => ['index', 'create', 'edit', 'show']],
         'board_customer' => ['name' => 'Ban chấp hành', 'routes' => ['index', 'create', 'edit', 'show']],
+        'business_customer' => ['name' => 'Khách hàng doanh nghiệp', 'routes' => ['index', 'create', 'edit', 'show']],
     ];
 
     public function getBreadcrumbs()
     {
         $route = Route::currentRouteName();
         $url = request()->path();
-
         $breadcrumbs = [];
 
         if (strpos($url, 'profile') !== false) {
@@ -38,10 +38,10 @@ class BreadcrumbService
                 }
             }
         } else if(strpos($url, 'customer') !== false) {
-            $breadcrumbs[] = ['name' => 'Khách hàng', 'url' => route('board_customer.index'), 'active' => false];
-
+            $newUrl = explode('/', $url)[1];
+            $breadcrumbs[] = ['name' => 'Khách hàng và đối tác', 'url' => route('board_customer.index'), 'active' => false];
             foreach ($this->breadcrumbConfigs as $key => $config) {
-                if (strpos($url, $key) !== false) {
+                if ($newUrl == $key) {
                     $breadcrumbs = array_merge($breadcrumbs, $this->generateBreadcrumbs($key, $route, $config));
                     break;
                 }

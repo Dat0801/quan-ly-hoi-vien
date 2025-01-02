@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('phone'); 
             $table->string('gender'); 
             $table->string('email'); 
+            $table->foreignId('business_partner_id')->nullable()->constrained('business_partners')->nullOnDelete();
+            $table->foreignId('business_customer_id')->nullable()->constrained('business_customers')->nullOnDelete();
             $table->foreignId('club_id')->nullable()->constrained('clubs')->nullOnDelete();
             $table->timestamps();
         });

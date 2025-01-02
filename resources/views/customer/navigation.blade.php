@@ -6,4 +6,11 @@
            role="tab" 
            style="color: #803B03;">Ban chấp hành</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('business_customer.index') ? 'active' : '' }}" 
+           id="industry-tab" 
+           href="{{ route('business_customer.index') }}" 
+           role="tab" 
+           style="color: #803B03;">Khách hàng doanh nghiệp</a>
+    </li>
 </ul>

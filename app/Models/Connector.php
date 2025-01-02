@@ -21,4 +21,9 @@ class Connector extends Model
     {
         return $this->belongsTo(Club::class);
     }
+
+    public function business_customers()
+    {
+        return $this->belongsTo(BusinessCustomer::class);
+    }
 }
