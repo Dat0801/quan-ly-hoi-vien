@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\BoardCustomerController;
+use App\Http\Controllers\BusinessPartnerController;
+use App\Http\Controllers\IndividualCustomerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\IndustryController;
@@ -13,6 +15,7 @@ use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\ClubController;
 use App\Http\Controllers\BusinessCustomerController;
+use App\Http\Controllers\IndividualPartnerController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -80,6 +83,12 @@ Route::middleware('auth')->group(function () {
         Route::resource('board_customer', BoardCustomerController::class);
 
         Route::resource('business_customer', BusinessCustomerController::class);
+
+        Route::resource('individual_customer', IndividualCustomerController::class);
+
+        Route::resource('business_partner', BusinessPartnerController::class);
+
+        Route::resource('individual_partner', IndividualPartnerController::class);
 
     });
 

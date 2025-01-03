@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
         return window.location.pathname.includes('/category');
     }
 
+    function isInCustomerPage() {
+        return window.location.pathname.includes('/customer');
+    }
+
     function setActiveSidebarLink() {
         sidebarLinks.forEach(function(link) {
             if (window.location.href.startsWith(link.href)) {
@@ -40,6 +44,13 @@ document.addEventListener('DOMContentLoaded', function() {
             categoryText.classList.add('active');
         } else {
             categoryText.classList.remove('active');
+        }
+
+        const customerText = document.getElementById('customerText');
+        if (isInCustomerPage()) {
+            customerText.classList.add('active');
+        } else {
+            customerText.classList.remove('active');
         }
     }
 

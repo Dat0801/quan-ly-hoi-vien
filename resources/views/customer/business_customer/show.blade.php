@@ -210,7 +210,6 @@
                                     <span class="text-danger ms-2">{{ $errors->first('charter_capital') }}</span>
                                 @endif
                             </div>
-
                             <!-- Doanh thu trước gia nhập -->
                             <div class="d-flex align-items-center mb-3">
                                 <label for="pre_membership_revenue" class="form-label mb-0 me-2"
@@ -259,7 +258,7 @@
                                 </div>
 
                                 <!-- Lĩnh vực -->
-                                <div class="d-flex align-items-center mb-3">
+                                <div class="d-flex align-items-center">
                                     <label for="field_id" class="form-label mb-0 me-2" style="width: 250px;">Lĩnh vực
                                         <span class="text-danger">*</span></label>
                                     <select id="field_id" name="field_id"
@@ -354,7 +353,7 @@
                                     chỉ</label>
                                 <select id="certificate_id" name="certificate_id" disabled
                                     class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1">
-                                    <option value="{{ $customer->certificate_id ?? '-' }}" >
+                                    <option value="{{ $customer->certificate_id ?? '-' }}">
                                         {{ $customer->certificate->certificate_name ?? '-' }}
                                     </option>
                                 </select>
@@ -452,57 +451,122 @@
                         <!-- Thông tin phụ trách -->
                         <div class="border" style="padding: 20px; border-radius: 10px;">
                             <div id="responsible_people">
-                                <div class="d-flex align-items-center mb-3">
-                                    <label for="name" class="form-label mb-0 me-2" style="width: 250px;">Họ và
-                                        tên</label>
-                                    <input type="text" id="name" name="responsible_name[]" disabled
-                                        class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
-                                        placeholder="Nhập họ và tên"
-                                        value="{{ old('responsible_name.0', $responsible[0]->name ?? '-') }}">
-                                </div>
+                                @if ($customer->connector && $customer->connector->isNotEmpty())
+                                    @foreach ($customer->connector as $key => $person)
+                                        <div class="d-flex align-items-center mb-3">
+                                            <label for="name" class="form-label mb-0 me-2"
+                                                style="width: 250px;">Họ và tên</label>
+                                            <input type="text" id="name" name="responsible_name[]"
+                                                class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                                                value="{{ $person->name }}" disabled>
+                                        </div>
 
-                                <div class="d-flex align-items-center mb-3">
-                                    <label for="position" class="form-label mb-0 me-2" style="width: 250px;">Chức
-                                        vụ</label>
-                                    <input type="text" id="position" name="responsible_position[]" disabled
-                                        class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
-                                        placeholder="Nhập chức vụ"
-                                        value="{{ old('responsible_position.0', $responsible[0]->position ?? '-') }}">
-                                </div>
+                                        <div class="d-flex align-items-center mb-3">
+                                            <label for="position" class="form-label mb-0 me-2"
+                                                style="width: 250px;">Chức vụ</label>
+                                            <input type="text" id="position" name="responsible_position[]"
+                                                class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                                                value="{{ $person->position }}" disabled>
+                                        </div>
 
-                                <div class="d-flex align-items-center mb-3">
-                                    <label for="phone" class="form-label mb-0 me-2" style="width: 250px;">Số điện
-                                        thoại</label>
-                                    <input type="text" id="phone" name="responsible_phone[]" disabled
-                                        class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
-                                        placeholder="Nhập số điện thoại"
-                                        value="{{ old('responsible_phone.0', $responsible[0]->phone ?? '-') }}">
-                                </div>
+                                        <div class="d-flex align-items-center mb-3">
+                                            <label for="phone" class="form-label mb-0 me-2"
+                                                style="width: 250px;">Số điện thoại</label>
+                                            <input type="text" id="phone" name="responsible_phone[]"
+                                                class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                                                value="{{ $person->phone }}" disabled>
+                                        </div>
 
-                                <div class="d-flex align-items-center mb-3">
-                                    <label class="form-label mb-0 me-1" style="width: 180px;">Giới tính</label>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="responsible_gender[0]" disabled
-                                            id="gender_male" value="male"
-                                            {{ old('responsible_gender.0', $responsible[0]->gender ?? '-') == 'male' ? 'checked' : '-' }}>
-                                        <label class="form-check-label" for="gender_male">Nam</label>
+                                        <div class="d-flex align-items-center mb-3">
+                                            <label class="form-label mb-0 me-1" style="width: 180px;">Giới
+                                                tính</label>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio"
+                                                    name="responsible_gender[{{ $key }}]"
+                                                    id="gender_male_{{ $key }}" value="male"
+                                                    {{ old('responsible_gender.' . $key, $person->gender) == 'male' ? 'checked' : '' }}
+                                                    disabled>
+                                                <label class="form-check-label"
+                                                    for="gender_male_{{ $key }}">Nam</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio"
+                                                    name="responsible_gender[{{ $key }}]"
+                                                    id="gender_female_{{ $key }}" value="female"
+                                                    {{ old('responsible_gender.' . $key, $person->gender) == 'female' ? 'checked' : '' }}
+                                                    disabled>
+                                                <label class="form-check-label"
+                                                    for="gender_female_{{ $key }}">Nữ</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex align-items-center mb-3">
+                                            <label for="email" class="form-label mb-0 me-2"
+                                                style="width: 250px;">Email liên hệ trực tiếp</label>
+                                            <input type="email" id="email" name="responsible_email[]"
+                                                class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                                                value="{{ $person->email }}" disabled>
+                                        </div>
+
+                                        <hr class="my-4" style="border: 1px solid #FF7506;">
+                                    @endforeach
+                                @else
+                                    <div class="d-flex align-items-center mb-3">
+                                        <label for="name" class="form-label mb-0 me-2" style="width: 250px;">Họ
+                                            và
+                                            tên</label>
+                                        <input type="text" id="name" name="responsible_name[]" disabled
+                                            class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                                            placeholder="Nhập họ và tên"
+                                            value="{{ old('responsible_name.0', $responsible[0]->name ?? '-') }}">
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="responsible_gender[0]" disabled
-                                            id="gender_female" value="female"
-                                            {{ old('responsible_gender.0', $responsible[0]->gender ?? '-') == 'female' ? 'checked' : '-' }}>
-                                        <label class="form-check-label" for="gender_female">Nữ</label>
-                                    </div>
-                                </div>
 
-                                <div class="d-flex align-items-center mb-3">
-                                    <label for="email" class="form-label mb-0 me-2" style="width: 250px;">Email
-                                        liên hệ trực tiếp</label>
-                                    <input type="email" id="email" name="responsible_email[]" disabled
-                                        class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
-                                        placeholder="Nhập email liên hệ"
-                                        value="{{ old('responsible_email.0', $responsible[0]->email ?? '-') }}">
-                                </div>
+                                    <div class="d-flex align-items-center mb-3">
+                                        <label for="position" class="form-label mb-0 me-2" style="width: 250px;">Chức
+                                            vụ</label>
+                                        <input type="text" id="position" name="responsible_position[]" disabled
+                                            class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                                            placeholder="Nhập chức vụ"
+                                            value="{{ old('responsible_position.0', $responsible[0]->position ?? '-') }}">
+                                    </div>
+
+                                    <div class="d-flex align-items-center mb-3">
+                                        <label for="phone" class="form-label mb-0 me-2" style="width: 250px;">Số
+                                            điện
+                                            thoại</label>
+                                        <input type="text" id="phone" name="responsible_phone[]" disabled
+                                            class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                                            placeholder="Nhập số điện thoại"
+                                            value="{{ old('responsible_phone.0', $responsible[0]->phone ?? '-') }}">
+                                    </div>
+
+                                    <div class="d-flex align-items-center mb-3">
+                                        <label class="form-label mb-0 me-1" style="width: 180px;">Giới tính</label>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio"
+                                                name="responsible_gender[0]" disabled id="gender_male" value="male"
+                                                {{ old('responsible_gender.0', $responsible[0]->gender ?? '-') == 'male' ? 'checked' : '-' }}>
+                                            <label class="form-check-label" for="gender_male">Nam</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio"
+                                                name="responsible_gender[0]" disabled id="gender_female"
+                                                value="female"
+                                                {{ old('responsible_gender.0', $responsible[0]->gender ?? '-') == 'female' ? 'checked' : '-' }}>
+                                            <label class="form-check-label" for="gender_female">Nữ</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex align-items-center mb-3">
+                                        <label for="email" class="form-label mb-0 me-2"
+                                            style="width: 250px;">Email
+                                            liên hệ trực tiếp</label>
+                                        <input type="email" id="email" name="responsible_email[]" disabled
+                                            class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                                            placeholder="Nhập email liên hệ"
+                                            value="{{ old('responsible_email.0', $responsible[0]->email ?? '-') }}">
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <h3 class="p-2"
@@ -510,8 +574,8 @@
                             9. Câu lạc bộ</h3>
                         <div class="border" style="padding: 20px; border-radius: 10px;">
                             <div class="d-flex align-items-center">
-                                <label for="club_id" class="form-label mb-0 me-2" style="width: 250px;">Câu lạc bộ
-                                    <span class="text-danger">*</span></label>
+                                <label for="club_id" class="form-label mb-0 me-2" style="width: 250px;">Câu lạc
+                                    bộ</label>
                                 <select id="club_id" name="club_id"
                                     class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
                                     disabled>
@@ -520,9 +584,33 @@
                                 </select>
                             </div>
                         </div>
+
+                        <h3 class="p-2" style="font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 700; line-height: 38.4px; color: #803B03;">10. Thông tin tài khoản</h3>
+                        <div class="border" style="border-radius: 10px; padding: 20px;">
+                            <div class="d-flex align-items-center mb-3">
+                                <label for="activity_status" class="form-label mb-0 me-2" style="width: 250px;">Thông tin đăng nhập</label>
+                                <input type="text" id="activity_status" name="activity_status" value="{{ old('activity_status', $customer->login_code) }}" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" {{ isset($customer) ? 'disabled' : '' }}>
+                                @if ($errors->has('activity_status'))
+                                    <span class="text-danger ms-2">{{ $errors->first('activity_status') }}</span>
+                                @endif
+                            </div>
+
+                            <div class="d-flex align-items-center">
+                                <label for="activity_status" class="form-label mb-0 me-2" style="width: 180px;">Tình trạng hoạt động</label>
+                                <span class="badge {{ $customer->status ? 'bg-success' : 'bg-danger' }}">
+                                    {{ $customer->status ? 'Đang hoạt động' : 'Ngưng hoạt động' }}
+                                </span>
+                                @if ($errors->has('activity_status'))
+                                    <span class="text-danger ms-2">{{ $errors->first('activity_status') }}</span>
+                                @endif
+                            </div>
+                        </div>
                     </div>
                     <div class="d-flex justify-content-center gap-3">
-                        <a href="{{ route('business_customer.index') }}" class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Đóng</a>
+                        <a href="{{ route('business_customer.index') }}"
+                            class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Đóng</a>
+                        <a href="{{ route('business_customer.edit', $customer->id) }}"
+                            class="btn btn-primary w-48 py-3 sm:rounded-lg">Chỉnh sửa</a>
                     </div>
                 </div>
             </form>

@@ -128,3 +128,30 @@ function submitBoardCustomerForm(boardCustomerId) {
     }
 }
 
+function submitBusinessCustomerForm(businessCustomerId) {
+    const form = document.getElementById(`deleteBusinessCustomerForm-${businessCustomerId}`);
+    if (form) {
+        form.submit();
+    } else {
+        console.error("Form không tìm thấy!");
+    }
+}
+
+function submitIndividualCustomerForm(individualCustomerId) {
+    const form = document.getElementById(`deleteIndividualCustomerForm-${individualCustomerId}`);
+    if (form) {
+        form.submit();
+    } else {
+        console.error("Form không tìm thấy!");
+    }
+}
+
+function submitBusinessPartnerForm(businessPartnerId) {
+    const form = document.getElementById(`deleteBusinessPartnerForm-${businessPartnerId}`);
+    if (form) {
+        form.submit();
+    } else {
+        console.error("Form không tìm thấy!");
+    }
+}
+

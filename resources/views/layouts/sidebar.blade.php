@@ -9,7 +9,7 @@
             <a href="{{ route('dashboard') }}" class="nav-link text-gray-500" aria-current="page">Trang chủ</a>
         </li>
         <li><a href="{{ route('club.index') }}" class="nav-link text-gray-500">Câu lạc bộ</a></li>
-        <li><a href="{{ route('board_customer.index') }}" class="nav-link text-gray-500">Khách hàng & Đối tác</a></li>
+        <li><a href="{{ route('board_customer.index') }}" class="nav-link text-gray-500" id="customerText">Khách hàng & Đối tác</a></li>
         <li><a href="#" class="nav-link text-gray-500">Hoạt động</a></li>
         <li><a href="#" class="nav-link text-gray-500">Hội phí</a></li>
         <li><a href="#" class="nav-link text-gray-500">Tài trợ</a></li>

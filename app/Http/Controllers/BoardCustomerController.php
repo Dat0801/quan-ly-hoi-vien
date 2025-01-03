@@ -101,13 +101,10 @@ class BoardCustomerController extends Controller
         $customer = BoardCustomer::findOrFail($id);
 
         $request->validate([
-            'login_code' => "required|unique:board_customers,login_code,{$id}",
-            'card_code' => "required|unique:board_customers,card_code,{$id}",
             'full_name' => 'required',
             'birth_date' => 'nullable|date',
             'gender' => 'required',
             'phone' => 'required',
-            'email' => 'nullable|email',
             'unit_name' => 'required',
             'unit_position' => 'required',
             'association_position' => 'required',

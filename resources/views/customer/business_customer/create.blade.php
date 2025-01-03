@@ -72,8 +72,10 @@
 
                             <!-- Địa chỉ trụ sở chính -->
                             <div class="d-flex align-items-center mb-3">
-                                <label for="headquarters_address" class="form-label mb-0 me-2" style="width: 250px;">Địa chỉ trụ sở chính</label>
-                                <input type="text" id="headquarters_address" name="headquarters_address" value="{{ old('headquarters_address') }}" placeholder="Nhập địa chỉ trụ sở chính" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" required>
+                                <label for="headquarters_address" class="form-label mb-0 me-2" style="width: 250px;">Địa chỉ trụ sở chính <span class="text-danger">*</span></label>
+                                <input type="text" id="headquarters_address" name="headquarters_address" 
+                                value="{{ old('headquarters_address') }}" placeholder="Nhập địa chỉ trụ sở chính" 
+                                class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" required>
                                 @if ($errors->has('headquarters_address'))
                                     <span class="text-danger ms-2">{{ $errors->first('headquarters_address') }}</span>
                                 @endif
@@ -99,8 +101,10 @@
 
                             <!-- Số điện thoại -->
                             <div class="d-flex align-items-center mb-3">
-                                <label for="phone" class="form-label mb-0 me-2" style="width: 250px;">Số điện thoại</label>
-                                <input type="text" id="phone" name="phone" value="{{ old('phone') }}" placeholder="Nhập số điện thoại" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" required>
+                                <label for="phone" class="form-label mb-0 me-2" style="width: 250px;">Số điện thoại <span class="text-danger">*</span></label>
+                                <input type="text" id="phone" name="phone" 
+                                value="{{ old('phone') }}" placeholder="Nhập số điện thoại" 
+                                class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" required>
                                 @if ($errors->has('phone'))
                                     <span class="text-danger ms-2">{{ $errors->first('phone') }}</span>
                                 @endif
@@ -153,8 +157,9 @@
 
                             <!-- Email -->
                             <div class="d-flex align-items-center">
-                                <label for="email" class="form-label mb-0 me-2" style="width: 250px;">Email</label>
-                                <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="Nhập email (nếu có)" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1">
+                                <label for="email" class="form-label mb-0 me-2" style="width: 250px;">Email <span class="text-danger">*</span></label>
+                                <input type="email" id="email" name="email" value="{{ old('email') }}" required
+                                placeholder="Nhập email (nếu có)" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1">
                                 @if ($errors->has('email'))
                                     <span class="text-danger ms-2">{{ $errors->first('email') }}</span>
                                 @endif
@@ -224,22 +229,22 @@
                         <div class="border" style="padding: 20px; border-radius: 10px;">
                             <div class="d-flex justify-content-between w-100">
                                 <div class="form-check form-check-inline w-25">
-                                    <input class="form-check-input" type="radio" name="business_scale" id="scale_50_100" value="50-100" 
+                                    <input class="form-check-input" type="radio" name="business_scale" id="scale_50_100" value="50-100" required
                                            {{ old('business_scale') == '50-100' ? 'checked' : '' }}>
                                     <label class="form-check-label" for="scale_50_100">50 - 100 người</label>
                                 </div>
                                 <div class="form-check form-check-inline w-25">
-                                    <input class="form-check-input" type="radio" name="business_scale" id="scale_100_200" value="100-200" 
+                                    <input class="form-check-input" type="radio" name="business_scale" id="scale_100_200" value="100-200" required
                                            {{ old('business_scale') == '100-200' ? 'checked' : '' }}>
                                     <label class="form-check-label" for="scale_100_200">100 - 200 người</label>
                                 </div>
                                 <div class="form-check form-check-inline w-25">
-                                    <input class="form-check-input" type="radio" name="business_scale" id="scale_200_500" value="200-500" 
+                                    <input class="form-check-input" type="radio" name="business_scale" id="scale_200_500" value="200-500" required
                                            {{ old('business_scale') == '200-500' ? 'checked' : '' }}>
                                     <label class="form-check-label" for="scale_200_500">200 - 500 người</label>
                                 </div>
                                 <div class="form-check form-check-inline w-25">
-                                    <input class="form-check-input" type="radio" name="business_scale" id="scale_500" value="500+" 
+                                    <input class="form-check-input" type="radio" name="business_scale" id="scale_500" value="500+" required
                                            {{ old('business_scale') == '500+' ? 'checked' : '' }}>
                                     <label class="form-check-label" for="scale_500">Trên 500 người</label>
                                 </div>
@@ -286,35 +291,35 @@
                             <div>
                                 <!-- Họ và tên -->
                                 <div class="d-flex align-items-center mb-3">
-                                    <label for="leader_name" class="form-label mb-0 me-2" style="width: 250px;">Họ và tên</label>
+                                    <label for="leader_name" class="form-label mb-0 me-2" style="width: 250px;">Họ và tên <span class="text-danger">*</span></label>
                                     <input type="text" id="leader_name" name="leader_name" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" 
-                                        placeholder="Nhập họ và tên" value="{{ old('leader_name') }}">
+                                       required placeholder="Nhập họ và tên" value="{{ old('leader_name') }}">
                                 </div>
 
                                 <!-- Chức vụ -->
                                 <div class="d-flex align-items-center mb-3">
-                                    <label for="leader_position" class="form-label mb-0 me-2" style="width: 250px;">Chức vụ</label>
+                                    <label for="leader_position" class="form-label mb-0 me-2" style="width: 250px;">Chức vụ <span class="text-danger">*</span></label>
                                     <input type="text" id="leader_position" name="leader_position" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" 
-                                        placeholder="Nhập chức vụ" value="{{ old('leader_position') }}">
+                                       required placeholder="Nhập chức vụ" value="{{ old('leader_position') }}">
                                 </div>
 
                                 <!-- Số điện thoại -->
                                 <div class="d-flex align-items-center mb-3">
-                                    <label for="leader_phone" class="form-label mb-0 me-2" style="width: 250px;">Số điện thoại</label>
+                                    <label for="leader_phone" class="form-label mb-0 me-2" style="width: 250px;">Số điện thoại <span class="text-danger">*</span></label>
                                     <input type="text" id="leader_phone" name="leader_phone" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" 
-                                        placeholder="Nhập số điện thoại" value="{{ old('leader_phone') }}">
+                                       required placeholder="Nhập số điện thoại" value="{{ old('leader_phone') }}">
                                 </div>
                                 
                                 <!-- Giới tính -->
                                 <div class="d-flex align-items-center mb-3">
-                                    <label class="form-label mb-0 me-1" style="width: 180px;">Giới tính</label>
+                                    <label class="form-label mb-0 me-1" style="width: 180px;">Giới tính <span class="text-danger">*</span></label>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="leader_gender" id="gender_male" value="male" 
+                                        <input class="form-check-input" type="radio" name="leader_gender" id="gender_male" value="male" required
                                             {{ old('leader_gender') == 'male' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="gender_male">Nam</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="leader_gender" id="gender_female" value="female" 
+                                        <input class="form-check-input" type="radio" name="leader_gender" id="gender_female" value="female" required
                                             {{ old('leader_gender') == 'female' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="gender_female">Nữ</label>
                                     </div>
@@ -322,9 +327,9 @@
 
                                 <!-- Email liên hệ trực tiếp -->
                                 <div class="d-flex align-items-center">
-                                    <label for="leader_email" class="form-label mb-0 me-2" style="width: 250px;">Email liên hệ trực tiếp</label>
+                                    <label for="leader_email" class="form-label mb-0 me-2" style="width: 250px;">Email liên hệ trực tiếp <span class="text-danger">*</span></label>
                                     <input type="email" id="leader_email" name="leader_email" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" 
-                                        placeholder="Nhập email liên hệ" value="{{ old('leader_email') }}">
+                                       required placeholder="Nhập email liên hệ" value="{{ old('leader_email') }}">
                                 </div>
                             </div>
                         </div>
@@ -334,41 +339,41 @@
                         <div class="border" style="padding: 20px; border-radius: 10px;" >
                             <div id="responsible_people">
                                 <div class="d-flex align-items-center mb-3">
-                                    <label for="name" class="form-label mb-0 me-2" style="width: 250px;">Họ và tên</label>
+                                    <label for="name" class="form-label mb-0 me-2" style="width: 250px;">Họ và tên <span class="text-danger">*</span></label>
                                     <input type="text" id="name" name="responsible_name[]" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" 
-                                            placeholder="Nhập họ và tên" value="{{ old('responsible_name.0') }}">
+                                        required placeholder="Nhập họ và tên" value="{{ old('responsible_name.0') }}">
                                 </div>
     
                                 <div class="d-flex align-items-center mb-3">
-                                    <label for="position" class="form-label mb-0 me-2" style="width: 250px;">Chức vụ</label>
+                                    <label for="position" class="form-label mb-0 me-2" style="width: 250px;">Chức vụ <span class="text-danger">*</span></label>
                                     <input type="text" id="position" name="responsible_position[]" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" 
-                                            placeholder="Nhập chức vụ" value="{{ old('responsible_position.0') }}">
+                                        required placeholder="Nhập chức vụ" value="{{ old('responsible_position.0') }}">
                                 </div>
     
                                 <div class="d-flex align-items-center mb-3">
-                                    <label for="phone" class="form-label mb-0 me-2" style="width: 250px;">Số điện thoại</label>
+                                    <label for="phone" class="form-label mb-0 me-2" style="width: 250px;">Số điện thoại <span class="text-danger">*</span></label>
                                     <input type="text" id="phone" name="responsible_phone[]" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" 
-                                            placeholder="Nhập số điện thoại" value="{{ old('responsible_phone.0') }}">
+                                        required placeholder="Nhập số điện thoại" value="{{ old('responsible_phone.0') }}">
                                 </div>
                                 
                                 <div class="d-flex align-items-center mb-3">
-                                    <label class="form-label mb-0 me-1" style="width: 180px;">Giới tính</label>
+                                    <label class="form-label mb-0 me-1" style="width: 180px;">Giới tính <span class="text-danger">*</span></label>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="responsible_gender[0]" id="gender_male" value="male" 
+                                        <input class="form-check-input" type="radio" name="responsible_gender[0]" id="gender_male" value="male" required
                                                 {{ old('responsible_gender.0') == 'male' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="gender_male">Nam</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="responsible_gender[0]" id="gender_female" value="female" 
+                                        <input class="form-check-input" type="radio" name="responsible_gender[0]" id="gender_female" value="female" required
                                                 {{ old('responsible_gender.0') == 'female' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="gender_female">Nữ</label>
                                     </div>
                                 </div>
                                 
                                 <div class="d-flex align-items-center mb-3">
-                                    <label for="email" class="form-label mb-0 me-2" style="width: 250px;">Email liên hệ trực tiếp</label>
+                                    <label for="email" class="form-label mb-0 me-2" style="width: 250px;">Email liên hệ trực tiếp <span class="text-danger">*</span></label>
                                     <input type="email" id="email" name="responsible_email[]" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" 
-                                            placeholder="Nhập email liên hệ" value="{{ old('responsible_email.0') }}">
+                                        required placeholder="Nhập email liên hệ" value="{{ old('responsible_email.0') }}">
                                 </div>
                                 
                                 <hr class="my-4" style="border: 1px solid #FF7506;">
@@ -382,8 +387,8 @@
                         <h3 class="p-2" style="font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 700; line-height: 38.4px; color: #803B03;">9. Câu lạc bộ</h3>
                         <div class="border" style="padding: 20px; border-radius: 10px;">
                             <div class="d-flex align-items-center">
-                                <label for="club_id" class="form-label mb-0 me-2" style="width: 250px;">Câu lạc bộ <span class="text-danger">*</span></label>
-                                <select id="club_id" name="club_id" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" required>
+                                <label for="club_id" class="form-label mb-0 me-2" style="width: 250px;">Câu lạc bộ</label>
+                                <select id="club_id" name="club_id" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1">
                                     <option value="">-- Chọn câu lạc bộ --</option>
                                     @foreach($clubs as $club)
                                         <option value="{{ $club->id }}" {{ old('club_id') == $club->id ? 'selected' : '' }}>
@@ -403,7 +408,6 @@
         </div>
     </div>
 </x-app-layout>
-
 <script>
     document.addEventListener("DOMContentLoaded", function () {
     let responsiblePeopleCount = 1; // Bắt đầu với 1 người phụ trách
@@ -453,3 +457,4 @@
     };
 });
 </script>
+
