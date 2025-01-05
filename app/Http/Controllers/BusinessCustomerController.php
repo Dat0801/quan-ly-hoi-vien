@@ -6,6 +6,7 @@ use App\Models\BusinessCustomer;
 use App\Models\Certificate;
 use App\Models\Club;
 use App\Models\Connector;
+use App\Models\Sponsorship;
 use App\Models\TargetCustomerGroup;
 use App\Models\Market;
 use App\Models\Field;
@@ -264,5 +265,22 @@ class BusinessCustomerController extends Controller
         $customer->delete();
 
         return redirect()->route('business_customer.index')->with('success', 'Customer deleted successfully!');
+    }
+
+    public function sponsorshipHistory($customerId, Request $request)
+    {
+        $customer = BusinessCustomer::findOrFail($customerId);
+
+        $sponsorships = Sponsorship::where('sponsorable_id', $customerId)
+            ->where('sponsorable_type', BusinessCustomer::class)
+            ->when($request->start_date && $request->end_date, function ($query) use ($request) {
+                return $query->whereBetween('sponsorship_date', [$request->start_date, $request->end_date]);
+            })
+            ->when($request->search, function ($query) use ($request) {
+                return $query->where('product', 'LIKE', "%{$request->search}%");
+            })
+            ->get();
+        $totalContribution = $sponsorships->sum('total_amount');
+        return view('customer.business_customer.sponsorship_history', compact('customer', 'sponsorships', 'totalContribution'));
     }
 }

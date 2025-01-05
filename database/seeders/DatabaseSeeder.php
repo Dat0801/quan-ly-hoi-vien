@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Bus;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -32,6 +33,12 @@ class DatabaseSeeder extends Seeder
             CertificateSeeder::class,
             OrganizationSeeder::class,
             BusinessSeeder::class,
+            ClubSeeder::class,
+            BusinessCustomerSeeder::class,
+            BusinessPartnerSeeder::class,
+            BoardCustomerSeeder::class,
+            IndividualCustomerSeeder::class,
+            IndividualPartnerSeeder::class,
         ]);
         
     }

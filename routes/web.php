@@ -16,6 +16,7 @@ use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\ClubController;
 use App\Http\Controllers\BusinessCustomerController;
 use App\Http\Controllers\IndividualPartnerController;
+use App\Http\Controllers\SponsorshipController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -81,21 +82,49 @@ Route::middleware('auth')->group(function () {
     Route::prefix('customer')->group(function () {
         //Board Customers
         Route::resource('board_customer', BoardCustomerController::class);
+        Route::get(
+            '/board_customer/{customerId}/sponsorship-history',
+            [BoardCustomerController::class, 'sponsorshipHistory']
+        )->name('board_customer.sponsorship_history');
+
 
         Route::resource('business_customer', BusinessCustomerController::class);
+        Route::get(
+            '/business_customer/{customerId}/sponsorship-history',
+            [BusinessCustomerController::class, 'sponsorshipHistory']
+        )->name('business_customer.sponsorship_history');
 
         Route::resource('individual_customer', IndividualCustomerController::class);
+        Route::get(
+            '/individual_customer/{customerId}/sponsorship-history',
+            [IndividualCustomerController::class, 'sponsorshipHistory']
+        )->name('individual_customer.sponsorship_history');
 
         Route::resource('business_partner', BusinessPartnerController::class);
+        Route::get(
+            '/business_partner/{customerId}/sponsorship-history',
+            [BusinessPartnerController::class, 'sponsorshipHistory']
+        )->name('business_partner.sponsorship_history');
 
         Route::resource('individual_partner', IndividualPartnerController::class);
+        Route::get(
+            '/individual_partner/{customerId}/sponsorship-history',
+            [IndividualPartnerController::class, 'sponsorshipHistory']
+        )->name('individual_partner.sponsorship_history');
 
     });
+
+    //Sponsorships
+    Route::resource('sponsorships', SponsorshipController::class);
 
     //Clubs
     Route::resource('club', ClubController::class);
 
-   
+    Route::get('/club/{club}/club.board_customer', [ClubController::class, 'board_customer_index'])->name('club.board_customer.index');
+    Route::post('/club/{club}/club.board_customer', [ClubController::class, 'board_customer_store'])->name('club.board_customer.store');
+    Route::get('/club/{club}/club.board_customer/create', [ClubController::class, 'board_customer_create'])->name('club.board_customer.create');
+    Route::get('/club/{club}/club.board_customer/show', [ClubController::class, 'board_customer_show'])->name('club.board_customer.show');
+    Route::get('/club/{club}/board_customer/{boardCustomer}/show', [ClubController::class, 'board_customer_show'])->name('club.board_customer.show');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

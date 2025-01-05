@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BoardCustomer;
 use Illuminate\Http\Request;
 use App\Models\Club;
 use App\Models\Field;
@@ -36,11 +37,18 @@ class ClubController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('name_vi', 'like', "%{$search}%")
-                  ->orWhere('name_en', 'like', "%{$search}%");
+                    ->orWhere('name_en', 'like', "%{$search}%");
             });
         }
 
-        $clubs = $query->paginate(3);
+        // Lấy câu lạc bộ với số lượng khách hàng
+        $clubs = $query->withCount([
+            'boardCustomers',
+            'businessCustomers',
+            'individualCustomers',
+            'businessPartners',
+            'individualPartners'
+        ])->paginate(3);
 
         return view('club.index', compact('clubs', 'fields', 'markets'));
     }
@@ -112,13 +120,13 @@ class ClubController extends Controller
                     ];
                 }
             }
-    
+
             // Nếu có thông tin người phụ trách, lưu vào bảng connectors
             if (!empty($connectors)) {
                 Connector::insert($connectors);
             }
         }
-       
+
         // Chuyển hướng về trang danh sách câu lạc bộ và thông báo thành công
         return redirect()->route('club.index')->with('success', 'Câu lạc bộ được tạo thành công.');
     }
@@ -217,4 +225,62 @@ class ClubController extends Controller
         $club->delete();
         return redirect()->route('club.index')->with('success', 'Câu lạc bộ được xóa thành công.');
     }
+
+    public function board_customer_index(Club $club)
+    {
+        $boardCustomers = $club->boardCustomers()
+            ->when(request('status'), function ($query) {
+                return $query->where('status', request('status') == 'active' ? 1 : 0);
+            })
+            ->when(request('search'), function ($query) {
+                return $query->where('full_name', 'like', '%' . request('search') . '%');
+            })
+            ->paginate(10);
+
+        return view('club.board_customer.index', compact('club', 'boardCustomers'));
+    }
+
+    public function board_customer_create(Club $club)
+    {
+        return view('club.board_customer.create', compact('club'));
+    }
+
+    public function board_customer_store(Request $request, Club $club)
+    {
+        $validatedData = $request->validate([
+            'login_code' => 'required|string|max:255|unique:board_customers,login_code',
+            'full_name' => 'required|string|max:255',
+            'birth_date' => 'nullable|date',
+            'gender' => 'nullable|in:male,female',
+            'phone' => 'nullable|string|max:15',
+            'unit_name' => 'nullable|string|max:255',
+            'unit_position' => 'nullable|string|max:255',
+            'association_position' => 'nullable|string|max:255',
+            'term' => 'nullable|string|max:255',
+        ]);
+
+        $club->boardCustomers()->create([
+            'login_code' => $validatedData['login_code'],
+            'full_name' => $validatedData['full_name'],
+            'birth_date' => $validatedData['birth_date'] ?? null,
+            'gender' => $validatedData['gender'] ?? null,
+            'phone' => $validatedData['phone'] ?? null,
+            'email' => $validatedData['email'] ?? null,
+            'unit_name' => $validatedData['unit_name'] ?? null,
+            'unit_position' => $validatedData['unit_position'] ?? null,
+            'association_position' => $validatedData['association_position'] ?? null,
+            'term' => $validatedData['term'] ?? null,
+            'club_id' => $club->id,
+        ]);
+
+        return redirect()
+            ->route('club.board_customer.index', $club->id)
+            ->with('success', 'Ban điều hành đã được thêm thành công.');
+    }
+
+    public function board_customer_show(Club $club, BoardCustomer $boardCustomer)
+    {
+        return view('club.board_customer.show', compact('club', 'boardCustomer'));
+    }
+
 }

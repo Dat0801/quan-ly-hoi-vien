@@ -4,7 +4,7 @@
             <h1 id="dynamicTitle"
                 style="font-family: 'Roboto', sans-serif; font-size: 32px; font-weight: 700; color: #803B03;"
                 class="mb-3">
-                Danh sách Đối tác Doanh nghiệp
+                Danh sách đối tác doanh nghiệp
             </h1>
 
             @include('customer.navigation')
@@ -111,6 +111,12 @@
                                                                     Xóa
                                                                 </button>
                                                             </form>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{{ route('business_partner.sponsorship_history', $partner->id) }}" 
+                                                                class="dropdown-item" style="color: #BF5805">
+                                                                Lịch sử tài trợ
+                                                            </a>
                                                         </li>
                                                     </ul>
                                                 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Connector;
+use App\Models\Sponsorship;
 use Illuminate\Http\Request;
 use App\Models\BusinessPartner;
 
@@ -158,5 +159,22 @@ class BusinessPartnerController extends Controller
         $businessPartner->delete();
 
         return redirect()->route('business_partner.index')->with('success', 'Đối tác doanh nghiệp đã được xóa thành công!');
+    }
+
+    public function sponsorshipHistory($customerId, Request $request)
+    {
+        $customer = BusinessPartner::findOrFail($customerId);
+
+        $sponsorships = Sponsorship::where('sponsorable_id', $customerId)
+            ->where('sponsorable_type', BusinessPartner::class)
+            ->when($request->start_date && $request->end_date, function ($query) use ($request) {
+                return $query->whereBetween('sponsorship_date', [$request->start_date, $request->end_date]);
+            })
+            ->when($request->search, function ($query) use ($request) {
+                return $query->where('product', 'LIKE', "%{$request->search}%");
+            })
+            ->get();
+        $totalContribution = $sponsorships->sum('total_amount');
+        return view('customer.business_partner.sponsorship_history', compact('customer', 'sponsorships', 'totalContribution'));
     }
 }

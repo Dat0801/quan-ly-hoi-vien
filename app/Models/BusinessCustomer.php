@@ -75,4 +75,9 @@ class BusinessCustomer extends Model
     {
         return $this->belongsTo(Club::class);
     }
+
+    public function sponsorships()
+    {
+        return $this->morphMany(Sponsorship::class, 'sponsorable');
+    }
 }

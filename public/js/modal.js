@@ -155,3 +155,20 @@ function submitBusinessPartnerForm(businessPartnerId) {
     }
 }
 
+function submitIndividualPartnerForm(individualPartnerId) {
+    const form = document.getElementById(`deleteIndividualPartnerForm-${individualPartnerId}`);
+    if (form) {
+        form.submit();
+    } else {
+        console.error("Form không tìm thấy!");
+    }
+}
+
+function submitSponsorshipForm(sponsorshipId) {
+    const form = document.getElementById(`deleteSponsorshipForm-${sponsorshipId}`);
+    if (form) {
+        form.submit();
+    } else {
+        console.error("Form không tìm thấy!");
+    }
+}

@@ -18,7 +18,7 @@
         <div class="p-4 bg-white shadow-sm rounded-lg w-100" style="max-height: 85vh; overflow-y: auto;">
             <h1
                 style="font-family: 'Roboto', sans-serif; font-size: 32px; font-weight: 700; line-height: 38.4px; color: #803B03;">
-                Thêm đối tác doanh nghiệp
+                Chỉnh sửa đối tác
             </h1>
 
             <form action="{{ route('business_partner.update', $businessPartner->id) }}" method="POST">
@@ -233,7 +233,7 @@
 
                         <h3 class="p-2"
                             style="font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 700; line-height: 38.4px; color: #803B03;">
-                            8. Phụ trách kết nối</h3>
+                            3. Phụ trách kết nối</h3>
                         <div class="border" style="padding: 20px; border-radius: 10px;">
                             <div id="responsible_people">
                                 @if ($businessPartner->connector && $businessPartner->connector->isNotEmpty())
@@ -357,7 +357,9 @@
                                 <button type="button" class="btn btn-outline-primary" onclick="addResponsiblePerson()">Thêm người phụ trách</button>
                             </div>
                         </div>
-                        <h3 class="p-2" style="font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 700; line-height: 38.4px; color: #803B03;">10. Thông tin tài khoản</h3>
+                        <h3 class="p-2" 
+                        style="font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 700; line-height: 38.4px; color: #803B03;">
+                        4. Thông tin tài khoản</h3>
                         <div class="border mb-3" style="border-radius: 10px; padding: 20px;">
                             <div class="d-flex align-items-center mb-3">
                                 <label for="activity_status" class="form-label mb-0 me-2" style="width: 250px;">Thông tin đăng nhập</label>

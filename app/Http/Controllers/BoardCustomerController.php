@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sponsorship;
 use Illuminate\Http\Request;
 use App\Models\BoardCustomer;
 
@@ -11,19 +12,21 @@ class BoardCustomerController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $status = $request->input('status'); // Lấy tham số 'status' từ request
+        $status = $request->input('status'); 
 
-        $customers = BoardCustomer::when($search, function ($query, $search) {
-                return $query->where('full_name', 'like', "%{$search}%")
-                            ->orWhere('login_code', 'like', "%{$search}%")
-                            ->orWhere('card_code', 'like', "%{$search}%");
+        $customers = BoardCustomer::whereNull('club_id') 
+            ->when($search, function ($query, $search) {
+                return $query->where(function ($q) use ($search) {
+                    $q->where('full_name', 'like', "%{$search}%")
+                        ->orWhere('login_code', 'like', "%{$search}%")
+                        ->orWhere('card_code', 'like', "%{$search}%");
+                });
             })
             ->when($status, function ($query, $status) {
-                // Lọc theo status nếu có
                 if ($status == 'active') {
-                    return $query->where('status', 1); // Đang hoạt động
+                    return $query->where('status', 1); 
                 } elseif ($status == 'inactive') {
-                    return $query->where('status', 0); // Ngưng hoạt động
+                    return $query->where('status', 0); 
                 }
             })
             ->paginate(10);
@@ -50,7 +53,7 @@ class BoardCustomerController extends Controller
             'unit_position' => 'required',
             'association_position' => 'required',
             'term' => 'required',
-            'attendance_permission' => 'nullable|in:1,0', 
+            'attendance_permission' => 'nullable|in:1,0',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -115,20 +118,20 @@ class BoardCustomerController extends Controller
 
         if ($request->hasFile('avatar')) {
             if ($customer->avatar) {
-                $oldAvatarPath = public_path('storage/' . $customer->avatar); 
+                $oldAvatarPath = public_path('storage/' . $customer->avatar);
                 if (file_exists($oldAvatarPath)) {
-                    unlink($oldAvatarPath); 
+                    unlink($oldAvatarPath);
                 }
             }
 
             $file = $request->file('avatar');
-            $fileName = $file->getClientOriginalName(); 
+            $fileName = $file->getClientOriginalName();
             $uniqueFileName = uniqid() . '_' . $fileName;
-            $avatarPath = $file->storeAs('avatars', $uniqueFileName, 'public'); 
+            $avatarPath = $file->storeAs('avatars', $uniqueFileName, 'public');
             $customer->avatar = $avatarPath;
         }
 
-        $customer->update($request->except('avatar')); 
+        $customer->update($request->except('avatar'));
 
         return redirect()->route('board_customer.index')->with('success', 'Cập nhật ban chấp hành thành công!');
     }
@@ -140,4 +143,22 @@ class BoardCustomerController extends Controller
 
         return redirect()->route('board_customer.index')->with('success', 'Xóa ban chấp hành thành công!');
     }
+
+    public function sponsorshipHistory($customerId, Request $request)
+    {
+        $customer = BoardCustomer::findOrFail($customerId);
+
+        $sponsorships = Sponsorship::where('sponsorable_id', $customerId)
+            ->where('sponsorable_type', BoardCustomer::class)
+            ->when($request->start_date && $request->end_date, function ($query) use ($request) {
+                return $query->whereBetween('sponsorship_date', [$request->start_date, $request->end_date]);
+            })
+            ->when($request->search, function ($query) use ($request) {
+                return $query->where('product', 'LIKE', "%{$request->search}%");
+            })
+            ->get();
+        $totalContribution = $sponsorships->sum('total_amount');
+        return view('customer.board_customer.sponsorship_history', compact('customer', 'sponsorships', 'totalContribution'));
+    }
+
 }

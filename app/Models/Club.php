@@ -28,23 +28,49 @@ class Club extends Model
         'status',
     ];
 
-     public function industry()
-     {
-         return $this->belongsTo(Industry::class);
-     }
- 
-     public function field()
-     {
-         return $this->belongsTo(Field::class);
-     }
- 
-     public function market()
-     {
-         return $this->belongsTo(Market::class);
-     }
- 
-     public function connector()
-     {
-         return $this->hasMany(Connector::class);
-     }
+    public function industry()
+    {
+        return $this->belongsTo(Industry::class);
+    }
+
+    public function field()
+    {
+        return $this->belongsTo(Field::class);
+    }
+
+    public function market()
+    {
+        return $this->belongsTo(Market::class);
+    }
+
+    public function connector()
+    {
+        return $this->hasMany(Connector::class);
+    }
+
+    public function boardCustomers()
+    {
+        return $this->hasMany(BoardCustomer::class);
+    }
+
+    public function businessCustomers()
+    {
+        return $this->hasMany(BusinessCustomer::class);
+    }
+
+    public function individualCustomers()
+    {
+        return $this->hasMany(IndividualCustomer::class);
+    }
+
+    public function businessPartners()
+    {
+        return $this->hasMany(BusinessPartner::class);
+    }
+
+    public function individualPartners()
+    {
+        return $this->hasMany(IndividualPartner::class);
+    }
+
 }

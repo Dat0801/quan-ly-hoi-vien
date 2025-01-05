@@ -115,6 +115,12 @@
                                                                 </button>
                                                             </form>
                                                         </li>
+                                                        <li>
+                                                            <a href="{{ route('individual_partner.sponsorship_history', $partner->id) }}" 
+                                                                class="dropdown-item" style="color: #BF5805">
+                                                                Lịch sử tài trợ
+                                                            </a>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </td>

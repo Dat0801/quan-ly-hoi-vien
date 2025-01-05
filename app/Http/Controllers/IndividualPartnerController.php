@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sponsorship;
 use Illuminate\Http\Request;
 use App\Models\IndividualPartner;
 use App\Models\Industry;
@@ -97,5 +98,22 @@ class IndividualPartnerController extends Controller
         $partner->delete();
 
         return redirect()->route('individual_partner.index')->with('success', 'Xóa đối tác thành công!');
+    }
+
+    public function sponsorshipHistory($customerId, Request $request)
+    {
+        $customer = IndividualPartner::findOrFail($customerId);
+
+        $sponsorships = Sponsorship::where('sponsorable_id', $customerId)
+            ->where('sponsorable_type', IndividualPartner::class)
+            ->when($request->start_date && $request->end_date, function ($query) use ($request) {
+                return $query->whereBetween('sponsorship_date', [$request->start_date, $request->end_date]);
+            })
+            ->when($request->search, function ($query) use ($request) {
+                return $query->where('product', 'LIKE', "%{$request->search}%");
+            })
+            ->get();
+        $totalContribution = $sponsorships->sum('total_amount');
+        return view('customer.business_customer.sponsorship_history', compact('customer', 'sponsorships', 'totalContribution'));
     }
 }

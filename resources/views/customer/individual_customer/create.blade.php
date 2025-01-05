@@ -18,7 +18,7 @@
         <div class="p-4 bg-white shadow-sm rounded-lg w-100" style="max-height: 85vh; overflow-y: auto;">
             <h1
                 style="font-family: 'Roboto', sans-serif; font-size: 32px; font-weight: 700; line-height: 38.4px; color: #803B03;">
-                Thông tin khách hàng</h1>
+                Thêm khách hàng</h1>
 
             <form action="{{ route('individual_customer.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf

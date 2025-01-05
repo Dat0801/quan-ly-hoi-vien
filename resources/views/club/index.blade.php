@@ -111,7 +111,13 @@
                                                 <td>{{ $club->name_vi }}</td>
                                                 <td>{{ $club->field->name ?? '-' }}</td>
                                                 <td>{{ $club->market->market_name ?? '-' }}</td>
-                                                <td>{{ $club->members_count }}</td>
+                                                <td>
+                                                    {{ $club->board_customers_count + 
+                                                        $club->business_customers_count + 
+                                                        $club->individual_customers_count + 
+                                                        $club->business_partners_count + 
+                                                        $club->individual_partners_count }}
+                                                </td>
                                                 <td>
                                                     <span
                                                         class="badge {{ $club->status ? 'bg-success' : 'bg-danger' }}">
@@ -135,8 +141,7 @@
                                                                 </a>
                                                             </li>
                                                             <li>
-                                                                {{-- {{ route('club.executive', $club->id) }} --}}
-                                                                <a href="" class="dropdown-item"
+                                                                <a href="{{ route('club.board_customer.index', $club->id) }}" class="dropdown-item"
                                                                     style="color: #BF5805">
                                                                     Ban điều hành
                                                                 </a>
