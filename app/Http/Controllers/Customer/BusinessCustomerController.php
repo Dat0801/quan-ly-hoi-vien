@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\BusinessCustomer;
+use App\Models\Field;
+use App\Models\Market;
+use App\Models\TargetCustomerGroup;
+use App\Models\Industry;
 use App\Models\Certificate;
 use App\Models\Club;
 use App\Models\Connector;
 use App\Models\Sponsorship;
-use App\Models\TargetCustomerGroup;
-use App\Models\Market;
-use App\Models\Field;
-use App\Models\Industry;
-
-use Illuminate\Http\Request;
 
 class BusinessCustomerController extends Controller
 {
@@ -29,7 +29,7 @@ class BusinessCustomerController extends Controller
         $marketId = $request->input('market_id');
         $targetCustomerGroupId = $request->input('target_customer_group_id');
 
-        $customers = BusinessCustomer::query()
+        $customers = BusinessCustomer::whereNull('club_id') 
             ->when($search, function ($query, $search) {
                 return $query->where(function ($q) use ($search) {
                     $q->where('business_name_vi', 'like', "%{$search}%")

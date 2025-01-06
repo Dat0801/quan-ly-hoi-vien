@@ -34,6 +34,7 @@ class SponsorshipController extends Controller
     {
         // Lấy tất cả người tài trợ từ các bảng
         $boardCustomers = BoardCustomer::select('id', 'full_name', 'phone')
+            ->whereNull('club_id')
             ->get()
             ->map(function ($customer) {
                 $customer->type = BoardCustomer::class;
@@ -41,6 +42,7 @@ class SponsorshipController extends Controller
             });
 
         $businessCustomers = BusinessCustomer::select('id', 'business_name_vi as full_name', 'phone')
+            ->whereNull('club_id')
             ->get()
             ->map(function ($customer) {
                 $customer->type = BusinessCustomer::class;
@@ -48,6 +50,7 @@ class SponsorshipController extends Controller
             });
 
         $individualCustomers = IndividualCustomer::select('id', 'full_name', 'phone')
+            ->whereNull('club_id')
             ->get()
             ->map(function ($customer) {
                 $customer->type = IndividualCustomer::class;
@@ -55,6 +58,7 @@ class SponsorshipController extends Controller
             });
 
         $businessPartners = BusinessPartner::select('id', 'business_name_vi as full_name', 'phone')
+            ->whereNull('club_id')
             ->get()
             ->map(function ($customer) {
                 $customer->type = BusinessPartner::class;
@@ -62,6 +66,7 @@ class SponsorshipController extends Controller
             });
 
         $individualPartners = IndividualPartner::select('id', 'full_name', 'phone')
+            ->whereNull('club_id')
             ->get()
             ->map(function ($customer) {
                 $customer->type = IndividualPartner::class;

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
-use App\Models\Sponsorship;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\IndividualCustomer;
 use App\Models\Industry;
 use App\Models\Field;
+use App\Models\Sponsorship;
 
 class IndividualCustomerController extends Controller
 {
@@ -16,7 +17,8 @@ class IndividualCustomerController extends Controller
         $search = $request->input('search');
         $status = $request->input('status');
 
-        $customers = IndividualCustomer::when($search, function ($query, $search) {
+        $customers = IndividualCustomer::whereNull('club_id') 
+            ->when($search, function ($query, $search) {
                 return $query->where('full_name', 'like', "%{$search}%")
                     ->orWhere('login_code', 'like', "%{$search}%")
                     ->orWhere('card_code', 'like', "%{$search}%");

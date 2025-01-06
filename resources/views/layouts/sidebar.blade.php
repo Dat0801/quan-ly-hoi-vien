@@ -10,7 +10,7 @@
         </li>
         <li><a href="{{ route('club.index') }}" class="nav-link text-gray-500">Câu lạc bộ</a></li>
         <li><a href="{{ route('board_customer.index') }}" class="nav-link text-gray-500" id="customerText">Khách hàng & Đối tác</a></li>
-        <li><a href="#" class="nav-link text-gray-500">Hoạt động</a></li>
+        <li><a href="{{ route('activities.index') }}" class="nav-link text-gray-500">Hoạt động</a></li>
         <li><a href="#" class="nav-link text-gray-500">Hội phí</a></li>
         <li><a href="{{ route('sponsorships.index') }}" class="nav-link text-gray-500">Tài trợ</a></li>
         <li><a href="#" class="nav-link text-gray-500">Thông báo</a></li>

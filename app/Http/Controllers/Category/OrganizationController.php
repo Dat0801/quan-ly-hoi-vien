@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Category;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Organization;
 
 class OrganizationController extends Controller
 {
     //
-    /**
-     * Hiển thị danh sách tổ chức.
-     */
     public function index(Request $request)
     {
         $search = $request->input('search');

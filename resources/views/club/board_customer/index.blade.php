@@ -71,12 +71,12 @@
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="{{ route('board_customer.edit', $customer->id) }}" class="dropdown-item" style="color: #BF5805">
+                                                            <a href="{{ route('club.board_customer.edit', [$club->id,$customer->id]) }}" class="dropdown-item" style="color: #BF5805">
                                                                 Chỉnh sửa
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <form action="{{ route('board_customer.destroy', $customer->id) }}" method="POST" id="deleteBoardCustomerForm-{{ $customer->id }}">
+                                                            <form action="{{ route('club.board_customer.destroy', [$club->id,$customer->id]) }}" method="POST" id="deleteBoardCustomerForm-{{ $customer->id }}">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="button" class="dropdown-item text-danger" 

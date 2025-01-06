@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Category;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Field;
 use App\Models\Industry;
@@ -9,6 +10,7 @@ use App\Models\SubGroup;
 
 class FieldController extends Controller
 {
+    //
     public function index(Request $request)
     {
         $search = $request->input('search');

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
-use App\Models\Connector;
-use App\Models\Sponsorship;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BusinessPartner;
+use App\Models\Connector;
+use App\Models\Sponsorship;
 
 class BusinessPartnerController extends Controller
 {
@@ -15,7 +16,7 @@ class BusinessPartnerController extends Controller
         $search = $request->input('search');
         $partnerCategory = $request->input('partner_category');
 
-        $businessPartners = BusinessPartner::query()
+        $businessPartners = BusinessPartner::whereNull('club_id') 
             ->when($search, function ($query, $search) {
                 $query->where(function ($subQuery) use ($search) {
                     $subQuery->where('business_name_vi', 'like', "%{$search}%")

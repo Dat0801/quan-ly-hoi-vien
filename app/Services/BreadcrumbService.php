@@ -19,14 +19,12 @@ class BreadcrumbService
         'individual_customer' => ['name' => 'Khách hàng cá nhân', 'routes' => ['index', 'create', 'edit', 'show']],
         'business_partner' => ['name' => 'Đối tác doanh nghiệp', 'routes' => ['index', 'create', 'edit', 'show']],
         'individual_partner' => ['name' => 'Đối tác cá nhân', 'routes' => ['index', 'create', 'edit', 'show']],
-        'club.board_customer' => ['name' => 'Ban điều hành', 'routes' => ['index', 'create', 'edit', 'show']],
-
     ];
 
     public function getBreadcrumbs()
     {
         $route = Route::currentRouteName();
-        $url = '/'.request()->path();
+        $url = '/' . request()->path();
         $breadcrumbs = [];
         if (strpos($url, 'profile') !== false) {
             $breadcrumbs = [['name' => 'Trang chủ', 'url' => route('dashboard'), 'active' => false]];
@@ -50,14 +48,33 @@ class BreadcrumbService
                     break;
                 }
             }
-        } else if (strpos($url, 'club.') !== false) {
-            $newUrl = explode('/', $url)[3];
+        } else if (strpos($url, '/club/') !== false) {
             $club = request()->route('club');
-            $breadcrumbs[] = ['name' => 'Câu lạc bộ', 'url' => route('club.board_customer.index', ['club' => $club]), 'active' => false];
-            foreach ($this->breadcrumbConfigs as $key => $config) {
-                if ($newUrl == $key) {
-                    $breadcrumbs = array_merge($breadcrumbs, $this->generateClubBreadcrumbs($key, $route, $config, $club));
-                    break;
+            if ($club != null) {
+                if (strpos($url, '/club/' . $club->id . '/') !== false 
+                && strpos($url, '/club/' . $club->id . '/edit') === false) {
+                    $newUrl = explode('/', $url)[3];
+                    $breadcrumbs[] = ['name' => 'Câu lạc bộ', 'url' => route('club.index', ['club' => $club]), 'active' => false];
+                    foreach ($this->breadcrumbConfigs as $key => $config) {
+                        if ($newUrl == $key) {
+                            $breadcrumbs = array_merge($breadcrumbs, $this->generateClubBreadcrumbs($key, $route, $config, $club));
+                            break;
+                        }
+                    }
+                } else {
+                    foreach ($this->breadcrumbConfigs as $key => $config) {
+                        if (strpos($url, $key) !== false) {
+                            $breadcrumbs = array_merge($breadcrumbs, $this->generateBreadcrumbs($key, $route, $config));
+                            break;
+                        }
+                    }
+                }
+            } else {
+                foreach ($this->breadcrumbConfigs as $key => $config) {
+                    if (strpos($url, $key) !== false) {
+                        $breadcrumbs = array_merge($breadcrumbs, $this->generateBreadcrumbs($key, $route, $config));
+                        break;
+                    }
                 }
             }
         } else {
@@ -75,27 +92,27 @@ class BreadcrumbService
     private function generateClubBreadcrumbs($key, $route, $config, $club)
     {
         $breadcrumbs = [];
-        $baseRoute = "{$key}.index";
-        if ($route === "{$key}.index") {
+        $baseRoute = "club.{$key}.index";
+        if ($route === "club.{$key}.index") {
             $breadcrumbs[] = ['name' => $config['name'], 'url' => route($baseRoute, ['club' => $club]), 'active' => true];
-        } else if ($route === "{$key}.create") {
+        } else if ($route === "club.{$key}.create") {
             $breadcrumbs[] = ['name' => $config['name'], 'url' => route($baseRoute, ['club' => $club]), 'active' => false];
-            $breadcrumbs[] = ['name' => 'Thêm mới', 'url' => route("{$key}.create", ['club' => $club]), 'active' => true];
-        } else if ($route === "{$key}.edit") {
+            $breadcrumbs[] = ['name' => 'Thêm mới', 'url' => route("club.{$key}.create", ['club' => $club]), 'active' => true];
+        } else if ($route === "club.{$key}.edit") {
             $breadcrumbs[] = ['name' => $config['name'], 'url' => route($baseRoute, ['club' => $club]), 'active' => false];
             $breadcrumbs[] = [
                 'name' => 'Chỉnh sửa',
-                'url' => route("{$key}.edit", [$key => request()->route($key)]),
+                'url' => route("club.{$key}.edit", [$key => request()->route($key), 'club' => $club]),
                 'active' => true,
             ];
-        } else if ($route === "{$key}.show") {
+        } else if ($route === "club.{$key}.show") {
             $breadcrumbs[] = ['name' => $config['name'], 'url' => route($baseRoute, ['club' => $club]), 'active' => false];
             $breadcrumbs[] = [
                 'name' => 'Chi tiết',
-                'url' => route("{$key}.show", [$key => request()->route($key), 'club' => $club]),
+                'url' => route("club.{$key}.show", [$key => request()->route($key), 'club' => $club]),
                 'active' => true,
             ];
-        } 
+        }
         return $breadcrumbs;
     }
 

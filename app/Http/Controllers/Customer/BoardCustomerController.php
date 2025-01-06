@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
-use App\Models\Sponsorship;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BoardCustomer;
+use App\Models\Sponsorship;
 
 class BoardCustomerController extends Controller
 {
@@ -160,5 +161,4 @@ class BoardCustomerController extends Controller
         $totalContribution = $sponsorships->sum('total_amount');
         return view('customer.board_customer.sponsorship_history', compact('customer', 'sponsorships', 'totalContribution'));
     }
-
 }

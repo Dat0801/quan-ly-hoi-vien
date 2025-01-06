@@ -1,22 +1,24 @@
 <?php
 
-use App\Http\Controllers\BoardCustomerController;
-use App\Http\Controllers\BusinessPartnerController;
-use App\Http\Controllers\IndividualCustomerController;
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DocumentController;
-use App\Http\Controllers\IndustryController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\FieldController;
-use App\Http\Controllers\MarketController;
-use App\Http\Controllers\TargetCustomerGroupController;
-use App\Http\Controllers\CertificateController;
-use App\Http\Controllers\OrganizationController;
-use App\Http\Controllers\BusinessController;
-use App\Http\Controllers\ClubController;
-use App\Http\Controllers\BusinessCustomerController;
-use App\Http\Controllers\IndividualPartnerController;
 use App\Http\Controllers\SponsorshipController;
+use App\Http\Controllers\Club\ClubController;
+use App\Http\Controllers\Club\ClubBoardCustomerController;
+use App\Http\Controllers\Customer\BoardCustomerController;
+use App\Http\Controllers\Customer\BusinessPartnerController;
+use App\Http\Controllers\Customer\BusinessCustomerController;
+use App\Http\Controllers\Customer\IndividualCustomerController;
+use App\Http\Controllers\Customer\IndividualPartnerController;
+use App\Http\Controllers\Category\CategoryController;
+use App\Http\Controllers\Category\IndustryController;
+use App\Http\Controllers\Category\FieldController;
+use App\Http\Controllers\Category\MarketController;
+use App\Http\Controllers\Category\TargetCustomerGroupController;
+use App\Http\Controllers\Category\CertificateController;
+use App\Http\Controllers\Category\OrganizationController;
+use App\Http\Controllers\Category\BusinessController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -120,11 +122,10 @@ Route::middleware('auth')->group(function () {
     //Clubs
     Route::resource('club', ClubController::class);
 
-    Route::get('/club/{club}/club.board_customer', [ClubController::class, 'board_customer_index'])->name('club.board_customer.index');
-    Route::post('/club/{club}/club.board_customer', [ClubController::class, 'board_customer_store'])->name('club.board_customer.store');
-    Route::get('/club/{club}/club.board_customer/create', [ClubController::class, 'board_customer_create'])->name('club.board_customer.create');
-    Route::get('/club/{club}/club.board_customer/show', [ClubController::class, 'board_customer_show'])->name('club.board_customer.show');
-    Route::get('/club/{club}/board_customer/{boardCustomer}/show', [ClubController::class, 'board_customer_show'])->name('club.board_customer.show');
+    Route::resource('club.board_customer', ClubBoardCustomerController::class);
+
+    Route::resource('activities', controller: ActivityController::class);
+    
 });
 
 require __DIR__ . '/auth.php';

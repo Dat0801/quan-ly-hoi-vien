@@ -46,4 +46,9 @@ class BusinessPartner extends Model
     {
         return $this->morphMany(Sponsorship::class, 'sponsorable');
     }
+
+    public function activities()
+    {
+        return $this->morphMany(ActivityParticipant::class, 'participantable');
+    }
 }
