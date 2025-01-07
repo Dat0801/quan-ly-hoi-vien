@@ -79,23 +79,29 @@
                                                 @endif
                                             </td>
                                             <td class="text-center">
-                                                <a href="{{ route('activities.show', $activity->id) }}"
-                                                    class="me-1" style="cursor: pointer">
+                                                <a href="{{ route('activities.show', $activity->id) }}" class="me-1"
+                                                    style="cursor: pointer">
                                                     <i class="fas fa-circle-info" style="color: #FF7506"></i>
                                                 </a>
 
-                                                <form action="{{ route('activities.destroy', $activity->id) }}"
-                                                    method="POST" style="display:inline;"
-                                                    id="deleteActivityForm-{{ $activity->id }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" class="btn-sm text-danger"
-                                                        onclick="showModal('Bạn có chắc chắn muốn xóa hoạt động này?', function() { submitActivityForm('{{ $activity->id }}'); }, function() { })">
-                                                        <i class="fas fa-trash-alt"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
+                                                @if (now() < $activity->start_time)
+                                                    <a href="{{ route('activities.edit', $activity->id) }}"
+                                                        class="me-1" style="cursor: pointer">
+                                                        <i class="fas fa-edit" style="color: #FF7506"></i>
+                                                    </a>
 
+                                                    <form action="{{ route('activities.destroy', $activity->id) }}"
+                                                        method="POST" style="display:inline;"
+                                                        id="deleteActivityForm-{{ $activity->id }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button" class="btn-sm text-danger"
+                                                            onclick="showModal('Bạn có chắc chắn muốn xóa hoạt động này?', function() { submitActivityForm('{{ $activity->id }}'); }, function() { })">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </form>
+                                                @endif
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -112,8 +118,7 @@
         <div class="d-flex flex-column justify-content-between ms-4 bg-white sm:rounded-lg" id="addNewButtonContainer">
             <a href="{{ route('activities.create') }}"
                 class="btn btn-white d-flex flex-column align-items-center justify-content-center border-0 p-3"
-                style="color: #FF7506; border-color: #FF7506; width: 80px; text-align: center;"
-                id="addActivityButton">
+                style="color: #FF7506; border-color: #FF7506; width: 80px; text-align: center;" id="addActivityButton">
                 <i class="fas fa-plus fa-lg mt-2" style="color: #FF7506;"></i>
                 <span class="mt-3" style="color: #FF7506; font-size: 12px; word-wrap: break-word;">Thêm mới</span>
             </a>

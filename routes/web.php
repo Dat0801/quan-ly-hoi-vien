@@ -125,6 +125,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('club.board_customer', ClubBoardCustomerController::class);
 
     Route::resource('activities', controller: ActivityController::class);
+    Route::get('/activities/{id}/participants', [ActivityController::class, 'showParticipants'])->name('activities.participants');
     
 });
 

@@ -172,3 +172,12 @@ function submitSponsorshipForm(sponsorshipId) {
         console.error("Form không tìm thấy!");
     }
 }
+
+function submitActivityForm(activityId) {
+    const form = document.getElementById(`deleteActivityForm-${activityId}`);
+    if (form) {
+        form.submit();
+    } else {
+        console.error("Form không tìm thấy!");
+    }
+}
