@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\MembershipFeeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\SponsorshipController;
@@ -58,28 +60,38 @@ Route::middleware('auth')->group(function () {
     //Categories
     Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
 
-    Route::prefix('category')->group(function () {
-        //Industries
-        Route::resource('industry', IndustryController::class);
+    Route::prefix('settings')->group(function () {
 
-        //Fields
-        Route::resource('field', FieldController::class);
+        Route::prefix('category')->group(function () {
+            //Industries
+            Route::resource('industry', IndustryController::class);
+    
+            //Fields
+            Route::resource('field', FieldController::class);
+    
+            //Markets
+            Route::resource('market', MarketController::class);
+    
+            //Target Customer Groups
+            Route::resource('target_customer_group', TargetCustomerGroupController::class);
+    
+            //Certificates
+            Route::resource('certificate', CertificateController::class);
+    
+            //Organizations
+            Route::resource('organization', OrganizationController::class);
+    
+            //Businesses
+            Route::resource('business', BusinessController::class);
+        });
 
-        //Markets
-        Route::resource('market', MarketController::class);
+        Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+        Route::get('/contact/edit', [ContactController::class, 'edit'])->name('contact.edit');
+        Route::put('/contact/update', [ContactController::class, 'update'])->name('contact.update');
 
-        //Target Customer Groups
-        Route::resource('target_customer_group', TargetCustomerGroupController::class);
-
-        //Certificates
-        Route::resource('certificate', CertificateController::class);
-
-        //Organizations
-        Route::resource('organization', OrganizationController::class);
-
-        //Businesses
-        Route::resource('business', BusinessController::class);
     });
+
+
 
     Route::prefix('customer')->group(function () {
         //Board Customers
@@ -119,14 +131,17 @@ Route::middleware('auth')->group(function () {
     //Sponsorships
     Route::resource('sponsorships', SponsorshipController::class);
 
+    Route::resource('membership_fee', MembershipFeeController::class);
+
     //Clubs
     Route::resource('club', ClubController::class);
 
     Route::resource('club.board_customer', ClubBoardCustomerController::class);
 
-    Route::resource('activities', controller: ActivityController::class);
-    Route::get('/activities/{id}/participants', [ActivityController::class, 'showParticipants'])->name('activities.participants');
+    Route::resource('activity', controller: ActivityController::class);
+    Route::get('/activity/{id}/participants', [ActivityController::class, 'showParticipants'])->name('activity.participants');
     
+   
 });
 
 require __DIR__ . '/auth.php';

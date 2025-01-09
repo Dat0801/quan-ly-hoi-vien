@@ -21,7 +21,7 @@
                 Chỉnh sửa hoạt động
             </h1>
 
-            <form id="activityForm" action="{{ route('activities.update', $activity->id) }}" method="POST"
+            <form id="activityForm" action="{{ route('activity.update', $activity->id) }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -143,7 +143,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center gap-3 mt-4">
-                    <a href="{{ route('activities.index') }}"
+                    <a href="{{ route('activity.index') }}"
                         class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Hủy</a>
                     <button type="submit" form="activityForm"
                         class="btn btn-primary w-48 py-3 sm:rounded-lg">Cập nhật</button>

@@ -59,7 +59,7 @@
 
                         <div class="d-flex justify-content-between align-items-center">
                             <form id="customerSearchForm" method="GET"
-                                action="{{ route('activities.participants', $activity->id) }}" class="d-flex mb-3">
+                                action="{{ route('activity.participants', $activity->id) }}" class="d-flex mb-3">
                                 <div class="d-flex align-items-center">
                                     <select name="participant_type" class="form-control" style="max-width: 200px;">
                                         <option value="">Tất cả</option>
@@ -96,13 +96,16 @@
                                             <td>{{ $participant['name'] }}</td>
                                             <td>{{ $participant['email'] }}</td>
                                             <td>
-                                                @if ($participant['participated'])
-                                                    <span class="badge bg-success">Đã tham gia</span>
+                                                @if (now() < $activity->start_time)
+                                                    <span class="badge bg-warning">Chưa bắt đầu</span>
                                                 @else
-                                                    <span class="badge bg-secondary">Chưa tham gia</span>
+                                                    <span class="badge bg-success">Tham gia</span>
                                                 @endif
                                             </td>
-                                            <td>{{ $participant['participation_date'] ? \Carbon\Carbon::parse($participant['participation_date'])->format('d/m/Y') : '-' }}
+                                            <td>
+                                                @if (now() >= $activity->start_time)
+                                                    {{ $activity->start_time }}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

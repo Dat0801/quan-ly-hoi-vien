@@ -113,7 +113,7 @@ class ActivityController extends Controller
         }
 
 
-        return redirect()->route('activities.index')->with('success', 'Hoạt động đã được tạo thành công.');
+        return redirect()->route('activity.index')->with('success', 'Hoạt động đã được tạo thành công.');
     }
 
 
@@ -237,7 +237,7 @@ class ActivityController extends Controller
             }
         }
 
-        return redirect()->route('activities.index')->with('success', 'Hoạt động đã được cập nhật thành công.');
+        return redirect()->route('activity.index')->with('success', 'Hoạt động đã được cập nhật thành công.');
     }
 
     public function destroy($id)
@@ -253,7 +253,7 @@ class ActivityController extends Controller
 
         $activity->delete();
 
-        return redirect()->route('activities.index')->with('success', 'Hoạt động đã được xóa thành công.');
+        return redirect()->route('activity.index')->with('success', 'Hoạt động đã được xóa thành công.');
     }
 
     public function showParticipants($id)
@@ -261,7 +261,8 @@ class ActivityController extends Controller
         $activity = Activity::with('participants.participantable')->findOrFail($id);
         $participants = $activity->participants;
 
-        // Define attribute mappings for each type
+        $participantTypeFilter = request('participant_type');
+
         $typeMappings = [
             BoardCustomer::class => ['name' => 'full_name', 'email' => 'email', 'login_code' => 'login_code'],
             BusinessCustomer::class => ['name' => 'business_name_vi', 'email' => 'email', 'login_code' => 'login_code'],
@@ -304,8 +305,19 @@ class ActivityController extends Controller
             return $participantData;
         });
 
+        if ($participantTypeFilter) {
+            $participantDetails = $participantDetails->filter(function ($participant) use ($participantTypeFilter) {
+                return $participant['type'] === class_basename($participantTypeFilter);
+            });
+        }
+
         $totalCustomers = $participants->count();
-        $participatingCustomers = $participants->where('participated', true)->count();
+        $participatingCustomers = 0;
+
+        if (now() >= $activity->start_time) {
+            $participatingCustomers = $totalCustomers;
+        }
+        
         $nonParticipatingCustomers = $totalCustomers - $participatingCustomers;
 
         $participantTypes = [
@@ -316,8 +328,13 @@ class ActivityController extends Controller
             IndividualPartner::class => 'Đối tác cá nhân',
         ];
 
-        return view('activities.participants', compact('activity', 'participantDetails', 'totalCustomers', 'participatingCustomers', 'nonParticipatingCustomers', 'participantTypes'));
+        return view('activities.participants', compact(
+            'activity',
+            'participantDetails',
+            'totalCustomers',
+            'participatingCustomers',
+            'nonParticipatingCustomers',
+            'participantTypes'
+        ));
     }
-
-
 }

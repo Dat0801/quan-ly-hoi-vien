@@ -19,6 +19,8 @@ class BreadcrumbService
         'individual_customer' => ['name' => 'Khách hàng cá nhân', 'routes' => ['index', 'create', 'edit', 'show']],
         'business_partner' => ['name' => 'Đối tác doanh nghiệp', 'routes' => ['index', 'create', 'edit', 'show']],
         'individual_partner' => ['name' => 'Đối tác cá nhân', 'routes' => ['index', 'create', 'edit', 'show']],
+        'activity' => ['name' => 'Hoạt động', 'routes' => ['index', 'create', 'edit', 'show']],
+        'contact' => ['name' => 'Liên hệ', 'routes' => ['edit', 'index']],
     ];
 
     public function getBreadcrumbs()
@@ -29,10 +31,13 @@ class BreadcrumbService
         if (strpos($url, 'profile') !== false) {
             $breadcrumbs = [['name' => 'Trang chủ', 'url' => route('dashboard'), 'active' => false]];
             $breadcrumbs[] = ['name' => 'Thông tin cơ bản', 'url' => route('profile.show'), 'active' => true];
-        } else if (strpos($url, 'category') !== false) {
-            $breadcrumbs[] = ['name' => 'Cài đặt', 'url' => route('category.index'), 'active' => false];
-            $breadcrumbs[] = ['name' => 'Danh mục', 'url' => route('category.index'), 'active' => false];
-
+        } else if (strpos($url, '/settings/') !== false) {
+            if (strpos($url, '/category/') !== false) {
+                $breadcrumbs[] = ['name' => 'Cài đặt', 'url' => route('category.index'), 'active' => false];
+                $breadcrumbs[] = ['name' => 'Danh mục', 'url' => route('category.index'), 'active' => false];
+            } else {
+                $breadcrumbs[] = ['name' => 'Cài đặt', 'url' => route('category.index'), 'active' => false];
+            }
             foreach ($this->breadcrumbConfigs as $key => $config) {
                 if (strpos($url, $key) !== false) {
                     $breadcrumbs = array_merge($breadcrumbs, $this->generateBreadcrumbs($key, $route, $config));
@@ -51,8 +56,10 @@ class BreadcrumbService
         } else if (strpos($url, '/club/') !== false) {
             $club = request()->route('club');
             if ($club != null) {
-                if (strpos($url, '/club/' . $club->id . '/') !== false 
-                && strpos($url, '/club/' . $club->id . '/edit') === false) {
+                if (
+                    strpos($url, '/club/' . $club->id . '/') !== false
+                    && strpos($url, '/club/' . $club->id . '/edit') === false
+                ) {
                     $newUrl = explode('/', $url)[3];
                     $breadcrumbs[] = ['name' => 'Câu lạc bộ', 'url' => route('club.index', ['club' => $club]), 'active' => false];
                     foreach ($this->breadcrumbConfigs as $key => $config) {
@@ -148,6 +155,18 @@ class BreadcrumbService
                 $breadcrumbs[] = [
                     'name' => 'Lịch sử tài trợ',
                     'url' => route("{$key}.sponsorship_history", ['customerId' => $customerId]),
+                    'active' => true,
+                ];
+            }
+        } else if ($route === "{$key}.participants") {
+            $id = request()->route('id');
+
+            if ($id) {
+                $breadcrumbs[] = ['name' => $config['name'], 'url' => route($baseRoute), 'active' => false];
+                $breadcrumbs[] = ['name' => "Chi tiết hoạt động", 'url' => route("{$key}.show", ['activity' => $id]), 'active' => false];
+                $breadcrumbs[] = [
+                    'name' => 'Danh sách người tham gia',
+                    'url' => route("{$key}.participants", ['id' => $id]),
                     'active' => true,
                 ];
             }

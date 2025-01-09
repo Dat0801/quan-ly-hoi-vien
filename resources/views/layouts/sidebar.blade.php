@@ -10,8 +10,8 @@
         </li>
         <li><a href="{{ route('club.index') }}" class="nav-link text-gray-500">Câu lạc bộ</a></li>
         <li><a href="{{ route('board_customer.index') }}" class="nav-link text-gray-500" id="customerText">Khách hàng & Đối tác</a></li>
-        <li><a href="{{ route('activities.index') }}" class="nav-link text-gray-500">Hoạt động</a></li>
-        <li><a href="#" class="nav-link text-gray-500">Hội phí</a></li>
+        <li><a href="{{ route('activity.index') }}" class="nav-link text-gray-500">Hoạt động</a></li>
+        <li><a href="{{ route('membership_fee.index') }}" class="nav-link text-gray-500">Hội phí</a></li>
         <li><a href="{{ route('sponsorships.index') }}" class="nav-link text-gray-500">Tài trợ</a></li>
         <li><a href="#" class="nav-link text-gray-500">Thông báo</a></li>
         <li><a href="#" class="nav-link text-gray-500">Lịch</a></li>
@@ -26,7 +26,12 @@
                     <li><a href="#" class="text-gray-500 nav-link text-decoration-none">Quản lý người dùng</a></li>
                     <li>
                         <a href="{{ route('category.index') }}" class="text-gray-500 nav-link text-decoration-none">
-                            <span class="category-text" id="categoryText">Danh mục</span>
+                            <span class="setting-text" id="categoryText">Danh mục</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('contact.index') }}" class="text-gray-500 nav-link text-decoration-none">
+                            <span class="setting-text" id="contactText">Liên hệ</span>
                         </a>
                     </li>
                 </ul>

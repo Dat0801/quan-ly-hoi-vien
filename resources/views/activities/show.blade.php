@@ -82,7 +82,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <a href="{{ route('activities.participants', $activity->id) }}" class="btn btn-primary">
+                    <a href="{{ route('activity.participants', $activity->id) }}" class="btn btn-primary">
                         Danh sách đối tượng tham gia
                     </a>
                 </div>
@@ -127,7 +127,7 @@
             </div>
 
             <div class="d-flex justify-content-center gap-3 mt-4">
-                <a href="{{ route('activities.index') }}"
+                <a href="{{ route('activity.index') }}"
                     class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Đóng</a>
             </div>
         </div>

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const sidebarLinks = document.querySelectorAll('.nav-link');
     
     function isInSettingsPage() {
-        return window.location.pathname.includes('/category/');
+        return window.location.pathname.includes('/settings/');
     }
 
     function isInCategoryPage() {
@@ -16,10 +16,14 @@ document.addEventListener('DOMContentLoaded', function() {
         return window.location.pathname.includes('/customer');
     }
 
+    function isInContactPage() {
+        return window.location.pathname.includes('/contact');
+    }
+
     function setActiveSidebarLink() {
         sidebarLinks.forEach(function(link) {
             if (window.location.href.startsWith(link.href)) {
-                if(!window.location.pathname.includes('/category/')) {
+                if(!window.location.pathname.includes('/settings/')) {
                     link.classList.add('active');
                 }
             } else {
@@ -51,6 +55,13 @@ document.addEventListener('DOMContentLoaded', function() {
             customerText.classList.add('active');
         } else {
             customerText.classList.remove('active');
+        }
+
+        const contactText = document.getElementById('contactText');
+        if (isInContactPage()) {
+            contactText.classList.add('active');
+        } else {
+            contactText.classList.remove('active');
         }
     }
 

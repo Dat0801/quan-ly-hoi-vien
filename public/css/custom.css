@@ -195,11 +195,11 @@ body {
     }
 }
 
-.category-text {
+.setting-text {
     color: gray; 
 }
 
-.category-text.active {
+.setting-text.active {
     color: #BF5805; 
     font-weight: bold;
 }

@@ -21,7 +21,7 @@
                 Thêm hoạt động
             </h1>
 
-            <form id="activityForm" action="{{ route('activities.store') }}" method="POST"
+            <form id="activityForm" action="{{ route('activity.store') }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="row">
@@ -115,7 +115,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center gap-3 mt-4">
-                    <a href="{{ route('activities.index') }}"
+                    <a href="{{ route('activity.index') }}"
                         class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Hủy</a>
                     <button type="submit" form="activityForm"
                         class="btn btn-primary w-48 py-3 sm:rounded-lg">Thêm</button>

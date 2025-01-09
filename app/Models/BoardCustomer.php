@@ -40,4 +40,5 @@ class BoardCustomer extends Model
     {
         return $this->morphMany(ActivityParticipant::class, 'participantable');
     }
+   
 }

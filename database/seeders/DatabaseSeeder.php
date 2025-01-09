@@ -39,6 +39,8 @@ class DatabaseSeeder extends Seeder
             BoardCustomerSeeder::class,
             IndividualCustomerSeeder::class,
             IndividualPartnerSeeder::class,
+            ContactSeeder::class,
+            MembershipFeeSeeder::class,
         ]);
         
     }

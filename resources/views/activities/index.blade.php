@@ -18,11 +18,11 @@
 
                         <h1 style="font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 500; line-height: 18.75px; text-align: left; color: #BF5805;"
                             class="mb-1">
-                            Thời gian hoạt động
+                            Thời gian
                         </h1>
 
                         <div class="d-flex justify-content-between align-items-center">
-                            <form id="activitySearchForm" method="GET" action="{{ route('activities.index') }}"
+                            <form id="activitySearchForm" method="GET" action="{{ route('activity.index') }}"
                                 class="d-flex mb-3">
                                 <div class="d-flex align-items-center">
                                     <input type="date" id="start_date" name="start_date" class="form-control"
@@ -37,7 +37,7 @@
                                 </div>
                             </form>
 
-                            <form id="activitySearchForm" method="GET" action="{{ route('activities.index') }}"
+                            <form id="activitySearchForm" method="GET" action="{{ route('activity.index') }}"
                                 class="d-flex mb-3">
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="search"
@@ -79,18 +79,18 @@
                                                 @endif
                                             </td>
                                             <td class="text-center">
-                                                <a href="{{ route('activities.show', $activity->id) }}" class="me-1"
+                                                <a href="{{ route('activity.show', $activity->id) }}" class="me-1"
                                                     style="cursor: pointer">
                                                     <i class="fas fa-circle-info" style="color: #FF7506"></i>
                                                 </a>
 
                                                 @if (now() < $activity->start_time)
-                                                    <a href="{{ route('activities.edit', $activity->id) }}"
+                                                    <a href="{{ route('activity.edit', $activity->id) }}"
                                                         class="me-1" style="cursor: pointer">
                                                         <i class="fas fa-edit" style="color: #FF7506"></i>
                                                     </a>
 
-                                                    <form action="{{ route('activities.destroy', $activity->id) }}"
+                                                    <form action="{{ route('activity.destroy', $activity->id) }}"
                                                         method="POST" style="display:inline;"
                                                         id="deleteActivityForm-{{ $activity->id }}">
                                                         @csrf
@@ -116,7 +116,7 @@
         </div>
 
         <div class="d-flex flex-column justify-content-between ms-4 bg-white sm:rounded-lg" id="addNewButtonContainer">
-            <a href="{{ route('activities.create') }}"
+            <a href="{{ route('activity.create') }}"
                 class="btn btn-white d-flex flex-column align-items-center justify-content-center border-0 p-3"
                 style="color: #FF7506; border-color: #FF7506; width: 80px; text-align: center;" id="addActivityButton">
                 <i class="fas fa-plus fa-lg mt-2" style="color: #FF7506;"></i>
