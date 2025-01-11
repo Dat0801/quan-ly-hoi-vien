@@ -106,8 +106,8 @@
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            {{-- {{ route('board_customers.fee_history', $customer->id) }} --}}
-                                                            <a href="" class="dropdown-item" style="color: #BF5805">
+                                                            <a href="{{ route('board_customer.membership-fee-history', $customer->id) }}" 
+                                                                class="dropdown-item" style="color: #BF5805">
                                                                 Lịch sử đóng hội phí
                                                             </a>
                                                         </li>

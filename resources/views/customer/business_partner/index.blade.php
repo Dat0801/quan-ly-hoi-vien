@@ -118,6 +118,12 @@
                                                                 Lịch sử tài trợ
                                                             </a>
                                                         </li>
+                                                        <li>
+                                                            <a href="{{ route('business_partner.membership-fee-history', $partner->id) }}" 
+                                                                class="dropdown-item" style="color: #BF5805">
+                                                                Lịch sử đóng hội phí
+                                                            </a>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </td>

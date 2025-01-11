@@ -114,7 +114,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center gap-3">
-                    <a href="{{ route('sponsorships.index') }}"
+                    <a href="{{ route('sponsorship.index') }}"
                         class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Đóng</a>
                 </div>
             </form>

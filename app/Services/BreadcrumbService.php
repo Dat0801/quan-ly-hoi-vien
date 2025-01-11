@@ -21,6 +21,8 @@ class BreadcrumbService
         'individual_partner' => ['name' => 'Đối tác cá nhân', 'routes' => ['index', 'create', 'edit', 'show']],
         'activity' => ['name' => 'Hoạt động', 'routes' => ['index', 'create', 'edit', 'show']],
         'contact' => ['name' => 'Liên hệ', 'routes' => ['edit', 'index']],
+        'membership_fee' => ['name' => 'Hội phí', 'routes' => ['index', 'create']],
+        'sponsorship' => ['name' => 'Tài trợ', 'routes' => ['index', 'create', 'show']],
     ];
 
     public function getBreadcrumbs()
@@ -155,6 +157,17 @@ class BreadcrumbService
                 $breadcrumbs[] = [
                     'name' => 'Lịch sử tài trợ',
                     'url' => route("{$key}.sponsorship_history", ['customerId' => $customerId]),
+                    'active' => true,
+                ];
+            }
+        } else if ($route === "{$key}.membership-fee-history") {
+            $customerId = request()->route('customerId');
+
+            if ($customerId) {
+                $breadcrumbs[] = ['name' => $config['name'], 'url' => route($baseRoute), 'active' => false];
+                $breadcrumbs[] = [
+                    'name' => 'Lịch sử đóng hội phí',
+                    'url' => route("{$key}.membership-fee-history", ['customerId' => $customerId]),
                     'active' => true,
                 ];
             }

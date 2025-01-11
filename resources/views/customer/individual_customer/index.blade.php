@@ -105,6 +105,12 @@
                                                                 Lịch sử tài trợ
                                                             </a>
                                                         </li>
+                                                        <li>
+                                                            <a href="{{ route('individual_customer.membership-fee-history', $customer->id) }}" 
+                                                                class="dropdown-item" style="color: #BF5805">
+                                                                Lịch sử đóng hội phí
+                                                            </a>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </td>

@@ -38,7 +38,7 @@
                         </h1>
                         
                         <div class="d-flex justify-content-between align-items-center">
-                            <form id="sponsorshipSearchForm" method="GET" action="{{ route('business_partner.sponsorship_history', $customer->id) }}" class="d-flex mb-3">
+                            <form id="sponsorshipSearchForm" method="GET" action="{{ route('board_customer.sponsorship_history', $customer->id) }}" class="d-flex mb-3">
                                 <div class="d-flex align-items-center">
                                     <input type="date" id="start_date" name="start_date" class="form-control" value="{{ request('start_date') }}" style="max-width: 200px;">
                         
@@ -50,7 +50,7 @@
                                 </div>
                             </form>
                         
-                            <form id="sponsorshipSearchForm" method="GET" action="{{ route('business_partner.sponsorship_history', $customer->id) }}" class="d-flex mb-3">
+                            <form id="sponsorshipSearchForm" method="GET" action="{{ route('board_customer.sponsorship_history', $customer->id) }}" class="d-flex mb-3">
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm sản phẩm tài trợ...">
                                     <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
@@ -94,6 +94,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="d-flex flex-column justify-content-between ms-4 bg-white sm:rounded-lg" id="addNewButtonContainer">
         </div>
     </div>
 </x-app-layout>

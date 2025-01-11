@@ -100,6 +100,10 @@ Route::middleware('auth')->group(function () {
             '/board_customer/{customerId}/sponsorship-history',
             [BoardCustomerController::class, 'sponsorshipHistory']
         )->name('board_customer.sponsorship_history');
+        Route::get(
+            '/board_customer/{customerId}/membership-fee-history',
+            [BoardCustomerController::class, 'membershipFeeHistory']
+        )->name('board_customer.membership-fee-history');
 
 
         Route::resource('business_customer', BusinessCustomerController::class);
@@ -107,31 +111,48 @@ Route::middleware('auth')->group(function () {
             '/business_customer/{customerId}/sponsorship-history',
             [BusinessCustomerController::class, 'sponsorshipHistory']
         )->name('business_customer.sponsorship_history');
+        Route::get(
+            '/business_customer/{customerId}/membership-fee-history',
+            [BusinessCustomerController::class, 'membershipFeeHistory']
+        )->name('business_customer.membership-fee-history');
 
         Route::resource('individual_customer', IndividualCustomerController::class);
         Route::get(
             '/individual_customer/{customerId}/sponsorship-history',
             [IndividualCustomerController::class, 'sponsorshipHistory']
         )->name('individual_customer.sponsorship_history');
+        Route::get(
+            '/individual_customer/{customerId}/membership-fee-history',
+            [IndividualCustomerController::class, 'membershipFeeHistory']
+        )->name('individual_customer.membership-fee-history');
 
         Route::resource('business_partner', BusinessPartnerController::class);
         Route::get(
             '/business_partner/{customerId}/sponsorship-history',
             [BusinessPartnerController::class, 'sponsorshipHistory']
         )->name('business_partner.sponsorship_history');
+        Route::get(
+            '/business_partner/{customerId}/membership-fee-history',
+            [BusinessPartnerController::class, 'membershipFeeHistory']
+        )->name('business_partner.membership-fee-history');
 
         Route::resource('individual_partner', IndividualPartnerController::class);
         Route::get(
             '/individual_partner/{customerId}/sponsorship-history',
             [IndividualPartnerController::class, 'sponsorshipHistory']
         )->name('individual_partner.sponsorship_history');
+        Route::get(
+            '/individual_partner/{customerId}/membership-fee-history',
+            [IndividualPartnerController::class, 'membershipFeeHistory']
+        )->name('individual_partner.membership-fee-history');
 
     });
 
     //Sponsorships
-    Route::resource('sponsorships', SponsorshipController::class);
+    Route::resource('sponsorship', SponsorshipController::class);
 
     Route::resource('membership_fee', MembershipFeeController::class);
+    Route::get('/api/get-customer-debts/{customerId}', [MembershipFeeController::class, 'getCustomerDebts']);
 
     //Clubs
     Route::resource('club', ClubController::class);

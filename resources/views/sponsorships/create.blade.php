@@ -20,7 +20,7 @@
                 class="mb-3">
                 Thêm tài trợ</h1>
 
-            <form action="{{ route('sponsorships.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('sponsorship.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-lg-6">
@@ -138,7 +138,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center gap-3">
-                    <a href="{{ route('sponsorships.index') }}"
+                    <a href="{{ route('sponsorship.index') }}"
                         class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Hủy</a>
                     <button type="submit" class="btn btn-primary w-48 py-3 sm:rounded-lg">Thêm</button>
                 </div>

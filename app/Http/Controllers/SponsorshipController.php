@@ -85,7 +85,7 @@ class SponsorshipController extends Controller
     {
         Sponsorship::create($request->all());
 
-        return redirect()->route('sponsorships.index')->with('success', 'Tài trợ đã được thêm thành công.');
+        return redirect()->route('sponsorship.index')->with('success', 'Tài trợ đã được thêm thành công.');
     }
 
     public function show($id)
@@ -99,6 +99,6 @@ class SponsorshipController extends Controller
         $sponsorship = Sponsorship::findOrFail($id);
         $sponsorship->delete();
 
-        return redirect()->route('sponsorships.index')->with('success', 'Tài trợ đã được xóa thành công.');
+        return redirect()->route('sponsorship.index')->with('success', 'Tài trợ đã được xóa thành công.');
     }
 }

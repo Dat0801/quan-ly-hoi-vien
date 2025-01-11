@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Models\MembershipFee;
 use Illuminate\Http\Request;
 use App\Models\BusinessPartner;
 use App\Models\Connector;
@@ -176,6 +177,37 @@ class BusinessPartnerController extends Controller
             })
             ->get();
         $totalContribution = $sponsorships->sum('total_amount');
-        return view('customer.business_partner.sponsorship_history', compact('customer', 'sponsorships', 'totalContribution'));
+        return view('customer.sponsorship_history', compact('customer', 'sponsorships', 'totalContribution'));
+    }
+
+    public function membershipFeeHistory(Request $request, $customerId)
+    {
+        $customer = BusinessPartner::findOrFail($customerId);
+        
+        $query = MembershipFee::where('customer_id', $customerId)
+            ->where('customer_type', BusinessPartner::class);
+
+        $years = MembershipFee::where('customer_id', $customerId)
+            ->where('customer_type', BusinessPartner::class)
+            ->select('year')
+            ->distinct()
+            ->pluck('year')
+            ->sortDesc();
+
+        if ($request->has('year') && $request->year != '') {
+            $query->where('year', $request->year);
+        }
+
+        if ($request->has('search') && $request->search != '') {
+            $query->where(function ($q) use ($request) {
+                $q->where('content', 'like', '%' . $request->search . '%')
+                    ->orWhere('notes', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        $fees = $query->orderBy('year', 'desc')->get();
+        $totalFeesPaid = $fees->sum('amount_paid');
+
+        return view('customer.membership_fee_history', compact('customer', 'fees', 'totalFeesPaid', 'years'));
     }
 }

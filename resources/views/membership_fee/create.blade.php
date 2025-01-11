@@ -30,12 +30,14 @@
                             </label>
                             <select id="member" name="member_id" class="form-control" required>
                                 <option value="">-- Chọn khách hàng --</option>
-                                @foreach ($allCustomers as $customer)
-                                    <option value="{{ $customer->id }}"
-                                        {{ old('member_id') == $customer->id ? 'selected' : '' }}
-                                        data-name="{{ $customer->full_name }}" data-phone="{{ $customer->phone }}"
-                                        data-id="{{ $customer->id }}" data-type="{{ $customer->type }}">
-                                        {{ $customer->full_name }}
+                                @foreach ($memberships as $membership)
+                                    <option value="{{ $membership->customer->id }}"
+                                        {{ old('member_id') == $membership->customer->id ? 'selected' : '' }}
+                                        data-name="{{ $membership->customer->full_name ?? $membership->customer->business_name_vi }}"
+                                        data-phone="{{ $membership->customer->phone }}"
+                                        data-id="{{ $membership->customer->login_code }}"
+                                        data-type="{{ $membership->customer_type }}">
+                                        {{ $membership->customer->full_name ?? $membership->customer->business_name_vi }}
                                     </option>
                                 @endforeach
                             </select>
@@ -70,7 +72,7 @@
                                 <label for="debt_settlement_checkbox" class="form-check-label">Tất toán nợ</label>
                             </div>
                             <div class="ms-2" id="debt_checkbox_container">
-                                @foreach ($membershipFees as $fee)
+                                {{-- @foreach ($membershipFees as $fee)
                                     <div class="ms-4">
                                         <label class="form-check-label">
                                             <input type="checkbox" name="debt[{{ $fee->year }}]"
@@ -82,7 +84,7 @@
                                             {{ number_format($fee->amount_due, 0, ',', '.') }} VNĐ
                                         </label>
                                     </div>
-                                @endforeach
+                                @endforeach --}}
                             </div>
                         </div>
 
@@ -152,29 +154,62 @@
 
 <script>
     document.getElementById('member').addEventListener('change', function() {
-        var selectedOption = this.options[this.selectedIndex];
+        const selectedOption = this.options[this.selectedIndex];
+        const selectedCustomerId = this.value;
+        const debtCheckboxContainer = document.getElementById('debt_checkbox_container');
+        const debtSettlementCheckbox = document.getElementById('debt_settlement_checkbox');
+        const customerIdInput = document.getElementById('customer_id');
+        const phoneInput = document.getElementById('phone');
+        const customerTypeInput = document.getElementById('customer_type_input');
 
-        if (selectedOption.value) {
-            var name = selectedOption.getAttribute('data-name');
-            var phone = selectedOption.getAttribute('data-phone');
-            var id = selectedOption.getAttribute('data-id');
-            var customerType = selectedOption.getAttribute('data-type');
+        customerIdInput.value = '';
+        phoneInput.value = '';
+        customerTypeInput.value = '';
+        debtCheckboxContainer.innerHTML = '';
+        debtSettlementCheckbox.checked = false;
 
-            document.getElementById('customer_id').value = id;
-            document.getElementById('phone').value = phone;
+        if (selectedCustomerId) {
+            const name = selectedOption.getAttribute('data-name');
+            const phone = selectedOption.getAttribute('data-phone');
+            const id = selectedOption.getAttribute('data-id');
+            const customerType = selectedOption.getAttribute('data-type');
 
-            document.getElementById('customer_type_input').value = customerType;
-        } else {
-            document.getElementById('customer_id').value = '';
-            document.getElementById('phone').value = '';
-            document.getElementById('customer_type_input').value = '';
+            customerIdInput.value = id;
+            phoneInput.value = phone;
+            customerTypeInput.value = customerType;
+
+            fetch(`/api/get-customer-debts/${selectedCustomerId}?type=${customerType}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.debts && data.debts.length > 0) {
+                        data.debts.forEach(debt => {
+                            const debtCheckbox = document.createElement('div');
+                            debtCheckbox.classList.add('ms-4');
+                            debtCheckbox.innerHTML = `
+                            <div class="form-check ms-4">
+                                <input type="checkbox" name="debt[${debt.year}]" id="debt_${debt.year}" 
+                                    class="debt_checkbox form-check-input me-1" 
+                                    data-amount="${debt.amount_due}" value="${debt.year}">
+                                <label class="form-check-label" for="debt_${debt.year}">
+                                    Năm ${debt.year}: ${debt.amount_due.toLocaleString()} VNĐ
+                                </label>
+                            </div>`;
+                            debtCheckboxContainer.appendChild(debtCheckbox);
+                        });
+                    } else {
+                        debtCheckboxContainer.innerHTML = '<p>Khách hàng này không có khoản nợ nào.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching debts:', error);
+                });
         }
     });
 
     document.addEventListener('DOMContentLoaded', function() {
         const debtSettlementCheckbox = document.getElementById('debt_settlement_checkbox');
         const debtCheckboxContainer = document.getElementById('debt_checkbox_container');
-        const debtCheckboxes = document.querySelectorAll('.debt_checkbox');
+        let debtCheckboxes = document.querySelectorAll('.debt_checkbox');
         const advancePaymentCheckbox = document.getElementById('advance_payment_checkbox');
         const advanceYearsSection = document.getElementById('advance_years_section');
         const yearsCountInput = document.getElementById('years_count');
@@ -193,15 +228,15 @@
 
             if (advancePaymentCheckbox.checked) {
                 const years = parseInt(yearsCountInput.value, 10);
-                const totalAdvance = isNaN(years) ? 0 : years * 1000000; 
+                const totalAdvance = isNaN(years) ? 0 : years * 1500000;
                 totalAmount += totalAdvance;
-                advanceTotalAmountInput.value = totalAdvance.toLocaleString(); 
+                advanceTotalAmountInput.value = totalAdvance.toLocaleString();
             } else {
                 advanceTotalAmountInput.value = '';
             }
 
             totalAmountInput.value = totalAmount;
-            hiddenTotalAmountInput.value = totalAmount; 
+            hiddenTotalAmountInput.value = totalAmount;
         }
 
         debtSettlementCheckbox.addEventListener('change', function() {
@@ -214,18 +249,24 @@
             calculateTotalAmount();
         });
 
-        debtCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                if (!this.checked) {
-                    debtSettlementCheckbox.checked = false;
-                } else {
-                    const allChecked = Array.from(debtCheckboxes).every(checkbox => checkbox
-                        .checked);
-                    debtSettlementCheckbox.checked = allChecked;
-                }
+        debtCheckboxContainer.addEventListener('change', function() {
+            debtCheckboxes = document.querySelectorAll(
+            '.debt_checkbox'); 
+            debtCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    if (!this.checked) {
+                        debtSettlementCheckbox.checked = false;
+                    } else {
+                        const allChecked = Array.from(debtCheckboxes).every(checkbox =>
+                            checkbox.checked);
+                        debtSettlementCheckbox.checked = allChecked;
+                    }
 
-                calculateTotalAmount();
+                    calculateTotalAmount();
+                });
             });
+
+            calculateTotalAmount();
         });
 
         advancePaymentCheckbox.addEventListener('change', function() {

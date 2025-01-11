@@ -22,7 +22,7 @@
                         </h1>
 
                         <div class="d-flex justify-content-between align-items-center">
-                            <form id="sponsorshipSearchForm" method="GET" action="{{ route('sponsorships.index') }}"
+                            <form id="sponsorshipSearchForm" method="GET" action="{{ route('sponsorship.index') }}"
                                 class="d-flex mb-3">
                                 <div class="d-flex align-items-center">
                                     <input type="date" id="start_date" name="start_date" class="form-control"
@@ -37,7 +37,7 @@
                                 </div>
                             </form>
 
-                            <form id="sponsorshipSearchForm" method="GET" action="{{ route('sponsorships.index') }}"
+                            <form id="sponsorshipSearchForm" method="GET" action="{{ route('sponsorship.index') }}"
                                 class="d-flex mb-3">
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="search"
@@ -75,12 +75,12 @@
                                             <td>{{ number_format($sponsorship->total_amount, 0, ',', '.') }} VNĐ</td>
                                             <td>{{ $sponsorship->sponsorship_date }}
                                             <td class="text-center">
-                                                <a href="{{ route('sponsorships.show', $sponsorship->id) }}"
+                                                <a href="{{ route('sponsorship.show', $sponsorship->id) }}"
                                                     class="me-1" style="cursor: pointer">
                                                     <i class="fas fa-circle-info" style="color: #FF7506"></i>
                                                 </a>
 
-                                                <form action="{{ route('sponsorships.destroy', $sponsorship->id) }}"
+                                                <form action="{{ route('sponsorship.destroy', $sponsorship->id) }}"
                                                     method="POST" style="display:inline;"
                                                     id="deleteSponsorshipForm-{{ $sponsorship->id }}">
                                                     @csrf
@@ -106,7 +106,7 @@
         </div>
 
         <div class="d-flex flex-column justify-content-between ms-4 bg-white sm:rounded-lg" id="addNewButtonContainer">
-            <a href="{{ route('sponsorships.create') }}"
+            <a href="{{ route('sponsorship.create') }}"
                 class="btn btn-white d-flex flex-column align-items-center justify-content-center border-0 p-3"
                 style="color: #FF7506; border-color: #FF7506; width: 80px; text-align: center;"
                 id="addSponsorshipButton">
