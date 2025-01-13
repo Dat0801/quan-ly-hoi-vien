@@ -41,6 +41,7 @@ class DatabaseSeeder extends Seeder
             IndividualPartnerSeeder::class,
             ContactSeeder::class,
             MembershipFeeSeeder::class,
+            MembershipTierSeeder::class,
         ]);
         
     }

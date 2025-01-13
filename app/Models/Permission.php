@@ -9,7 +9,7 @@ class Permission extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'permission_nname',
+        'permission_name',
         'group_name',
     ];
 

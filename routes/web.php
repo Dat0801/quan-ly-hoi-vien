@@ -3,8 +3,11 @@
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MembershipFeeController;
+use App\Http\Controllers\MembershipTierController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\User\AccountController;
+use App\Http\Controllers\User\RoleController;
 use App\Http\Controllers\SponsorshipController;
 use App\Http\Controllers\Club\ClubController;
 use App\Http\Controllers\Club\ClubBoardCustomerController;
@@ -62,25 +65,31 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('settings')->group(function () {
 
+        Route::prefix('user')->group(function () {
+            Route::resource('role', RoleController::class);
+
+            Route::resource('account', AccountController::class);
+        });
+
         Route::prefix('category')->group(function () {
             //Industries
             Route::resource('industry', IndustryController::class);
-    
+
             //Fields
             Route::resource('field', FieldController::class);
-    
+
             //Markets
             Route::resource('market', MarketController::class);
-    
+
             //Target Customer Groups
             Route::resource('target_customer_group', TargetCustomerGroupController::class);
-    
+
             //Certificates
             Route::resource('certificate', CertificateController::class);
-    
+
             //Organizations
             Route::resource('organization', OrganizationController::class);
-    
+
             //Businesses
             Route::resource('business', BusinessController::class);
         });
@@ -89,9 +98,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/contact/edit', [ContactController::class, 'edit'])->name('contact.edit');
         Route::put('/contact/update', [ContactController::class, 'update'])->name('contact.update');
 
+        Route::resource('membership_tier', MembershipTierController::class);
+
     });
-
-
 
     Route::prefix('customer')->group(function () {
         //Board Customers
@@ -161,8 +170,9 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('activity', controller: ActivityController::class);
     Route::get('/activity/{id}/participants', [ActivityController::class, 'showParticipants'])->name('activity.participants');
-    
-   
+
+
+
 });
 
 require __DIR__ . '/auth.php';

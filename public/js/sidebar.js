@@ -20,6 +20,14 @@ document.addEventListener('DOMContentLoaded', function() {
         return window.location.pathname.includes('/contact');
     }
 
+    function isInRankPage() {
+        return window.location.pathname.includes('/membership_tier');
+    }
+
+    function isInUserPage() {
+        return window.location.pathname.includes('/user');
+    }
+
     function setActiveSidebarLink() {
         sidebarLinks.forEach(function(link) {
             if (window.location.href.startsWith(link.href)) {
@@ -62,6 +70,20 @@ document.addEventListener('DOMContentLoaded', function() {
             contactText.classList.add('active');
         } else {
             contactText.classList.remove('active');
+        }
+
+        const membershipTierText = document.getElementById('membershipTierText');
+        if (isInRankPage()) {
+            membershipTierText.classList.add('active');
+        } else {
+            membershipTierText.classList.remove('active');
+        }
+
+        const userText = document.getElementById('userText');
+        if (isInUserPage()) {
+            userText.classList.add('active');
+        } else {
+            userText.classList.remove('active');
         }
     }
 

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 class BreadcrumbService
 {
     private $breadcrumbConfigs = [
+        //settings 
         'industry' => ['name' => 'Ngành', 'routes' => ['index', 'create', 'edit', 'show']],
         'field' => ['name' => 'Lĩnh vực', 'routes' => ['index', 'create', 'edit', 'show']],
         'market' => ['name' => 'Thị trường', 'routes' => ['index', 'create', 'edit', 'show']],
@@ -13,16 +14,24 @@ class BreadcrumbService
         'certificate' => ['name' => 'Chứng chỉ', 'routes' => ['index', 'create', 'edit', 'show']],
         'organization' => ['name' => 'Tổ chức', 'routes' => ['index', 'create', 'edit', 'show']],
         'business' => ['name' => 'Doanh nghiệp', 'routes' => ['index', 'create', 'edit', 'show']],
+        'contact' => ['name' => 'Liên hệ', 'routes' => ['edit', 'index']],
+        'membership_tier' => ['name' => 'Hạng thành viên', 'routes' => ['index', 'create', 'edit', 'show']],
+        //club
         'club' => ['name' => 'Câu lạc bộ', 'routes' => ['index', 'create', 'edit', 'show']],
+        //customer
         'board_customer' => ['name' => 'Ban chấp hành', 'routes' => ['index', 'create', 'edit', 'show']],
         'business_customer' => ['name' => 'Khách hàng doanh nghiệp', 'routes' => ['index', 'create', 'edit', 'show']],
         'individual_customer' => ['name' => 'Khách hàng cá nhân', 'routes' => ['index', 'create', 'edit', 'show']],
         'business_partner' => ['name' => 'Đối tác doanh nghiệp', 'routes' => ['index', 'create', 'edit', 'show']],
         'individual_partner' => ['name' => 'Đối tác cá nhân', 'routes' => ['index', 'create', 'edit', 'show']],
+        
         'activity' => ['name' => 'Hoạt động', 'routes' => ['index', 'create', 'edit', 'show']],
-        'contact' => ['name' => 'Liên hệ', 'routes' => ['edit', 'index']],
         'membership_fee' => ['name' => 'Hội phí', 'routes' => ['index', 'create']],
         'sponsorship' => ['name' => 'Tài trợ', 'routes' => ['index', 'create', 'show']],
+
+        //user 
+        'role' => ['name' => 'Vai trò', 'routes' => ['index', 'create', 'edit', 'show']],
+        'account' => ['name' => 'Tài khoản', 'routes' => ['index', 'create', 'edit', 'show']],
     ];
 
     public function getBreadcrumbs()
