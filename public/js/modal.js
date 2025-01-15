@@ -181,3 +181,31 @@ function submitActivityForm(activityId) {
         console.error("Form không tìm thấy!");
     }
 }
+
+function submitRoleForm(roleId) {
+    const form = document.getElementById(`deleteRoleForm-${roleId}`);
+    if (form) {
+        form.submit();
+    } else {
+        console.error("Form không tìm thấy!");
+    }
+}
+
+function submitAccountForm(accountId) {
+    const form = document.getElementById(`deleteAccountForm-${accountId}`);
+    if (form) {
+        form.submit();
+    } else {
+        console.error("Form không tìm thấy!");
+    }
+}
+
+function submitMeetingForm(meetingId) {
+    const form = document.getElementById(`deleteMeetingForm-${meetingId}`);
+    console.log(form);
+    if (form) {
+        form.submit();
+    } else {
+        console.error("Form không tìm thấy!");
+    }
+}

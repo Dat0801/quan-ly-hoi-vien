@@ -65,7 +65,7 @@
                         <div class="permissions-container">
                             @foreach ($permissions as $groupName => $groupPermissions)
                                 <div class="border mb-3 permission-group" style="border-radius: 10px; padding: 20px;">
-                                    <h4>{{ $groupName }}</h4>
+                                    <h4 class="mb-3">{{ $groupName }}</h4>
                                     <div class="form-check">
                                         <input class="form-check-input select-all" type="checkbox"
                                             id="selectAll_{{ $groupName }}">
@@ -88,7 +88,6 @@
                             @endforeach
                         </div>
 
-                        <!-- Nút thêm nhóm chức năng -->
                         <button type="button" class="btn btn-outline-primary w-48 py-3 sm:rounded-lg"
                             id="addPermissionGroup">
                             Thêm nhóm chức năng
@@ -108,13 +107,11 @@
     document.getElementById('addPermissionGroup').addEventListener('click', function() {
         const groupCount = document.querySelectorAll('.permission-group').length + 1;
 
-        // Tạo một container cho nhóm quyền mới
         const newGroup = document.createElement('div');
         newGroup.classList.add('border', 'mb-3', 'permission-group');
         newGroup.style.borderRadius = '10px';
         newGroup.style.padding = '20px';
 
-        // HTML cho nhóm quyền mới
         const groupHTML = `
         <h4>Nhóm chức năng ${groupCount}</h4>
         <div class="form-check">
@@ -130,11 +127,6 @@
         document.querySelector('.permissions-container').appendChild(newGroup);
     });
 
-    /**
-     * Hàm tạo danh sách các checkbox chức năng cho một nhóm
-     * @param {number} groupCount - Số thứ tự của nhóm quyền
-     * @returns {string} - HTML của các checkbox chức năng
-     */
     function generatePermissionsHTML(groupCount) {
         let permissionsHTML = '';
         for (let i = 1; i <= 4; i++) {
@@ -151,7 +143,6 @@
         return permissionsHTML;
     }
 
-    // Logic xử lý checkbox "Chọn tất cả" trong mỗi nhóm
     document.addEventListener('change', function(e) {
         if (e.target.classList.contains('select-all')) {
             const checkboxes = e.target.closest('.permission-group').querySelectorAll('.permission-checkbox');

@@ -85,4 +85,9 @@ class BusinessCustomer extends Model
     {
         return $this->morphMany(ActivityParticipant::class, 'participantable');
     }
+
+    public function meetings()
+    {
+        return $this->morphMany(MeetingParticipant::class, 'participantable');
+    }
 }

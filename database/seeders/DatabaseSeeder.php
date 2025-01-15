@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
             ContactSeeder::class,
             MembershipFeeSeeder::class,
             MembershipTierSeeder::class,
+            RolePermissionSeeder::class,
         ]);
         
     }

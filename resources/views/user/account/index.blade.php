@@ -12,7 +12,6 @@
             <div class="tab-content" id="managementTabsContent">
                 <div class="tab-pane fade show active" id="account" role="tabpanel">
                     <div class="d-flex align-items-start">
-                        <!-- Main Content -->
                         <div class="bg-white sm:rounded-lg" style="flex: 1;">
                             @if (session('success'))
                                 <div class="alert alert-success">
@@ -21,9 +20,8 @@
                             @endif
 
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <!-- Bộ lọc Trạng thái và Vai trò -->
                                 <div class="d-flex">
-                                    <div class="me-2">
+                                    <div class="me-2" style="width: 200px;">
                                         <h1 style="
                                             font-family: 'Roboto', sans-serif;
                                             font-size: 16px;
@@ -32,14 +30,14 @@
                                             text-align: left;
                                             color: #BF5805;"
                                             class="mb-1">
-                                            Trạng thái
+                                            Trạng thái hoạt động
                                         </h1>
-                                        <form id="filterForm" method="GET" action="{{ route('account.index') }}"
+                                        <form id="filterFormStatus" method="GET" action="{{ route('account.index') }}"
                                             class="d-flex" onchange="this.submit()">
-                                            <select name="status" class="form-control">
+                                            <select name="status" class="form-control" style="width: 100%;">
                                                 <option value=""
                                                     {{ request('status') === null ? 'selected' : '' }}>
-                                                    Tất cả trạng thái</option>
+                                                    Tất cả</option>
                                                 <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>
                                                     Hoạt động</option>
                                                 <option value="0" {{ request('status') == '0' ? 'selected' : '' }}>
@@ -47,8 +45,8 @@
                                             </select>
                                         </form>
                                     </div>
-
-                                    <div class="me-2">
+                            
+                                    <div class="me-2" style="width: 200px;">
                                         <h1 style="
                                             font-family: 'Roboto', sans-serif;
                                             font-size: 16px;
@@ -59,12 +57,12 @@
                                             class="mb-1">
                                             Vai trò
                                         </h1>
-                                        <form id="filterForm" method="GET" action="{{ route('account.index') }}"
+                                        <form id="filterFormRole" method="GET" action="{{ route('account.index') }}"
                                             class="d-flex" onchange="this.submit()">
-                                            <select name="role_id" class="form-control">
+                                            <select name="role_id" class="form-control" style="width: 100%;">
                                                 <option value=""
                                                     {{ request('role_id') === null ? 'selected' : '' }}>
-                                                    Tất cả vai trò</option>
+                                                    Tất cả</option>
                                                 @foreach ($roles as $role)
                                                     <option value="{{ $role->id }}"
                                                         {{ request('role_id') == $role->id ? 'selected' : '' }}>
@@ -76,7 +74,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Tìm kiếm -->
                                 <div class="ms-2">
                                     <form id="accountSearchForm" method="GET" action="{{ route('account.index') }}"
                                         class="d-flex">

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\MembershipFeeController;
 use App\Http\Controllers\MembershipTierController;
 use App\Http\Controllers\ProfileController;
@@ -165,13 +166,15 @@ Route::middleware('auth')->group(function () {
 
     //Clubs
     Route::resource('club', ClubController::class);
-
     Route::resource('club.board_customer', ClubBoardCustomerController::class);
 
+    //Activities
     Route::resource('activity', controller: ActivityController::class);
     Route::get('/activity/{id}/participants', [ActivityController::class, 'showParticipants'])->name('activity.participants');
 
-
+    //Meetings
+    Route::resource('meeting', controller: MeetingController::class);
+    Route::get('/meetings-by-date', [MeetingController::class, 'getMeetingsByDate']);
 
 });
 
