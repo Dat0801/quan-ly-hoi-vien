@@ -38,8 +38,8 @@ class IndividualCustomerController extends Controller
 
     public function create()
     {
-        $industries = Industry::all(); // Lấy tất cả ngành
-        $fields = Field::all(); // Lấy tất cả lĩnh vực
+        $industries = Industry::all(); 
+        $fields = Field::all(); 
         return view('customer.individual_customer.create', compact('industries', 'fields'));
     }
 
@@ -54,6 +54,7 @@ class IndividualCustomerController extends Controller
             'phone' => 'required',
             'email' => 'required|email|unique:individual_customers',
             'unit' => 'nullable',
+            'position' => 'nullable',
             'is_board_member' => 'required|boolean',
             'board_position' => 'nullable',
             'term' => 'nullable',
@@ -93,6 +94,7 @@ class IndividualCustomerController extends Controller
             'gender' => 'required',
             'phone' => 'required',
             'email' => 'required|email|unique:individual_customers,email,' . $id,
+            'position' => 'nullable',
             'unit' => 'nullable',
             'is_board_member' => 'required|boolean',
             'board_position' => 'nullable',

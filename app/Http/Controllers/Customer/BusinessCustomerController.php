@@ -204,8 +204,8 @@ class BusinessCustomerController extends Controller
         $businessCustomer = BusinessCustomer::findOrFail($id);
 
         $request->validate([
-            'login_code' => 'required|unique:business_partners,login_code,' . $id,
-            'card_code' => 'required|unique:business_partners,card_code,' . $id,
+            'login_code' => 'required|unique:business_customers,login_code,' . $id,
+            'card_code' => 'required|unique:business_customers,card_code,' . $id,
             'business_name_vi' => 'required',
             'business_name_en' => 'nullable',
             'business_name_abbr' => 'nullable',

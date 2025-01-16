@@ -88,20 +88,20 @@
                                                     <ul class="dropdown-menu"
                                                         aria-labelledby="actionDropdown-{{ $partner->id }}">
                                                         <li>
-                                                            <a href="{{ route('club.business_partner.show', [$partner->id,$club->id]) }}"
+                                                            <a href="{{ route('club.business_partner.show', [$club->id,$partner->id]) }}"
                                                                 class="dropdown-item" style="color: #BF5805">
                                                                 Chi tiết
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="{{ route('club.business_partner.edit', [$partner->id,$club->id]) }}"
+                                                            <a href="{{ route('club.business_partner.edit', [$club->id,$partner->id]) }}"
                                                                 class="dropdown-item" style="color: #BF5805">
                                                                 Chỉnh sửa
                                                             </a>
                                                         </li>
                                                         <li>
                                                             <form
-                                                                action="{{ route('club.business_partner.destroy', [$partner->id,$club->id]) }}"
+                                                                action="{{ route('club.business_partner.destroy', [$club->id, $partner->id]) }}"
                                                                 method="POST"
                                                                 id="deleteBusinessPartnerForm-{{ $partner->id }}">
                                                                 @csrf

@@ -20,7 +20,7 @@
                 Chi tiết khách hàng
             </h1>
 
-            <form action="{{ route('individual_customer.store') }}" method="POST" enctype="multipart/form-data">
+            <form method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row mb-3">
                     <!-- Phần 1: Thông tin cá nhân -->
@@ -70,12 +70,12 @@
                             <!-- Chức vụ -->
                             <div class="d-flex align-items-center mb-3">
                                 <label for="position" class="form-label mb-0 me-2" style="width: 250px;">Chức vụ</label>
-                                <input type="text" id="position" name="unit_position" value="{{ $customer->unit_position }}"
+                                <input type="text" id="position" name="position" value="{{ $customer->position }}"
                                     placeholder="Nhập chức vụ"
                                     class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
                                     disabled>
-                                @if ($errors->has('unit_position'))
-                                    <span class="text-danger ms-2">{{ $errors->first('unit_position') }}</span>
+                                @if ($errors->has('position'))
+                                    <span class="text-danger ms-2">{{ $errors->first('position') }}</span>
                                 @endif
                             </div>
 
@@ -133,11 +133,11 @@
                             <!-- Đơn vị -->
                             <div class="d-flex align-items-center mb-3">
                                 <label for="organization_name" class="form-label mb-0 me-2" style="width: 250px;">Đơn vị</label>
-                                <input type="text" id="organization_name" name="unit_name" value="{{ $customer->unit_name }}"
+                                <input type="text" id="organization_name" name="unit" value="{{ $customer->unit }}"
                                     placeholder="Nhập tên đơn vị" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
                                     disabled>
-                                @if ($errors->has('unit_name'))
-                                    <span class="text-danger ms-2">{{ $errors->first('unit_name') }}</span>
+                                @if ($errors->has('unit'))
+                                    <span class="text-danger ms-2">{{ $errors->first('unit') }}</span>
                                 @endif
                             </div>
                         </div>

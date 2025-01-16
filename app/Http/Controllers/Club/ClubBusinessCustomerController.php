@@ -179,7 +179,7 @@ class ClubBusinessCustomerController extends Controller
     public function show(Club $club, $id)
     {
         $customer = $club->businessCustomers()->findOrFail($id);
-        return view('customer.business_customer.show', compact('customer'));
+        return view('club.business_customer.show', compact('club', 'customer'));
     }
 
     public function edit(Club $club, $id)
@@ -192,15 +192,15 @@ class ClubBusinessCustomerController extends Controller
         $certificates = Certificate::all();
         $clubs = Club::all();
 
-        return view('customer.business_customer.edit', compact('customer', 'industries', 'fields', 'markets', 'targetCustomerGroups', 'certificates', 'clubs'));
+        return view('club.business_customer.edit', compact('club', 'customer', 'industries', 'fields', 'markets', 'targetCustomerGroups', 'certificates', 'clubs'));
     }
-    public function update(Request $request, $id, Club $club)
+    public function update(Request $request, Club $club, $id)
     {
         $businessCustomer = $club->businessCustomers()->findOrFail($id);
 
         $request->validate([
-            'login_code' => 'required|unique:business_partners,login_code,' . $id,
-            'card_code' => 'required|unique:business_partners,card_code,' . $id,
+            'login_code' => 'required|unique:business_customers,login_code,' . $id, 
+            'card_code' => 'required|unique:business_customers,card_code,' . $id,   
             'business_name_vi' => 'required',
             'business_name_en' => 'nullable',
             'business_name_abbr' => 'nullable',
@@ -231,7 +231,7 @@ class ClubBusinessCustomerController extends Controller
         $businessCustomer->update($request->all());
 
         if ($request->has('responsible_name') && count($request->responsible_name) > 0) {
-            $businessCustomer->connector()->delete();
+            $businessCustomer->connector()->delete(); 
 
             $connectors = [];
             foreach ($request->responsible_name as $index => $name) {

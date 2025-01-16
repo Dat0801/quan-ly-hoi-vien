@@ -80,17 +80,17 @@
                                                     </button>
                                                     <ul class="dropdown-menu" aria-labelledby="actionDropdown-{{ $customer->id }}">
                                                         <li>
-                                                            <a href="{{ route('club.individual_customer.show', [$customer->id, $club->id]) }}" class="dropdown-item" style="color: #BF5805">
+                                                            <a href="{{ route('club.individual_customer.show', [$club->id, $customer->id]) }}" class="dropdown-item" style="color: #BF5805">
                                                                 Chi tiết
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="{{ route('club.individual_customer.edit', [$customer->id, $club->id]) }}" class="dropdown-item" style="color: #BF5805">
+                                                            <a href="{{ route('club.individual_customer.edit', [$club->id, $customer->id]) }}" class="dropdown-item" style="color: #BF5805">
                                                                 Chỉnh sửa
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <form action="{{ route('club.individual_customer.destroy', [$customer->id, $club->id]) }}" method="POST" id="deleteIndividualCustomerForm-{{ $customer->id }}">
+                                                            <form action="{{ route('club.individual_customer.destroy', [$club->id, $customer->id]) }}" method="POST" id="deleteIndividualCustomerForm-{{ $customer->id }}">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="button" class="dropdown-item text-danger" 
