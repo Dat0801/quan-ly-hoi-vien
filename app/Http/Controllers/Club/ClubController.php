@@ -9,30 +9,26 @@ use App\Models\Industry;
 use App\Models\Field;
 use App\Models\Market;
 use App\Models\Connector;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ClubController extends Controller
 {
     //
     public function index(Request $request)
     {
-        // Lấy danh sách lĩnh vực và thị trường để hiển thị trong form lọc
         $fields = Field::all();
         $markets = Market::all();
 
-        // Query cơ bản
         $query = Club::query();
 
-        // Lọc theo lĩnh vực
         if ($request->filled('field_id')) {
             $query->where('field_id', $request->field_id);
         }
 
-        // Lọc theo thị trường
         if ($request->filled('market_id')) {
             $query->where('market_id', $request->market_id);
         }
 
-        // Tìm kiếm theo tên
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
@@ -41,7 +37,6 @@ class ClubController extends Controller
             });
         }
 
-        // Lấy câu lạc bộ với số lượng khách hàng
         $clubs = $query->withCount([
             'boardCustomers',
             'businessCustomers',
@@ -53,15 +48,139 @@ class ClubController extends Controller
         return view('club.index', compact('clubs', 'fields', 'markets'));
     }
 
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:csv,txt|max:2048',
+        ]);
+
+        $file = $request->file('file');
+        $fileData = array_map('str_getcsv', file($file->getRealPath()));
+
+        $headers = $fileData[0];
+        unset($fileData[0]);
+
+        $expectedHeaders = [
+            'club_code',
+            'name_vi',
+            'name_en',
+            'name_abbr',
+            'address',
+            'tax_code',
+            'phone',
+            'email',
+            'website',
+            'fanpage',
+            'established_date',
+            'established_decision',
+            'industry_id',
+            'field_id',
+            'market_id',
+            'connector_id',
+            'status',
+        ];
+
+        if ($headers !== $expectedHeaders) {
+            return redirect()->back()->withErrors(['file' => 'Cấu trúc file không hợp lệ.']);
+        }
+
+        foreach ($fileData as $row) {
+            $clubData = array_combine($headers, $row);
+            try {
+                Club::create([
+                    'club_code' => $clubData['club_code'] ?? null,
+                    'name_vi' => $clubData['name_vi'] ?? null,
+                    'name_en' => $clubData['name_en'] ?? null,
+                    'name_abbr' => $clubData['name_abbr'] ?? null,
+                    'address' => $clubData['address'] ?? null,
+                    'tax_code' => $clubData['tax_code'] ?? null,
+                    'phone' => $clubData['phone'] ?? null,
+                    'email' => $clubData['email'] ?? null,
+                    'website' => $clubData['website'] ?? null,
+                    'fanpage' => $clubData['fanpage'] ?? null,
+                    'established_date' => $clubData['established_date'] ?? null,
+                    'established_decision' => $clubData['established_decision'] ?? null,
+                    'industry_id' => $clubData['industry_id'] ?? null,
+                    'field_id' => $clubData['field_id'] ?? null,
+                    'market_id' => $clubData['market_id'] ?? null,
+                    'status' => $clubData['status'] ?? 'active',
+                ]);
+            } catch (\Exception $e) {
+                continue;
+            }
+        }
+
+        return redirect()->route('club.index')->with('success', 'File được tải lên và dữ liệu được nhập thành công.');
+    }
+
+
+    public function export()
+    {
+        $clubs = Club::all();
+        $headers = [
+            'club_code',
+            'name_vi',
+            'name_en',
+            'name_abbr',
+            'address',
+            'tax_code',
+            'phone',
+            'email',
+            'website',
+            'fanpage',
+            'established_date',
+            'established_decision',
+            'industry_id',
+            'field_id',
+            'market_id',
+            'connector_id',
+            'status',
+        ];
+
+        $response = new StreamedResponse(function () use ($clubs, $headers) {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, $headers);
+
+            foreach ($clubs as $club) {
+                fputcsv($handle, [
+                    $club->club_code,
+                    $club->name_vi,
+                    $club->name_en,
+                    $club->name_abbr,
+                    $club->address,
+                    $club->tax_code,
+                    $club->phone,
+                    $club->email,
+                    $club->website,
+                    $club->fanpage,
+                    $club->established_date,
+                    $club->established_decision,
+                    $club->industry_id,
+                    $club->field_id,
+                    $club->market_id,
+                    $club->connector_id,
+                    $club->status,
+                ]);
+            }
+
+            fclose($handle);
+        });
+
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="clubs.csv"');
+
+        return $response;
+    }
+
     public function create()
     {
-        $industries = Industry::all(); // Lấy tất cả ngành
-        $fields = Field::all(); // Lấy tất cả lĩnh vực
-        $markets = Market::all(); // Lấy tất cả thị trường
+        $industries = Industry::all();
+        $fields = Field::all();
+        $markets = Market::all();
         return view('club.create', compact('industries', 'fields', 'markets'));
     }
 
-    // Lưu câu lạc bộ mới
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -87,7 +206,6 @@ class ClubController extends Controller
             'responsible_email.*' => 'nullable|email',
         ]);
 
-        // Tạo câu lạc bộ
         $club = Club::create([
             'club_code' => $request->club_code,
             'name_vi' => $request->name_vi,
@@ -106,10 +224,12 @@ class ClubController extends Controller
             'market_id' => $request->market_id,
         ]);
 
+        $club = Club::create($validated);
+
         if ($request->has('responsible_name') && count($request->responsible_name) > 0) {
             $connectors = [];
             foreach ($request->responsible_name as $index => $name) {
-                if (!empty($name)) { // Kiểm tra xem người phụ trách có thông tin không
+                if (!empty($name)) {
                     $connectors[] = [
                         'club_id' => $club->id,
                         'name' => $name,
@@ -121,13 +241,11 @@ class ClubController extends Controller
                 }
             }
 
-            // Nếu có thông tin người phụ trách, lưu vào bảng connectors
             if (!empty($connectors)) {
                 Connector::insert($connectors);
             }
         }
 
-        // Chuyển hướng về trang danh sách câu lạc bộ và thông báo thành công
         return redirect()->route('club.index')->with('success', 'Câu lạc bộ được tạo thành công.');
     }
 
@@ -147,7 +265,6 @@ class ClubController extends Controller
 
     public function update(Request $request, Club $club)
     {
-        // Validate the request data
         $validated = $request->validate([
             'club_code' => 'required|unique:clubs,club_code,' . $club->id,
             'name_vi' => 'required|string',
@@ -171,7 +288,6 @@ class ClubController extends Controller
             'responsible_email.*' => 'nullable|email',
         ]);
 
-        // Update club details
         $club->update([
             'club_code' => $request->club_code,
             'name_vi' => $request->name_vi,
@@ -190,15 +306,12 @@ class ClubController extends Controller
             'market_id' => $request->market_id,
         ]);
 
-        // Handling responsible people (connectors)
         if ($request->has('responsible_name') && count($request->responsible_name) > 0) {
-            // First, clear any existing connectors for the club
             $club->connector()->delete();
 
-            // Prepare the connectors data
             $connectors = [];
             foreach ($request->responsible_name as $index => $name) {
-                if (!empty($name)) { // Check if the responsible person has information
+                if (!empty($name)) {
                     $connectors[] = [
                         'club_id' => $club->id,
                         'name' => $name,
@@ -210,13 +323,11 @@ class ClubController extends Controller
                 }
             }
 
-            // If there are valid connectors, insert them into the database
             if (!empty($connectors)) {
                 Connector::insert($connectors);
             }
         }
 
-        // Redirect to the club list page with a success message
         return redirect()->route('club.index')->with('success', 'Câu lạc bộ được cập nhật thành công.');
     }
 

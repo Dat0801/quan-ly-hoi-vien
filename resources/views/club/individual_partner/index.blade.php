@@ -4,11 +4,13 @@
             <h1 id="dynamicTitle"
                 style="font-family: 'Roboto', sans-serif; font-size: 32px; font-weight: 700; color: #803B03;"
                 class="mb-3">
-                Danh sách ban điều hành
+                Danh sách đối tác cá nhân
             </h1>
 
+            @include('club.navigation')
+
             <div class="tab-content" id="managementTabsContent">
-                <div class="tab-pane fade show active" id="board-customer" role="tabpanel">
+                <div class="tab-pane fade show active" id="individual-partner" role="tabpanel">
                     <div class="bg-white sm:rounded-lg">
                         @if (session('success'))
                             <div class="alert alert-success">
@@ -16,27 +18,35 @@
                             </div>
                         @endif
 
-                        <h1 style="font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 500; line-height: 18.75px; text-align: left; text-underline-position: from-font; text-decoration-skip-ink: none; color: #BF5805;"
-                            class="mb-1">
-                            Tình trạng hoạt động
-                        </h1>
+                        <h1 style="
+                                font-family: 'Roboto', sans-serif;
+                                font-size: 16px;
+                                font-weight: 500;
+                                line-height: 18.75px;
+                                text-align: left;
+                                text-underline-position: from-font;
+                                text-decoration-skip-ink: none;
+                                color: #BF5805;"
+                            class="mb-1">Phân loại</h1>
 
                         <div class="d-flex justify-content-between align-items-center">
-                            <form id="statusSelectForm" method="GET"
-                                action="{{ route('club.board_customer.index', $club->id) }}" class="d-flex"
+                            <form id="partnerCategorySelectForm" method="GET"
+                                action="{{ route('club.individual_partner.index', $club->id) }}" class="d-flex"
                                 onchange="this.submit()">
-                                <select name="status" class="form-control">
-                                    <option value="" {{ request('status') === null ? 'selected' : '' }}>Tất cả
+                                <select name="partner_category" class="form-control">
+                                    <option value="" {{ request('partner_category') === null ? 'selected' : '' }}>
+                                        Tất cả</option>
+                                    <option value="Việt Nam"
+                                        {{ request('partner_category') == 'Việt Nam' ? 'selected' : '' }}>Việt Nam
                                     </option>
-                                    <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Đang
-                                        hoạt động</option>
-                                    <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>
-                                        Ngưng hoạt động</option>
+                                    <option value="Quốc tế"
+                                        {{ request('partner_category') == 'Quốc tế' ? 'selected' : '' }}>Quốc tế
+                                    </option>
                                 </select>
                             </form>
 
-                            <form id="customerSearchForm" method="GET"
-                                action="{{ route('club.board_customer.index', $club->id) }}" class="d-flex">
+                            <form id="partnerSearchForm" method="GET" action="{{ route('club.individual_partner.index', $club->id) }}"
+                                class="d-flex">
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="search"
                                         value="{{ request('search') }}" placeholder="Tìm kiếm...">
@@ -51,56 +61,56 @@
                                 <thead style="background-color: #FFE3CD; color: #803B03;">
                                     <tr>
                                         <th class="text-center" style="border: none;">STT</th>
-                                        <th style="border: none;">Họ và Tên</th>
-                                        <th style="border: none;">Nhiệm kỳ</th>
-                                        <th style="border: none;">Chức vụ</th>
+                                        <th style="border: none;">Mã đối tác</th>
+                                        <th style="border: none;">Tên đối tác</th>
+                                        <th style="border: none;">Phân loại</th>
                                         <th style="border: none;">Tình trạng hoạt động</th>
                                         <th class="text-center" style="border: none;">Hành động</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($boardCustomers as $index => $customer)
+                                    @foreach ($partners as $index => $partner)
                                         <tr style="background-color: transparent;">
                                             <td class="text-center">{{ $index + 1 }}</td>
-                                            <td>{{ $customer->full_name }}</td>
-                                            <td>{{ $customer->term }}</td>
-                                            <td>{{ $customer->unit_position }}</td>
+                                            <td>{{ $partner->login_code }}</td>
+                                            <td>{{ $partner->full_name }}</td>
+                                            <td>{{ $partner->partner_category }}</td>
                                             <td>
                                                 <span
-                                                    class="badge {{ $customer->status ? 'bg-success' : 'bg-danger' }}">
-                                                    {{ $customer->status ? 'Đang hoạt động' : 'Ngưng hoạt động' }}
+                                                    class="badge {{ $partner->status ? 'bg-success' : 'bg-danger' }}">
+                                                    {{ $partner->status ? 'Đang hoạt động' : 'Ngưng hoạt động' }}
                                                 </span>
                                             </td>
                                             <td class="text-center">
                                                 <div class="dropdown">
                                                     <button class="btn btn-link p-0" type="button"
-                                                        id="actionDropdown-{{ $customer->id }}"
+                                                        id="actionDropdown-{{ $partner->id }}"
                                                         data-bs-toggle="dropdown" aria-expanded="false">
                                                         <i class="fas fa-ellipsis-vertical" style="color: #FF7506"></i>
                                                     </button>
                                                     <ul class="dropdown-menu"
-                                                        aria-labelledby="actionDropdown-{{ $customer->id }}">
+                                                        aria-labelledby="actionDropdown-{{ $partner->id }}">
                                                         <li>
-                                                            <a href="{{ route('club.board_customer.show', [$club->id, $customer->id]) }}"
+                                                            <a href="{{ route('club.individual_partner.show', [$partner->id, $club->id]) }}"
                                                                 class="dropdown-item" style="color: #BF5805">
                                                                 Chi tiết
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="{{ route('club.board_customer.edit', [$club->id, $customer->id]) }}"
+                                                            <a href="{{ route('club.individual_partner.edit', [$partner->id,$club->id]) }}"
                                                                 class="dropdown-item" style="color: #BF5805">
                                                                 Chỉnh sửa
                                                             </a>
                                                         </li>
                                                         <li>
                                                             <form
-                                                                action="{{ route('club.board_customer.destroy', [$club->id, $customer->id]) }}"
+                                                                action="{{ route('club.individual_partner.destroy', [$partner->id,$club->id]) }}"
                                                                 method="POST"
-                                                                id="deleteBoardCustomerForm-{{ $customer->id }}">
+                                                                id="deleteIndividualPartnerForm-{{ $partner->id }}">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="button" class="dropdown-item text-danger"
-                                                                    onclick="showModal('Bạn có chắc chắn muốn xóa ban chấp hành này?', function() { submitBoardCustomerForm('{{ $customer->id }}'); }, function() { })">
+                                                                    onclick="showModal('Bạn có chắc chắn muốn xóa đối tác này?', function() { submitIndividualPartnerForm('{{ $partner->id }}'); }, function() { })">
                                                                     Xóa
                                                                 </button>
                                                             </form>
@@ -113,7 +123,7 @@
                                 </tbody>
                             </table>
                             <div class="d-flex justify-content-center">
-                                {{ $boardCustomers->links('pagination::bootstrap-5') }}
+                                {{ $partners->links('pagination::bootstrap-5') }}
                             </div>
                         </div>
                     </div>
@@ -122,26 +132,11 @@
         </div>
 
         <div class="d-flex flex-column justify-content-between ms-4 bg-white sm:rounded-lg" id="addNewButtonContainer">
-            <a href="{{ route('club.board_customer.create', $club->id) }}"
+            <a href="{{ route('club.individual_partner.create', $club->id) }}"
                 class="btn btn-white d-flex flex-column align-items-center justify-content-center border-0 p-3"
-                style="color: #FF7506; border-color: #FF7506; width: 80px; text-align: center;" id="addCustomerButton">
+                style="color: #FF7506; border-color: #FF7506; width: 80px; text-align: center;" id="addPartnerButton">
                 <i class="fas fa-plus fa-lg mt-2" style="color: #FF7506;"></i>
                 <span class="mt-3" style="color: #FF7506; font-size: 12px; word-wrap: break-word;">Thêm mới</span>
-            </a>
-            <a href="{{ route('club.board_customer.create', $club->id) }}"
-                class="btn btn-white d-flex flex-column align-items-center justify-content-center border-0 p-3"
-                style="color: #FF7506; border-color: #FF7506; width: 80px; text-align: center;" id="addClubButton">
-                <i class="fa-solid fa-file-import" style="color: #FF7506;"></i>
-                <span style="color: #FF7506; font-size: 12px; word-wrap: break-word;">Tải file
-                    lên</span>
-            </a>
-
-            <a href="{{ route('club.board_customer.create', $club->id) }}"
-                class="btn btn-white d-flex flex-column align-items-center justify-content-center border-0 p-3"
-                style="color: #FF7506; border-color: #FF7506; width: 80px; text-align: center;" id="addClubButton">
-                <i class="fa-solid fa-file-export" style="color: #FF7506;"></i>
-                <span style="color: #FF7506; font-size: 12px; word-wrap: break-word;">Xuất file
-                    (.csv)</span>
             </a>
         </div>
     </div>

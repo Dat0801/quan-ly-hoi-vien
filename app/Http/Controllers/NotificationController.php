@@ -2,35 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Meeting;
+use Illuminate\Http\Request;
+use App\Models\Notification;
+use App\Models\NotificationRecipient;
 use App\Models\BoardCustomer;
 use App\Models\BusinessCustomer;
 use App\Models\IndividualCustomer;
 use App\Models\BusinessPartner;
 use App\Models\IndividualPartner;
-use App\Models\MeetingParticipant;
-use Illuminate\Http\Request;
 
-class MeetingController extends Controller
+class NotificationController extends Controller
 {
     //
     public function index(Request $request)
     {
-        $search = $request->search;
-        $startDate = $request->start_date;
-        $endDate = $request->end_date;
+        $search = $request->get('search');
+        $startDate = $request->get('start_date');
+        $endDate = $request->get('end_date');
+        $type = $request->get('type');
 
-        $meetings = Meeting::with('participants')
+        $notifications = Notification::query()
             ->when($search, function ($query) use ($search) {
-                return $query->where('title', 'LIKE', "%$search%");
+                $query->where('title', 'LIKE', "%$search%");
+            })
+            ->when($type, function ($query) use ($type) {
+                $query->where('type', $type);
             })
             ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
-                return $query->whereBetween('start_time', [$startDate, $endDate]);
+                $query->whereBetween('created_at', [$startDate, $endDate]);
             })
+            ->with('creator')
             ->paginate(10);
 
-        return view('meeting.index', compact('meetings'));
+        return view('notification.index', compact('notifications'));
     }
+
 
     public function create()
     {
@@ -94,7 +100,7 @@ class MeetingController extends Controller
         $businessScales = $allParticipants->pluck('business_scale')->filter()->unique();
 
         return view(
-            'meeting.create',
+            'notification.create',
             compact('allParticipants', 'fields', 'markets', 'targetCustomerGroups', 'businessScales', 'participantTypes')
         );
     }
@@ -102,23 +108,27 @@ class MeetingController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'host' => 'required|string|max:255',
             'title' => 'required|string|max:255',
+            'format' => 'required|string|max:255',
+            'send_time_option' => 'required|string',
+            'send_time' => 'nullable|date',
             'content' => 'nullable|string',
-            'location' => 'required|string|max:255',
-            'start_time' => 'required|date',
             'selected_members' => 'nullable|array',
             'new_participants' => 'nullable|array',
             'new_participants.*.email' => 'nullable|email',
         ]);
-        $meeting = new Meeting();
-        $meeting->host = $request->host;
-        $meeting->title = $request->title;
-        $meeting->content = $request->content;
-        $meeting->location = $request->location;
-        $meeting->start_time = $request->start_time;
-        $meeting->save();
 
+        $notification = new Notification();
+        $notification->title = $request->title;
+        $notification->format = $request->format;
+        if (request('send_time_option') == 'immediate') {
+            $notification->sent_at = now();
+        } else {
+            $notification->sent_at = $request->send_time;
+        }
+        $notification->content = $request->content;
+        $notification->user_id = auth()->id();
+        $notification->save();
         if ($request->has('selected_members')) {
             foreach ($request->selected_members as $selected_member) {
                 $customerModel = null;
@@ -126,35 +136,34 @@ class MeetingController extends Controller
                 $participantId = $selected_member['id'];
                 $customerModel = $type::find($participantId);
                 if ($customerModel) {
-                    $meetingParticipant = new MeetingParticipant();
-                    $meetingParticipant->meeting_id = $meeting->id;
-                    $meetingParticipant->participantable_id = $customerModel->id;
-                    $meetingParticipant->participantable_type = get_class($customerModel);
-                    $meetingParticipant->save();
+                    $notificationParticipant = new NotificationRecipient();
+                    $notificationParticipant->notification_id = $notification->id;
+                    $notificationParticipant->recipientable_id = $customerModel->id;
+                    $notificationParticipant->recipientable_type = get_class($customerModel);
+                    $notificationParticipant->save();
                 }
             }
         }
 
         if ($request->has('new_participants')) {
             foreach ($request->new_participants as $newParticipant) {
-                $meetingParticipant = new MeetingParticipant();
-                $meetingParticipant->meeting_id = $meeting->id;
-                $meetingParticipant->external_email = $newParticipant['email'];
-                $meetingParticipant->save();
+                $notificationParticipant = new NotificationRecipient();
+                $notificationParticipant->notification_id = $notification->id;
+                $notificationParticipant->email = $newParticipant['email'];
+                $notificationParticipant->save();
             }
         }
 
-        return redirect()->route('meeting.index')->with('success', 'Meeting created successfully!');
+        return redirect()->route('notification.index')->with('success', 'Thêm thông báo thành công!');
     }
 
     public function show($id)
     {
-        $meeting = Meeting::with(['participants.participantable'])
-            ->findOrFail($id);
+        $notification = Notification::with('recipients')->findOrFail($id);
 
-        $meeting->participants->each(function ($participant) {
-            if ($participant->participantable && method_exists($participant->participantable, 'market')) {
-                $participant->participantable->load('market');
+        $notification->recipients->each(function ($recipients) {
+            if ($recipients->recipientable && method_exists($recipients->recipientable, 'market')) {
+                $recipients->recipientable->load('market');
             }
         });
 
@@ -166,15 +175,15 @@ class MeetingController extends Controller
             IndividualPartner::class => 'Đối tác cá nhân',
         ];
 
-        $externalParticipants = $meeting->participants->filter(function ($participant) {
-            return $participant->participantable_type === null;
+        $externalParticipants = $notification->recipients->filter(function ($recipients) {
+            return $recipients->recipientable_type === null;
         });
-        return view('meeting.show', compact('meeting', 'participantTypes', 'externalParticipants'));
+        return view('notification.show', compact('notification', 'participantTypes', 'externalParticipants'));
     }
 
     public function edit($id)
     {
-        $meeting = Meeting::findOrFail($id);
+        $notification = Notification::findOrFail($id);
         $boardCustomers = BoardCustomer::all()->map(function ($item) {
             $item->type_name = 'Ban chấp hành';
             $item->type = BoardCustomer::class;
@@ -234,14 +243,14 @@ class MeetingController extends Controller
         $targetCustomerGroups = $allParticipants->pluck('target_customer_group')->filter()->unique();
         $businessScales = $allParticipants->pluck('business_scale')->filter()->unique();
 
-        $externalParticipants = $meeting->participants->filter(function ($participant) {
-            return $participant->participantable_type === null;
+        $externalParticipants = $notification->recipients->filter(function ($recipient) {
+            return $recipient->recipientable_type === null;
         });
 
         return view(
-            'meeting.edit',
+            'notification.edit',
             compact(
-                'meeting',
+                'notification',
                 'allParticipants',
                 'fields',
                 'markets',
@@ -256,32 +265,35 @@ class MeetingController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'host' => 'required|string|max:255',
             'title' => 'required|string|max:255',
+            'format' => 'required|string|max:255',
+            'sent_at' => 'nullable|date',
             'content' => 'nullable|string',
-            'location' => 'required|string|max:255',
-            'start_time' => 'required|date',
             'selected_members' => 'nullable|array',
             'external_participants' => 'nullable|array',
             'external_participants.*.email' => 'nullable|email',
         ]);
 
-        $meeting = Meeting::findOrFail($id);
-        $meeting->host = $request->host;
-        $meeting->title = $request->title;
-        $meeting->content = $request->content;
-        $meeting->location = $request->location;
-        $meeting->start_time = $request->start_time;
-        $meeting->save();
+        $notification = Notification::findOrFail($id);
+        $notification->title = $request->title;
+        $notification->format = $request->format;
+        if (request('send_time_option') == 'immediate') {
+            $notification->sent_at = now();
+        } else {
+            $notification->sent_at = $request->send_time;
+        }
+        $notification->content = $request->content;
+        $notification->user_id = auth()->id();
+        $notification->save();
 
         if ($request->has('selected_members')) {
-            $existingParticipants = $meeting->participants()
-                ->select('participantable_id', 'participantable_type') 
+            $existingParticipants = $notification->recipients()
+                ->select('recipientable_id', 'recipientable_type')
                 ->get()
-                ->map(function ($participant) {
+                ->map(function ($recipient) {
                     return [
-                        'id' => $participant->participantable_id,
-                        'type' => $participant->participantable_type
+                        'id' => $recipient->recipientable_id,
+                        'type' => $recipient->recipientable_type
                     ];
                 })
                 ->toArray();
@@ -299,61 +311,60 @@ class MeetingController extends Controller
 
             $idsToRemove = array_column($participantsToRemove, 'id');
 
-            MeetingParticipant::whereIn('participantable_id', $idsToRemove)
-                ->where('meeting_id', $meeting->id)
+            NotificationRecipient::whereIn('recipientable_id', $idsToRemove)
+                ->where('notification_id', $notification->id)
                 ->delete();
 
             foreach ($request->selected_members as $selected_member) {
                 $type = $selected_member['type'];
                 $participantId = $selected_member['id'];
-                $existing = $meeting->participants->where('participantable_id', $participantId)
-                    ->where('participantable_type', $type)
+                $existing = $notification->recipients->where('recipientable_id', $participantId)
+                    ->where('recipientable_type', $type)
                     ->first();
-
                 if (!$existing) {
                     $customerModel = $type::find($participantId);
                     if ($customerModel) {
-                        $meetingParticipant = new MeetingParticipant();
-                        $meetingParticipant->meeting_id = $meeting->id;
-                        $meetingParticipant->participantable_id = $customerModel->id;
-                        $meetingParticipant->participantable_type = get_class($customerModel);
+                        $meetingParticipant = new NotificationRecipient();
+                        $meetingParticipant->notification_id = $notification->id;
+                        $meetingParticipant->recipientable_id = $customerModel->id;
+                        $meetingParticipant->recipientable_type = get_class($customerModel);
                         $meetingParticipant->save();
                     }
                 }
             }
         } else {
-            $meeting->participants()->delete();
+            $notification->recipients()->delete();
         }
         if ($request->has('external_participants')) {
             foreach ($request->external_participants as $externalParticipant) {
                 if (!empty($externalParticipant['checked']) && !empty($externalParticipant['email'])) {
-                    $existing = $meeting->participants()
-                        ->where('external_email', $externalParticipant['email'])
+                    $existing = $notification->recipients()
+                        ->where('email', $externalParticipant['email'])
                         ->first();
 
                     if (!$existing) {
-                        $meetingParticipant = new MeetingParticipant();
-                        $meetingParticipant->meeting_id = $meeting->id;
-                        $meetingParticipant->external_email = $externalParticipant['email'];
+                        $meetingParticipant = new NotificationRecipient();
+                        $meetingParticipant->notification_id = $notification->id;
+                        $meetingParticipant->email = $externalParticipant['email'];
                         $meetingParticipant->save();
                     }
                 } else {
-                    $meeting->participants()
-                        ->where('external_email', $externalParticipant['email'])
+                    $notification->recipients()
+                        ->where('email', $externalParticipant['email'])
                         ->delete();
                 }
             }
         }
 
-        return redirect()->route('meeting.index')->with('success', 'Cuộc họp đã được cập nhật thành công.');
+        return redirect()->route('notification.index')->with('success', 'Thông báo đã được cập nhật!');
     }
 
     public function destroy($id)
     {
-        $meeting = Meeting::findOrFail($id);
-        $meeting->participants()->delete();
-        $meeting->delete();
+        $notification = Notification::findOrFail($id);
+        $notification->recipients()->delete();
+        $notification->delete();
 
-        return redirect()->route('meeting.index')->with('success', 'Cuộc họp đã được xóa thành công.');
+        return redirect()->route('notification.index')->with('success', 'Thông báo đã được xóa!');
     }
 }

@@ -209,3 +209,12 @@ function submitMeetingForm(meetingId) {
         console.error("Form không tìm thấy!");
     }
 }
+
+function submitNotificationForm(notificationId) {
+    const form = document.getElementById(`deleteNotificationForm-${notificationId}`);
+    if (form) {
+        form.submit();
+    } else {
+        console.error("Form không tìm thấy!");
+    }
+}

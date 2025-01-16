@@ -1,24 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers\Club;
 
 use App\Http\Controllers\Controller;
-use App\Models\MembershipFee;
+use App\Models\Certificate;
+use App\Models\Connector;
+use App\Models\Industry;
 use Illuminate\Http\Request;
+use App\Models\Club;
 use App\Models\BusinessCustomer;
 use App\Models\Field;
 use App\Models\Market;
 use App\Models\TargetCustomerGroup;
-use App\Models\Industry;
-use App\Models\Certificate;
-use App\Models\Club;
-use App\Models\Connector;
-use App\Models\Sponsorship;
 
-class BusinessCustomerController extends Controller
+
+class ClubBusinessCustomerController extends Controller
 {
     //
-    public function index(Request $request)
+    public function index(Request $request, Club $club)
     {
         $fields = Field::all();
         $markets = Market::all();
@@ -29,8 +28,7 @@ class BusinessCustomerController extends Controller
         $fieldId = $request->input('field_id');
         $marketId = $request->input('market_id');
         $targetCustomerGroupId = $request->input('target_customer_group_id');
-
-        $customers = BusinessCustomer::whereNull('club_id') 
+        $customers = $club->businessCustomers()
             ->when($search, function ($query, $search) {
                 return $query->where(function ($q) use ($search) {
                     $q->where('business_name_vi', 'like', "%{$search}%")
@@ -64,9 +62,9 @@ class BusinessCustomerController extends Controller
             ->when($targetCustomerGroupId, function ($query, $targetCustomerGroupId) {
                 return $query->where('target_customer_group_id', $targetCustomerGroupId);
             })
-            ->paginate(perPage: 10);
-
-        return view('customer.business_customer.index', compact(
+            ->paginate(10);
+        return view('club.business_customer.index', compact(
+            'club',
             'customers',
             'search',
             'status',
@@ -76,21 +74,22 @@ class BusinessCustomerController extends Controller
         ));
     }
 
-    public function create()
+    public function create(Club $club)
     {
         $industries = Industry::all();
-        $fields = Field::all(); 
+        $fields = Field::all();
         $markets = Market::all();
-        $targetCustomerGroups = TargetCustomerGroup::all(); 
-        $certificates = Certificate::all(); 
-        $clubs = Club::all(); 
+        $targetCustomerGroups = TargetCustomerGroup::all();
+        $certificates = Certificate::all();
+
         return view(
-            'customer.business_customer.create',
-            compact('industries', 'fields', 'markets', 'targetCustomerGroups', 'certificates', 'clubs')
+            'club.business_customer.create',
+            compact('industries', 'fields', 'markets', 'targetCustomerGroups', 'certificates', 'club')
         );
     }
 
-    public function store(Request $request)
+
+    public function store(Request $request, Club $club)
     {
         $request->validate([
             'login_code' => 'required|unique:business_customers',
@@ -118,7 +117,6 @@ class BusinessCustomerController extends Controller
             'market_id' => 'nullable|exists:markets,id',
             'target_customer_group_id' => 'nullable|exists:target_customer_groups,id',
             'certificate_id' => 'nullable|exists:certificates,id',
-            'club_id' => 'nullable|exists:clubs,id',
             'responsible_name.*' => 'nullable|string',
             'responsible_position.*' => 'nullable|string',
             'responsible_phone.*' => 'nullable|string',
@@ -126,7 +124,7 @@ class BusinessCustomerController extends Controller
             'responsible_email.*' => 'nullable|email',
         ]);
 
-        $businessCustomer = BusinessCustomer::create([
+        $businessCustomer = $club->businessCustomers()->create([
             'login_code' => $request->login_code,
             'card_code' => $request->card_code,
             'business_name_vi' => $request->business_name_vi,
@@ -152,7 +150,6 @@ class BusinessCustomerController extends Controller
             'market_id' => $request->market_id,
             'target_customer_group_id' => $request->target_customer_group_id,
             'certificate_id' => $request->certificate_id,
-            'club_id' => $request->club_id,
         ]);
 
         if ($request->has('responsible_name') && count($request->responsible_name) > 0) {
@@ -175,33 +172,31 @@ class BusinessCustomerController extends Controller
             }
         }
 
-        return redirect()->route('business_customer.index')->with('success', 'Thêm khách hàng thành công!');
+        return redirect()->route('club.business_customer.index', $club->id)
+            ->with('success', 'Thêm khách hàng thành công!');
     }
 
-    public function show($id)
+    public function show(Club $club, $id)
     {
-        $customer = BusinessCustomer::findOrFail($id);
+        $customer = $club->businessCustomers()->findOrFail($id);
         return view('customer.business_customer.show', compact('customer'));
     }
 
-    public function edit($id)
+    public function edit(Club $club, $id)
     {
-        $customer = BusinessCustomer::findOrFail($id);
-        $industries = Industry::all(); // Lấy tất cả ngành
-        $fields = Field::all(); // Lấy tất cả lĩnh vực
-        $markets = Market::all(); // Lấy tất cả thị trường
-        $targetCustomerGroups = TargetCustomerGroup::all(); // Lấy tất cả thị trường
-        $certificates = Certificate::all(); // Lấy tất cả thị trường
-        $clubs = Club::all(); // Lấy tất cả thị trường
-        return view(
-            'customer.business_customer.edit',
-            compact('customer', 'industries', 'fields', 'markets', 'targetCustomerGroups', 'certificates', 'clubs')
-        );
-    }
+        $customer = $club->businessCustomers()->findOrFail($id);
+        $industries = Industry::all();
+        $fields = Field::all();
+        $markets = Market::all();
+        $targetCustomerGroups = TargetCustomerGroup::all();
+        $certificates = Certificate::all();
+        $clubs = Club::all();
 
-    public function update(Request $request, $id)
+        return view('customer.business_customer.edit', compact('customer', 'industries', 'fields', 'markets', 'targetCustomerGroups', 'certificates', 'clubs'));
+    }
+    public function update(Request $request, $id, Club $club)
     {
-        $businessCustomer = BusinessCustomer::findOrFail($id);
+        $businessCustomer = $club->businessCustomers()->findOrFail($id);
 
         $request->validate([
             'login_code' => 'required|unique:business_partners,login_code,' . $id,
@@ -257,62 +252,13 @@ class BusinessCustomerController extends Controller
             }
         }
 
-        return redirect()->route('business_customer.index')->with('success', 'Cập nhật khách hàng thành công!');
+        return redirect()->route('club.business_customer.index', $club->id)->with('success', 'Cập nhật khách hàng thành công!');
     }
 
-    public function destroy($id)
+    public function destroy(Club $club, BusinessCustomer $businessCustomer)
     {
-        $customer = BusinessCustomer::findOrFail($id);
-        $customer->delete();
+        $businessCustomer->delete();
 
-        return redirect()->route('business_customer.index')->with('success', 'Xóa khách hàng thành công!');
-    }
-
-    public function sponsorshipHistory($customerId, Request $request)
-    {
-        $customer = BusinessCustomer::findOrFail($customerId);
-
-        $sponsorships = Sponsorship::where('sponsorable_id', $customerId)
-            ->where('sponsorable_type', BusinessCustomer::class)
-            ->when($request->start_date && $request->end_date, function ($query) use ($request) {
-                return $query->whereBetween('sponsorship_date', [$request->start_date, $request->end_date]);
-            })
-            ->when($request->search, function ($query) use ($request) {
-                return $query->where('product', 'LIKE', "%{$request->search}%");
-            })
-            ->get();
-        $totalContribution = $sponsorships->sum('total_amount');
-        return view('customer.sponsorship_history', compact('customer', 'sponsorships', 'totalContribution'));
-    }
-
-    public function membershipFeeHistory(Request $request, $customerId)
-    {
-        $customer = BusinessCustomer::findOrFail($customerId);
-        
-        $query = MembershipFee::where('customer_id', $customerId)
-            ->where('customer_type', BusinessCustomer::class);
-
-        $years = MembershipFee::where('customer_id', $customerId)
-            ->where('customer_type', BusinessCustomer::class)
-            ->select('year')
-            ->distinct()
-            ->pluck('year')
-            ->sortDesc();
-
-        if ($request->has('year') && $request->year != '') {
-            $query->where('year', $request->year);
-        }
-
-        if ($request->has('search') && $request->search != '') {
-            $query->where(function ($q) use ($request) {
-                $q->where('content', 'like', '%' . $request->search . '%')
-                    ->orWhere('notes', 'like', '%' . $request->search . '%');
-            });
-        }
-
-        $fees = $query->orderBy('year', 'desc')->get();
-        $totalFeesPaid = $fees->sum('amount_paid');
-
-        return view('customer.membership_fee_history', compact('customer', 'fees', 'totalFeesPaid', 'years'));
+        return redirect()->route('club.business_customer.index', $club->id)->with('success', 'Xóa khách hàng thành công!');
     }
 }

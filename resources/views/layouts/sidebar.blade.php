@@ -15,7 +15,7 @@
         <li><a href="{{ route('activity.index') }}" class="nav-link text-gray-500">Hoạt động</a></li>
         <li><a href="{{ route('membership_fee.index') }}" class="nav-link text-gray-500">Hội phí</a></li>
         <li><a href="{{ route('sponsorship.index') }}" class="nav-link text-gray-500">Tài trợ</a></li>
-        <li><a href="#" class="nav-link text-gray-500">Thông báo</a></li>
+        <li><a href="{{ route('notification.index') }}" class="nav-link text-gray-500">Thông báo</a></li>
         <li><a href="{{ route('meeting.index') }}" class="nav-link text-gray-500">Lịch</a></li>
         <li>
             <a class="nav-link text-gray-500 d-flex justify-content-between" href="#" id="settingsToggle"

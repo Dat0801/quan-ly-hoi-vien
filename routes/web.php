@@ -1,10 +1,15 @@
 <?php
 
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\Club\ClubBusinessCustomerController;
+use App\Http\Controllers\Club\ClubBusinessPartnerController;
+use App\Http\Controllers\Club\ClubIndividualCustomerController;
+use App\Http\Controllers\Club\ClubIndividualPartnerController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\MembershipFeeController;
 use App\Http\Controllers\MembershipTierController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\User\AccountController;
@@ -26,6 +31,7 @@ use App\Http\Controllers\Category\CertificateController;
 use App\Http\Controllers\Category\OrganizationController;
 use App\Http\Controllers\Category\BusinessController;
 
+use App\Models\Notification;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -166,7 +172,13 @@ Route::middleware('auth')->group(function () {
 
     //Clubs
     Route::resource('club', ClubController::class);
+    Route::post('/clubs/import', [ClubController::class, 'import'])->name('club.import');
+    Route::get('/clubs/export', [ClubController::class, 'export'])->name('club.export');
     Route::resource('club.board_customer', ClubBoardCustomerController::class);
+    Route::resource('club.business_customer', ClubBusinessCustomerController::class);
+    Route::resource('club.individual_customer', ClubIndividualCustomerController::class);
+    Route::resource('club.business_partner', ClubBusinessPartnerController::class);
+    Route::resource('club.individual_partner', ClubIndividualPartnerController::class);
 
     //Activities
     Route::resource('activity', controller: ActivityController::class);
@@ -174,7 +186,9 @@ Route::middleware('auth')->group(function () {
 
     //Meetings
     Route::resource('meeting', controller: MeetingController::class);
-    Route::get('/meetings-by-date', [MeetingController::class, 'getMeetingsByDate']);
+
+    //Notifications
+    Route::resource('notification', NotificationController::class);
 
 });
 

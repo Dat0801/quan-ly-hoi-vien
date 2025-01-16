@@ -16,8 +16,10 @@ class BreadcrumbService
         'business' => ['name' => 'Doanh nghiệp', 'routes' => ['index', 'create', 'edit', 'show']],
         'contact' => ['name' => 'Liên hệ', 'routes' => ['edit', 'index']],
         'membership_tier' => ['name' => 'Hạng thành viên', 'routes' => ['index', 'create', 'edit', 'show']],
+        
         //club
         'club' => ['name' => 'Câu lạc bộ', 'routes' => ['index', 'create', 'edit', 'show']],
+
         //customer
         'board_customer' => ['name' => 'Ban chấp hành', 'routes' => ['index', 'create', 'edit', 'show']],
         'business_customer' => ['name' => 'Khách hàng doanh nghiệp', 'routes' => ['index', 'create', 'edit', 'show']],
@@ -28,10 +30,13 @@ class BreadcrumbService
         'activity' => ['name' => 'Hoạt động', 'routes' => ['index', 'create', 'edit', 'show']],
         'membership_fee' => ['name' => 'Hội phí', 'routes' => ['index', 'create']],
         'sponsorship' => ['name' => 'Tài trợ', 'routes' => ['index', 'create', 'show']],
+        'notification' => ['name' => 'Thông báo', 'routes' => ['index', 'create', 'edit', 'show']],
+        'meeting' => ['name' => 'Lịch', 'routes' => ['index', 'create', 'edit', 'show']],
 
         //user 
         'role' => ['name' => 'Vai trò', 'routes' => ['index', 'create', 'edit', 'show']],
         'account' => ['name' => 'Tài khoản', 'routes' => ['index', 'create', 'edit', 'show']],
+
     ];
 
     public function getBreadcrumbs()

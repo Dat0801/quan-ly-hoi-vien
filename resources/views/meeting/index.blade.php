@@ -53,7 +53,7 @@
                 </form>
             </div>
 
-            <div id="calendar-container" class="p-3" style="background-color: #f9f9f9; border-radius: 8px; max-height: 600px; overflow-y: auto;">
+            <div id="calendar-container" class="p-3" style="background-color: #f9f9f9; border-radius: 8px; max-height: 400px; overflow-y: auto;">
                 <div id="calendar" style="max-width: 1020px;"></div>
             </div>
         </div>

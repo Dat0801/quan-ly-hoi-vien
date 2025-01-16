@@ -112,10 +112,10 @@
                                                 <td>{{ $club->field->name ?? '-' }}</td>
                                                 <td>{{ $club->market->market_name ?? '-' }}</td>
                                                 <td>
-                                                    {{ $club->board_customers_count + 
-                                                        $club->business_customers_count + 
-                                                        $club->individual_customers_count + 
-                                                        $club->business_partners_count + 
+                                                    {{ $club->board_customers_count +
+                                                        $club->business_customers_count +
+                                                        $club->individual_customers_count +
+                                                        $club->business_partners_count +
                                                         $club->individual_partners_count }}
                                                 </td>
                                                 <td>
@@ -141,15 +141,14 @@
                                                                 </a>
                                                             </li>
                                                             <li>
-                                                                <a href="{{ route('club.board_customer.index', $club->id) }}" class="dropdown-item"
-                                                                    style="color: #BF5805">
+                                                                <a href="{{ route('club.board_customer.index', $club->id) }}"
+                                                                    class="dropdown-item" style="color: #BF5805">
                                                                     Ban điều hành
                                                                 </a>
                                                             </li>
                                                             <li>
-                                                                {{-- {{ route('club.customers', $club->id) }} --}}
-                                                                <a href="" class="dropdown-item"
-                                                                    style="color: #BF5805">
+                                                                <a href="{{ route('club.business_customer.index', $club->id) }}"
+                                                                    class="dropdown-item" style="color: #BF5805">
                                                                     Danh sách khách hàng
                                                                 </a>
                                                             </li>
@@ -191,22 +190,25 @@
                 <span class="mt-3" style="color: #FF7506; font-size: 12px; word-wrap: break-word;">Thêm mới</span>
             </a>
 
-            <a href="{{ route('club.create') }}"
-                class="btn btn-white d-flex flex-column align-items-center justify-content-center border-0 p-3"
-                style="color: #FF7506; border-color: #FF7506; width: 80px; text-align: center;" id="addClubButton">
-                <i class="fas fa-plus fa-lg" style="color: #FF7506;"></i>
-                <span class="mt-3" style="color: #FF7506; font-size: 12px; word-wrap: break-word;">Tải file
-                    lên</span>
-            </a>
+            <form action="{{ route('club.import') }}" method="POST" enctype="multipart/form-data"
+                class="d-flex flex-column align-items-center justify-content-center border-0 p-3"
+                style="width: 80px; text-align: center; color: #FF7506; border-color: #FF7506;">
+                @csrf
+                <label for="fileInput" class="btn btn-white border-0 p-0 m-0" style="cursor: pointer;">
+                    <i class="fa-solid fa-file-import" style="color: #FF7506; font-size: 18px;"></i><br>
+                    <span style="color: #FF7506; font-size: 12px; word-wrap: break-word;">Tải file lên</span>
+                </label>
+                <input type="file" id="fileInput" name="file" accept=".csv" style="display: none;"
+                    onchange="this.form.submit()">
+            </form>
 
-            <a href="{{ route('club.create') }}"
+            <a href="{{ route('club.export') }}"
                 class="btn btn-white d-flex flex-column align-items-center justify-content-center border-0 p-3"
                 style="color: #FF7506; border-color: #FF7506; width: 80px; text-align: center;" id="addClubButton">
-                <i class="fas fa-plus fa-lg" style="color: #FF7506;"></i>
-                <span class="mt-3" style="color: #FF7506; font-size: 12px; word-wrap: break-word;">Xuất file
+                <i class="fa-solid fa-file-export" style="color: #FF7506;"></i>
+                <span style="color: #FF7506; font-size: 12px; word-wrap: break-word;">Xuất file
                     (.csv)</span>
             </a>
-
         </div>
     </div>
 </x-app-layout>
