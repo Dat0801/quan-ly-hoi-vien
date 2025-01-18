@@ -107,9 +107,16 @@
 
                         <!-- Đính kèm -->
                         <div class="d-flex align-items-center mb-3">
-                            <label for="attachment" class="form-label mb-0 me-2" style="width: 250px;">Đính
-                                kèm</label>
-                            <input type="file" id="attachment" name="attachment" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" disabled>
+                            <label for="attachment" class="form-label mb-0 me-2" style="width: 250px;">Tệp đính kèm</label>
+                            @if ($sponsorship->attachment)
+                                <a href="{{ asset('storage/' . $sponsorship->attachment) }}" target="_blank"
+                                    class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1">Xem tệp
+                                    đính kèm</a>
+                            @else
+                                <input type="text" value="Không có tệp đính kèm"
+                                    class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                                    disabled>
+                            @endif
                         </div>
                     </div>
                 </div>

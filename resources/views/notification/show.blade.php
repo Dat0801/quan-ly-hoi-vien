@@ -3,7 +3,7 @@
         <div class="p-4 bg-white shadow-sm rounded-lg w-100" style="max-height: 85vh; overflow-y: auto;">
             <h1 style="font-family: 'Roboto', sans-serif; font-size: 32px; font-weight: 700; line-height: 38.4px; color: #803B03;"
                 class="mb-3">
-                Chi Tiết Lịch Họp
+                Chi Tiết Thông Báo
             </h1>
 
             <div class="row">
@@ -69,7 +69,6 @@
                                         <th>Thị trường</th>
                                         <th>Khách hàng mục tiêu</th>
                                         <th>Quy mô</th>
-                                        <th>Xác nhận tham gia</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -88,12 +87,6 @@
                                                 <td>{{ $recipient->recipientable->targetCustomerGroup->group_name ?? '-' }}
                                                 </td>
                                                 <td>{{ $recipient->recipientable->business_scale ?? '-' }}</td>
-                                                <td>
-                                                    <span class="badge bg-warning">
-                                                        Chưa xác nhận
-                                                    </span>
-
-                                                </td>
                                             </tr>
                                         @endif
                                     @endforeach

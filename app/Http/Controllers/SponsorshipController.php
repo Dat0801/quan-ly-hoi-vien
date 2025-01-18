@@ -83,7 +83,29 @@ class SponsorshipController extends Controller
 
     public function store(Request $request)
     {
-        Sponsorship::create($request->all());
+        $validatedData = $request->validate([
+            'sponsorable_id' => 'required|integer',
+            'sponsorable_type' => 'required|string',
+            'sponsorship_date' => 'required|date',
+            'content' => 'nullable|string',
+            'product' => 'required|string|max:255',
+            'unit' => 'required|string|max:50',
+            'unit_price' => 'required|numeric|min:0',
+            'quantity' => 'required|integer|min:1',
+            'total_amount' => 'required|numeric|min:0',
+            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048', 
+        ]);
+
+        $attachmentPath = null;
+        if ($request->hasFile('attachment')) {
+            $file = $request->file('attachment');
+            $uniqueFileName = uniqid() . '_' . $file->getClientOriginalName();
+            $attachmentPath = $file->storeAs('attachments', $uniqueFileName, 'public');
+        }
+
+        $validatedData['attachment'] = $attachmentPath;
+
+        Sponsorship::create($validatedData);
 
         return redirect()->route('sponsorship.index')->with('success', 'Tài trợ đã được thêm thành công.');
     }

@@ -6,13 +6,13 @@
                 class="mb-3">
                 Lịch sử tài trợ
             </h1>
-            
+
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div class="d-flex align-items-center p-3 border rounded shadow-sm" style="max-width: 300px;">
                     <div class="me-3">
                         <i class="fa-solid fa-hand-holding-heart" style="font-size: 30px; color: #FF7506;"></i>
                     </div>
-            
+
                     <div>
                         <div class="text" style="font-size: 14px; color: #BF5805; font-weight: 600;">
                             Tổng Đóng Góp
@@ -23,7 +23,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="tab-content" id="managementTabsContent">
                 <div class="tab-pane fade show active" id="sponsorships-history" role="tabpanel">
                     <div class="bg-white sm:rounded-lg">
@@ -33,27 +33,36 @@
                             </div>
                         @endif
 
-                        <h1 style="font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 500; line-height: 18.75px; text-align: left; color: #BF5805;" class="mb-1">
+                        <h1 style="font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 500; line-height: 18.75px; text-align: left; color: #BF5805;"
+                            class="mb-1">
                             Ngày tài trợ
                         </h1>
-                        
+
                         <div class="d-flex justify-content-between align-items-center">
-                            <form id="sponsorshipSearchForm" method="GET" action="{{ route('board_customer.sponsorship_history', $customer->id) }}" class="d-flex mb-3">
+                            <form id="sponsorshipSearchForm" method="GET"
+                                action="{{ route('board_customer.sponsorship_history', $customer->id) }}"
+                                class="d-flex mb-3">
                                 <div class="d-flex align-items-center">
-                                    <input type="date" id="start_date" name="start_date" class="form-control" value="{{ request('start_date') }}" style="max-width: 200px;">
-                        
+                                    <input type="date" id="start_date" name="start_date" class="form-control"
+                                        value="{{ request('start_date') }}" style="max-width: 200px;">
+
                                     <i class="fas fa-arrow-right mx-2 text-secondary"></i>
-                        
-                                    <input type="date" id="end_date" name="end_date" class="form-control me-3" value="{{ request('end_date') }}" style="max-width: 200px;">
-                        
+
+                                    <input type="date" id="end_date" name="end_date" class="form-control me-3"
+                                        value="{{ request('end_date') }}" style="max-width: 200px;">
+
                                     <button type="submit" class="btn btn-primary">Lọc</button>
                                 </div>
                             </form>
-                        
-                            <form id="sponsorshipSearchForm" method="GET" action="{{ route('board_customer.sponsorship_history', $customer->id) }}" class="d-flex mb-3">
+
+                            <form id="sponsorshipSearchForm" method="GET"
+                                action="{{ route('board_customer.sponsorship_history', $customer->id) }}"
+                                class="d-flex mb-3">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="search" value="{{ request('search') }}" placeholder="Tìm kiếm sản phẩm tài trợ...">
-                                    <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
+                                    <input type="text" class="form-control" name="search"
+                                        value="{{ request('search') }}" placeholder="Tìm kiếm sản phẩm tài trợ...">
+                                    <button class="btn btn-outline-secondary" type="submit"><i
+                                            class="fas fa-search"></i></button>
                                 </div>
                             </form>
                         </div>
@@ -76,13 +85,24 @@
                                     @foreach ($sponsorships as $index => $sponsorship)
                                         <tr style="background-color: transparent;">
                                             <td class="text-center">{{ $index + 1 }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($sponsorship->sponsorship_date)->format('d/m/Y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($sponsorship->sponsorship_date)->format('d/m/Y') }}
+                                            </td>
                                             <td>{{ $sponsorship->content ?? '-' }}</td>
                                             <td>{{ $sponsorship->product ?? '-' }}</td>
                                             <td>{{ $sponsorship->unit ?? '-' }}</td>
                                             <td>{{ $sponsorship->quantity ?? '-' }}</td>
                                             <td>{{ number_format($sponsorship->total_amount, 0, ',', '.') }} VNĐ</td>
-                                            <td>{{ $sponsorship->attachment ?? '-' }}</td>
+                                            <td>
+                                                @if ($sponsorship->attachment)
+                                                    <a href="{{ asset('storage/' . $sponsorship->attachment) }}"
+                                                        target="_blank"
+                                                        style="text-decoration: underline; color: #803B03;">
+                                                        Xem file đính kèm
+                                                    </a>
+                                                @else
+                                                    <span>-</span>
+                                                @endif
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

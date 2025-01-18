@@ -60,7 +60,7 @@
                                             <option value="email" {{ request('format') == 'email' ? 'selected' : '' }}>
                                                 Email</option>
                                             <option value="sms" {{ request('format') == 'sms' ? 'selected' : '' }}>
-                                                SMS</option>
+                                                Notification</option>
                                         </select>
                                     </form>
                                 </div>
@@ -100,7 +100,6 @@
                                         <th style="border: none; text-align: center;">Thời gian gửi</th>
                                         <th style="border: none; text-align: center;">Số người nhận</th>
                                         <th style="border: none;">Người tạo</th>
-                                        <th style="border: none; text-align: center;">Ngày tạo</th>
                                         <th style="border: none;">Trạng thái</th>
                                         <th class="text-center" style="border: none;">Hành động</th>
                                     </tr>
@@ -117,7 +116,6 @@
                                             <td style="text-align: center">{{ $notification->recipients->count() }}
                                             </td>
                                             <td>{{ $notification->creator->name }}</td>
-                                            <td style="text-align: center">{{ $notification->created_at }}</td>
                                             <td>
                                                 <span
                                                     class="badge {{ $notification->sent_at <= now() ? 'bg-success' : 'bg-danger' }}">

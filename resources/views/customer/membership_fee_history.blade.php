@@ -107,7 +107,17 @@
                                                     {{ $fee->status ? 'Đã hoàn thành' : 'Chưa hoàn thành' }}
                                                 </span>
                                             </td>
-                                            <td>{{ $fee->notes ?? '-' }}</td>
+                                            <td>
+                                                @if ($fee->attachment)
+                                                    <a href="{{ asset('storage/' . $fee->attachment) }}"
+                                                        target="_blank"
+                                                        style="text-decoration: underline; color: #803B03;">
+                                                        Xem file đính kèm
+                                                    </a>
+                                                @else
+                                                    <span>-</span>
+                                                @endif
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

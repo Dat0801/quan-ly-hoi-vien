@@ -30,8 +30,7 @@ class BusinessCustomerController extends Controller
         $marketId = $request->input('market_id');
         $targetCustomerGroupId = $request->input('target_customer_group_id');
 
-        $customers = BusinessCustomer::whereNull('club_id') 
-            ->when($search, function ($query, $search) {
+        $customers = BusinessCustomer::when($search, function ($query, $search) {
                 return $query->where(function ($q) use ($search) {
                     $q->where('business_name_vi', 'like', "%{$search}%")
                         ->orWhere('business_name_en', 'like', "%{$search}%")

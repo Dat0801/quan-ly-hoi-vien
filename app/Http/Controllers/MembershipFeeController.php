@@ -85,7 +85,14 @@ class MembershipFeeController extends Controller
             ->customer;
 
         $customerType = get_class($customer);
-        $attachmentPath = $request->hasFile('attachment') ? $request->file('attachment')->store('attachments', 'public') : null;
+        
+        $attachmentPath = null;
+        if ($request->hasFile('attachment')) {
+            $file = $request->file('attachment');
+            $fileName = $file->getClientOriginalName();
+            $uniqueFileName = uniqid() . '_' . $fileName;
+            $attachmentPath = $file->storeAs('attachments', $uniqueFileName, 'public');
+        }
 
         $debtYears = $request->input('debt', []);
         
