@@ -206,24 +206,6 @@ class ClubController extends Controller
             'responsible_email.*' => 'nullable|email',
         ]);
 
-        $club = Club::create([
-            'club_code' => $request->club_code,
-            'name_vi' => $request->name_vi,
-            'name_en' => $request->name_en,
-            'name_abbr' => $request->name_abbr,
-            'address' => $request->address,
-            'tax_code' => $request->tax_code,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'website' => $request->website,
-            'fanpage' => $request->fanpage,
-            'established_date' => $request->established_date,
-            'established_decision' => $request->established_decision,
-            'industry_id' => $request->industry_id,
-            'field_id' => $request->field_id,
-            'market_id' => $request->market_id,
-        ]);
-
         $club = Club::create($validated);
 
         if ($request->has('responsible_name') && count($request->responsible_name) > 0) {
