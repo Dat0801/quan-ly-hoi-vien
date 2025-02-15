@@ -23,7 +23,7 @@
                 Cài đặt
                 <i id="arrow" class="fas fa-chevron-down ms-auto mt-1"></i>
             </a>
-            <div class="{{ session('settingsSubmenuOpen') == 'true' ? 'show' : '' }}" id="settingsSubmenu">
+            <div class="collapse {{ session('settingsSubmenuOpen') == 'true' ? 'show' : '' }}" id="settingsSubmenu">
                 <ul class="list-unstyled ps-3">
                     <li>
                         <a href="{{ Route('membership_tier.index') }}" class="text-gray-500 nav-link text-decoration-none setting-text">
