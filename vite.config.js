@@ -4,10 +4,7 @@ import laravel from 'laravel-vite-plugin';
 export default defineConfig({
   plugins: [
     laravel({
-      input: [
-        'resources/css/app.css',
-        'resources/js/app.js',
-      ],
+      input: ['resources/css/app.css', 'resources/js/app.js'],
       refresh: true,
     }),
   ],
@@ -15,15 +12,15 @@ export default defineConfig({
     outDir: 'public/build',
     manifest: true,
     rollupOptions: {
-      input: {
-        app: 'resources/js/app.js',
-        styles: 'resources/css/app.css',
+      output: {
+        assetFileNames: 'assets/[name]-[hash][extname]',
+        entryFileNames: 'assets/[name]-[hash].js',
       },
     },
   },
   server: {
     host: '0.0.0.0',
     strictPort: true,
-    https: true, 
+    https: true,
   },
 });
