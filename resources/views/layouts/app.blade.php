@@ -21,8 +21,8 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <!-- Vite -->
-    <link rel="stylesheet" href="{{ secure_asset('build/assets/app-d96bec99.css') }}">
-    <script src="{{ secure_asset('build/assets/app-226659d9.js') }}"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
