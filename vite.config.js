@@ -17,12 +17,13 @@ export default defineConfig({
     rollupOptions: {
       input: {
         app: 'resources/js/app.js',
-        styles: 'resources/css/app.css', 
+        styles: 'resources/css/app.css',
       },
     },
   },
   server: {
     host: '0.0.0.0',
-    https: true,
+    strictPort: true,
+    https: true, 
   },
 });
