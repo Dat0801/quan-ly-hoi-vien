@@ -30,5 +30,9 @@ class AppServiceProvider extends ServiceProvider
             $breadcrumbs = $breadcrumbService->getBreadcrumbs();
             $view->with('breadcrumbs', $breadcrumbs);
         });
+
+        if (config('app.env') === 'production') {
+            URL::forceScheme('https');
+        }
     }
 }
