@@ -7,22 +7,22 @@
 
         <!-- Email Address -->
         <div>
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" 
-            style="height: 60px;"
+            <x-text-input id="email" class="block mt-1" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" 
             placeholder="Tên đăng nhập"
+            value="nguyenbin394@gmail.com"
             />
         </div>
 
         <!-- Password -->
         <div class="relative mt-1">
-            <x-text-input id="password" class="block mt-1 w-full pr-10"
+            <x-text-input id="password" class="block mt-1 pr-10"
                           type="password"
                           name="password"
                           required autocomplete="current-password" 
-                          style="height: 60px"
                           placeholder="Mật khẩu"
+                          value="password"
             />
-            <button type="button" id="togglePassword" class="absolute inset-y-0 right-0 px-3 py-2 text-sm text-gray-500" style="top: 15px">
+            <button type="button" id="togglePassword" class="absolute inset-y-0 right-0 px-3 py-2 text-sm text-gray-500">
                 <i id="eyeIcon" class="fas fa-eye-slash"></i> 
             </button>
             <x-input-error :messages="$errors->get('email') + $errors->get('password')" class="mt-2" />
@@ -31,7 +31,7 @@
         <div class="flex items-center justify-between mt-2">
             <div class="inline-flex items-center">
                 <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ml-2 text-sm text-gray-600">{{ __('Ghi nhớ mật khẩu') }}</span>
+                <span class="ml-2 text-sm text-gray-600">Ghi nhớ mật khẩu</span>
             </div>
 
             @if (Route::has('password.request'))
@@ -39,14 +39,14 @@
                 href="{{ route('password.request') }}"
                 style="color: #BF5805"
                 >
-                    {{ __('Quên mật khẩu?') }}
+                    Quên mật khẩu?
                 </a>
             @endif
         </div>
 
         <div class="mt-4">
-            <x-primary-button class="w-full flex justify-center items-center" style="background-color: #FF7506;">
-                {{ __('Đăng nhập') }}
+            <x-primary-button :width="540" :height="48">
+                Đăng nhập
             </x-primary-button>
         </div>
     </form>

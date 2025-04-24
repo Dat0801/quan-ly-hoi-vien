@@ -28,9 +28,9 @@
 
         <div class="d-flex flex-column align-items-center justify-content-center position-absolute container-content">
 
-            <div class="mb-4">
-                <a href="/">
-                    <img src="{{ asset('images/Logo.png') }}" alt="Logo" class="img-fluid logo" />
+            <div style="margin-bottom: 64px">
+                <a href="{{ route('dashboard') }}">
+                    <x-application-logo />
                 </a>
             </div>
 
@@ -40,7 +40,7 @@
                 </h2>
             </div>
 
-            <div class="form-container">
+            <div class="mt-3">
                 {{ $slot }}
             </div>
         </div>
