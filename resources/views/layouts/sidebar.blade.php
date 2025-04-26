@@ -1,7 +1,7 @@
 @php
     $menuItems = [
         ['base_route' => 'dashboard', 'active_routes' => ['dashboard'], 'label' => 'Trang chủ'],
-        ['base_route' => 'club.index', 'active_routes' => ['club.index'], 'label' => 'Câu lạc bộ'],
+        ['base_route' => 'club.index', 'active_routes' => ['club.*'], 'label' => 'Câu lạc bộ'],
         [
             'base_route' => 'board_customer.index',
             'active_routes' => [
@@ -13,30 +13,30 @@
             ],
             'label' => 'Khách hàng & Đối tác',
         ],
-        ['base_route' => 'activity.index', 'active_routes' => ['activity.index'], 'label' => 'Hoạt động'],
-        ['base_route' => 'membership_fee.index', 'active_routes' => ['membership_fee.index'], 'label' => 'Hội phí'],
-        ['base_route' => 'sponsorship.index', 'active_routes' => ['sponsorship.index'], 'label' => 'Tài trợ'],
-        ['base_route' => 'notification.index', 'active_routes' => ['notification.index'], 'label' => 'Thông báo'],
-        ['base_route' => 'meeting.index', 'active_routes' => ['meeting.index'], 'label' => 'Lịch'],
+        ['base_route' => 'activity.index', 'active_routes' => ['activity.*'], 'label' => 'Hoạt động'],
+        ['base_route' => 'membership_fee.index', 'active_routes' => ['membership_fee.*'], 'label' => 'Hội phí'],
+        ['base_route' => 'sponsorship.index', 'active_routes' => ['sponsorship.*'], 'label' => 'Tài trợ'],
+        ['base_route' => 'notification.index', 'active_routes' => ['notification.*'], 'label' => 'Thông báo'],
+        ['base_route' => 'meeting.index', 'active_routes' => ['meeting.*'], 'label' => 'Lịch'],
     ];
 
     $settingsItems = [
-        ['base_route' => 'membership_tier.index', 'active_routes' => ['membership_tier.index'], 'label' => 'Hạng thành viên'],
-        ['base_route' => 'role.index', 'active_routes' => ['role.index', 'account.index'], 'label' => 'Quản lý người dùng'],
+        ['base_route' => 'membership_tier.index', 'active_routes' => ['membership_tier.*'], 'label' => 'Hạng thành viên'],
+        ['base_route' => 'role.index', 'active_routes' => ['role.*', 'account.*'], 'label' => 'Quản lý người dùng'],
         [
             'base_route' => 'industry.index',
             'active_routes' => [
-                'industry.index',
-                'field.index',
-                'market.index',
-                'target_customer_group.index',
-                'certificate.index',
-                'organization.index',
-                'business.index',
+                'industry.*',
+                'field.*',
+                'market.*',
+                'target_customer_group.*',
+                'certificate.*',
+                'organization.*',
+                'business.*',
             ],
             'label' => 'Danh mục',
         ],
-        ['base_route' => 'contact.index', 'active_routes' => ['contact.index'], 'label' => 'Liên hệ'],
+        ['base_route' => 'contact.index', 'active_routes' => ['contact.*'], 'label' => 'Liên hệ'],
     ];
 @endphp
 
@@ -51,11 +51,7 @@
     <!-- Menu -->
     <ul class="nav nav-pills flex-column mb-auto m-3">
         @foreach ($menuItems as $item)
-            <li class="mb-2">
-                <x-nav-link :href="route($item['base_route'])" :active="request()->routeIs(...$item['active_routes'])">
-                    {{ $item['label'] }}
-                </x-nav-link>
-            </li>
+            <x-sidebar-item :item="$item" />
         @endforeach
 
         <!-- Settings Menu -->
@@ -68,11 +64,7 @@
             <div class="collapse {{ session('settingsSubmenuOpen') == 'true' ? 'show' : '' }}" id="settingsSubmenu">
                 <ul class="list-unstyled ps-3">
                     @foreach ($settingsItems as $setting)
-                        <li class="mt-2">
-                            <x-nav-link :href="route($setting['base_route'])" :active-text="request()->routeIs(...$setting['active_routes'])">
-                                {{ $setting['label'] }}
-                            </x-nav-link>
-                        </li>
+                        <x-sidebar-item :item="$setting" :in-setting="true"/>
                     @endforeach
                 </ul>
             </div>

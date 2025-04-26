@@ -173,12 +173,13 @@
                     </div>
                 </div>
 
-                <!-- Nút Quay lại -->
                 <div class="d-flex justify-content-center gap-3">
-                    <a href="{{ route('club.index') }}" class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Đóng</a>
-                    <a href="{{ route('club.edit', $club->id) }}" class="btn btn-primary w-48 py-3 sm:rounded-lg" style="cursor: pointer;">
+                    <x-cancel-button :route="route('club.index')">
+                        Đóng
+                    </x-cancel-button>
+                    <x-primary-button :route="route('club.edit', $club->id)">
                         Chỉnh sửa
-                    </a>
+                    </x-primary-button>
                 </div>
             </div>
         </div>
