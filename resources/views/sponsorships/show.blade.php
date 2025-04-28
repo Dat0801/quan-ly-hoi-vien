@@ -29,16 +29,18 @@
                             <label for="sponsor" class="form-label mb-0 me-2" style="width: 250px;">
                                 Người tài trợ
                             </label>
-                            <input type="text" id="sponsor" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" 
-                            value="{{ $sponsorship->sponsorable->full_name ?? $sponsorship->sponsorable->business_name_vi ?? '-' }}" 
-                            disabled>
+                            <input type="text" id="sponsor"
+                                class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                                value="{{ $sponsorship->sponsorable->full_name ?? ($sponsorship->sponsorable->business_name_vi ?? '-') }}"
+                                disabled>
                         </div>
 
                         <!-- Mã khách hàng -->
                         <div class="d-flex align-items-center mb-3">
                             <label for="customer_id" class="form-label mb-0 me-2" style="width: 250px;">Mã khách
                                 hàng</label>
-                            <input type="text" id="customer_id" name="customer_id" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                            <input type="text" id="customer_id" name="customer_id"
+                                class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
                                 value="{{ $sponsorship->sponsorable->login_code }}" disabled>
                         </div>
 
@@ -46,7 +48,8 @@
                         <div class="d-flex align-items-center mb-3">
                             <label for="phone" class="form-label mb-0 me-2" style="width: 250px;">Số điện
                                 thoại</label>
-                            <input type="text" id="phone" name="phone" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                            <input type="text" id="phone" name="phone"
+                                class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
                                 value="{{ $sponsorship->sponsorable->phone }}" disabled>
                         </div>
 
@@ -54,16 +57,16 @@
                         <div class="d-flex align-items-center mb-3">
                             <label for="sponsorship_date" class="form-label mb-0 me-2" style="width: 250px;">Ngày tài
                                 trợ</label>
-                            <input type="date" id="sponsorship_date" name="sponsorship_date" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
-                                value="{{ $sponsorship->sponsorship_date }}"
-                                disabled>
+                            <input type="date" id="sponsorship_date" name="sponsorship_date"
+                                class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                                value="{{ $sponsorship->sponsorship_date }}" disabled>
                         </div>
 
                         <!-- Nội dung -->
                         <div class="d-flex align-items-center mb-3">
                             <label for="content" class="form-label mb-0 me-2" style="width: 250px;">Nội dung</label>
-                            <textarea id="content" name="content" rows="3" 
-                            class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" disabled>{{ $sponsorship->content }}</textarea>
+                            <textarea id="content" name="content" rows="3"
+                                class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" disabled>{{ $sponsorship->content }}</textarea>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -71,14 +74,16 @@
                         <div class="d-flex align-items-center mb-3">
                             <label for="product" class="form-label mb-0 me-2" style="width: 250px;">Sản phẩm tài
                                 trợ</label>
-                            <input type="text" id="product" name="product" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                            <input type="text" id="product" name="product"
+                                class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
                                 value="{{ $sponsorship->product }}" disabled>
                         </div>
 
                         <!-- Đơn vị -->
                         <div class="d-flex align-items-center mb-3">
                             <label for="unit" class="form-label mb-0 me-2" style="width: 250px;">Đơn vị</label>
-                            <input type="text" id="unit" name="unit" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                            <input type="text" id="unit" name="unit"
+                                class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
                                 value="{{ $sponsorship->unit }}" disabled>
                         </div>
 
@@ -86,14 +91,16 @@
                         <div class="d-flex align-items-center mb-3">
                             <label for="unit_price" class="form-label mb-0 me-2" style="width: 250px;">Đơn giá
                                 (VNĐ)</label>
-                            <input type="number" id="unit_price" name="unit_price" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                            <input type="number" id="unit_price" name="unit_price"
+                                class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
                                 value="{{ $sponsorship->unit_price }}" disabled>
                         </div>
 
                         <!-- Số lượng -->
                         <div class="d-flex align-items-center mb-3">
                             <label for="quantity" class="form-label mb-0 me-2" style="width: 250px;">Số lượng</label>
-                            <input type="number" id="quantity" name="quantity" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                            <input type="number" id="quantity" name="quantity"
+                                class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
                                 value="{{ $sponsorship->quantity }}" disabled>
                         </div>
 
@@ -101,16 +108,19 @@
                         <div class="d-flex align-items-center mb-3">
                             <label for="total_amount" class="form-label mb-0 me-2" style="width: 250px;">Thành tiền
                                 (VNĐ)</label>
-                            <input type="number" id="total_amount" name="total_amount" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                            <input type="number" id="total_amount" name="total_amount"
+                                class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
                                 value="{{ $sponsorship->total_amount }}" disabled>
                         </div>
 
                         <!-- Đính kèm -->
                         <div class="d-flex align-items-center mb-3">
-                            <label for="attachment" class="form-label mb-0 me-2" style="width: 250px;">Tệp đính kèm</label>
+                            <label for="attachment" class="form-label mb-0 me-2" style="width: 250px;">Tệp đính
+                                kèm</label>
                             @if ($sponsorship->attachment)
                                 <a href="{{ asset('storage/' . $sponsorship->attachment) }}" target="_blank"
-                                    class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1">Xem tệp
+                                    class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1">Xem
+                                    tệp
                                     đính kèm</a>
                             @else
                                 <input type="text" value="Không có tệp đính kèm"
@@ -121,8 +131,9 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center gap-3">
-                    <a href="{{ route('sponsorship.index') }}"
-                        class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Đóng</a>
+                    <x-cancel-button :route="route('sponsorship.index')">
+                        Đóng
+                    </x-cancel-button>
                 </div>
             </form>
         </div>

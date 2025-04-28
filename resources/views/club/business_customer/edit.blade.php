@@ -18,7 +18,7 @@
         <div class="p-4 bg-white shadow-sm rounded-lg w-100" style="max-height: 85vh; overflow-y: auto;">
             <h1
                 style="font-family: 'Roboto', sans-serif; font-size: 32px; font-weight: 700; line-height: 38.4px; color: #803B03;">
-                Chỉnh sửa khác hàng</h1>
+                Chỉnh sửa khách hàng</h1>
 
             <form action="{{ route('club.business_customer.update', [$club->id, $customer->id]) }}" method="POST">
                 @csrf
@@ -423,7 +423,8 @@
 
                                 <!-- Giới tính -->
                                 <div class="d-flex align-items-center mb-3">
-                                    <label class="form-label mb-0 me-1" style="width: 180px;">Giới tính <span class="text-danger">*</span></label>
+                                    <label class="form-label mb-0 me-1" style="width: 180px;">Giới tính <span
+                                            class="text-danger">*</span></label>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="leader_gender" required
                                             id="leader_gender_male" value="male"
@@ -441,7 +442,8 @@
                                 <!-- Email liên hệ trực tiếp -->
                                 <div class="d-flex align-items-center">
                                     <label for="leader_email" class="form-label mb-0 me-2"
-                                        style="width: 250px;">Email liên hệ trực tiếp <span class="text-danger">*</span></label>
+                                        style="width: 250px;">Email liên hệ trực tiếp <span
+                                            class="text-danger">*</span></label>
                                     <input type="email" id="leader_email" name="leader_email"
                                         class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
                                         placeholder="Nhập email liên hệ" required
@@ -567,7 +569,8 @@
                                 @endif
                             </div>
                             <div class="d-flex justify-content-end mb-2">
-                                <button type="button" class="btn btn-outline-primary" onclick="addResponsiblePerson()">Thêm người phụ trách</button>
+                                <button type="button" class="btn btn-outline-primary"
+                                    onclick="addResponsiblePerson()">Thêm người phụ trách</button>
                             </div>
                         </div>
                         <h3 class="p-2"
@@ -582,37 +585,42 @@
                                     @if ($customer->club_id == null)
                                         <option value="">Chọn câu lạc bộ</option>
                                     @endif
-                                    @foreach ($clubs as $club)
-                                        <option value="{{ $club->id }}"
-                                            {{ $club->id == $customer->club_id ? 'selected' : '' }}>
-                                            {{ $club->name_vi }}
+                                    @foreach ($clubs as $clubItem)
+                                        <option value="{{ $clubItem->id }}"
+                                            {{ $clubItem->id == $customer->club_id ? 'selected' : '' }}>
+                                            {{ $clubItem->name_vi }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
 
-                        <h3 class="p-2" style="font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 700; line-height: 38.4px; color: #803B03;">10. Thông tin tài khoản</h3>
+                        <h3 class="p-2"
+                            style="font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 700; line-height: 38.4px; color: #803B03;">
+                            10. Thông tin tài khoản</h3>
                         <div class="border mb-3" style="border-radius: 10px; padding: 20px;">
                             <div class="d-flex align-items-center mb-3">
-                                <label for="activity_status" class="form-label mb-0 me-2" style="width: 250px;">Thông tin đăng nhập</label>
+                                <label for="activity_status" class="form-label mb-0 me-2" style="width: 250px;">Thông
+                                    tin đăng nhập</label>
                                 <input type="text" id="activity_status" name="activity_status" disabled
-                                value="{{ old('activity_status', $customer->login_code) }}" 
-                                class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1">
+                                    value="{{ old('activity_status', $customer->login_code) }}"
+                                    class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1">
                                 @if ($errors->has('activity_status'))
                                     <span class="text-danger ms-2">{{ $errors->first('activity_status') }}</span>
                                 @endif
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <label for="activity_status" class="form-label mb-0 me-2" style="width: 180px;">Tình trạng hoạt động</label>
+                                <label for="activity_status" class="form-label mb-0 me-2" style="width: 180px;">Tình
+                                    trạng hoạt động</label>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="status" id="status_active" value="1" 
-                                        {{ old('status', $customer->status) == '1' ? 'checked' : '' }}>
+                                    <input class="form-check-input" type="radio" name="status" id="status_active"
+                                        value="1" {{ old('status', $customer->status) == '1' ? 'checked' : '' }}>
                                     <label class="form-check-label" for="status_active">Đang hoạt động</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="status" id="status_inactive" value="0" 
+                                    <input class="form-check-input" type="radio" name="status"
+                                        id="status_inactive" value="0"
                                         {{ old('status', $customer->status) == '0' ? 'checked' : '' }}>
                                     <label class="form-check-label" for="status_inactive">Ngưng hoạt động</label>
                                 </div>
@@ -623,9 +631,12 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-center gap-3">
-                        <a href="{{ route('club.business_customer.index', $club->id) }}"
-                            class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Hủy</a>
-                        <button type="submit" class="btn btn-primary w-48 py-3 sm:rounded-lg">Lưu</button>
+                        <x-cancel-button :route="route('club.business_customer.index', $club->id)">
+                            Hủy
+                        </x-cancel-button>
+                        <x-primary-button>
+                            Lưu
+                        </x-primary-button>
                     </div>
                 </div>
             </form>
@@ -633,12 +644,12 @@
     </div>
 </x-app-layout>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    let responsiblePeopleCount = 1; 
+    document.addEventListener("DOMContentLoaded", function() {
+        let responsiblePeopleCount = 1;
 
-    window.addResponsiblePerson = function () {
-        let responsibleContainer = document.getElementById("responsible_people");
-        let newPerson = `
+        window.addResponsiblePerson = function() {
+            let responsibleContainer = document.getElementById("responsible_people");
+            let newPerson = `
             <div class="d-flex align-items-center mb-3">
                 <label for="name" class="form-label mb-0 me-2" style="width: 250px;">Họ và tên</label>
                 <input type="text" id="name" name="responsible_name[]" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" 
@@ -674,8 +685,8 @@
             </div>
             <hr class="my-4" style="border: 1px solid #FF7506;">
         `;
-        responsibleContainer.insertAdjacentHTML("beforeend", newPerson);
-        responsiblePeopleCount++;
-    };
-});
+            responsibleContainer.insertAdjacentHTML("beforeend", newPerson);
+            responsiblePeopleCount++;
+        };
+    });
 </script>

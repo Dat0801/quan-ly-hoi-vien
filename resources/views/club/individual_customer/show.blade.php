@@ -16,7 +16,8 @@
 
     <div class="d-flex align-items-start" style="margin-right: 110px;">
         <div class="p-4 bg-white shadow-sm rounded-lg w-100" style="max-height: 85vh; overflow-y: auto;">
-            <h1 style="font-family: 'Roboto', sans-serif; font-size: 32px; font-weight: 700; line-height: 38.4px; color: #803B03;">
+            <h1
+                style="font-family: 'Roboto', sans-serif; font-size: 32px; font-weight: 700; line-height: 38.4px; color: #803B03;">
                 Chi tiết khách hàng
             </h1>
 
@@ -25,7 +26,8 @@
                 <div class="row mb-3">
                     <!-- Phần 1: Thông tin cá nhân -->
                     <div class="col-lg-6">
-                        <h3 class="p-2" style="font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 700; line-height: 38.4px; color: #803B03;">
+                        <h3 class="p-2"
+                            style="font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 700; line-height: 38.4px; color: #803B03;">
                             1. Thông tin cá nhân
                         </h3>
                         <div class="border mb-3" style="border-radius: 10px; padding: 20px;">
@@ -33,8 +35,8 @@
                             <div class="d-flex align-items-center mb-3">
                                 <label for="login_code" class="form-label mb-0 me-2" style="width: 250px;">Mã đăng nhập
                                     <span class="text-danger">*</span></label>
-                                <input type="text" id="login_code" name="login_code" value="{{ $customer->login_code }}"
-                                    placeholder="Nhập mã đăng nhập"
+                                <input type="text" id="login_code" name="login_code"
+                                    value="{{ $customer->login_code }}" placeholder="Nhập mã đăng nhập"
                                     class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
                                     disabled>
                                 @if ($errors->has('login_code'))
@@ -81,8 +83,10 @@
 
                             <!-- Ngày sinh -->
                             <div class="d-flex align-items-center mb-3">
-                                <label for="dob" class="form-label mb-0 me-2" style="width: 250px;">Ngày sinh</label>
-                                <input type="date" id="dob" name="birth_date" value="{{ $customer->birth_date }}"
+                                <label for="dob" class="form-label mb-0 me-2" style="width: 250px;">Ngày
+                                    sinh</label>
+                                <input type="date" id="dob" name="birth_date"
+                                    value="{{ $customer->birth_date }}"
                                     class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
                                     disabled>
                                 @if ($errors->has('birth_date'))
@@ -111,7 +115,8 @@
                                 <label for="phone" class="form-label mb-0 me-2" style="width: 250px;">Số điện thoại
                                     <span class="text-danger">*</span></label>
                                 <input type="text" id="phone" name="phone" value="{{ $customer->phone }}"
-                                    placeholder="Nhập số điện thoại" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                                    placeholder="Nhập số điện thoại"
+                                    class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
                                     disabled>
                                 @if ($errors->has('phone'))
                                     <span class="text-danger ms-2">{{ $errors->first('phone') }}</span>
@@ -123,7 +128,8 @@
                                 <label for="email" class="form-label mb-0 me-2" style="width: 250px;">Email <span
                                         class="text-danger">*</span></label>
                                 <input type="email" id="email" name="email" value="{{ $customer->email }}"
-                                    placeholder="Nhập email" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                                    placeholder="Nhập email"
+                                    class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
                                     disabled>
                                 @if ($errors->has('email'))
                                     <span class="text-danger ms-2">{{ $errors->first('email') }}</span>
@@ -132,9 +138,11 @@
 
                             <!-- Đơn vị -->
                             <div class="d-flex align-items-center mb-3">
-                                <label for="organization_name" class="form-label mb-0 me-2" style="width: 250px;">Đơn vị</label>
-                                <input type="text" id="organization_name" name="unit" value="{{ $customer->unit }}"
-                                    placeholder="Nhập tên đơn vị" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                                <label for="organization_name" class="form-label mb-0 me-2" style="width: 250px;">Đơn
+                                    vị</label>
+                                <input type="text" id="organization_name" name="unit"
+                                    value="{{ $customer->unit }}" placeholder="Nhập tên đơn vị"
+                                    class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
                                     disabled>
                                 @if ($errors->has('unit'))
                                     <span class="text-danger ms-2">{{ $errors->first('unit') }}</span>
@@ -145,15 +153,18 @@
 
                     <!-- Phần 2: Ngành và Lĩnh vực -->
                     <div class="col-lg-6">
-                        <h3 class="p-2" style="font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 700; line-height: 38.4px; color: #803B03;">
+                        <h3 class="p-2"
+                            style="font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 700; line-height: 38.4px; color: #803B03;">
                             2. Ngành và Lĩnh vực
                         </h3>
                         <div class="border" style="border-radius: 10px; padding: 20px;">
                             <!-- Ngành -->
                             <div class="d-flex align-items-center mb-3">
-                                <label for="industry" class="form-label mb-0 me-2" style="width: 250px;">Ngành</label>
+                                <label for="industry" class="form-label mb-0 me-2"
+                                    style="width: 250px;">Ngành</label>
                                 <select id="industry" name="industry_id"
-                                    class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" disabled>
+                                    class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                                    disabled>
                                     <option value="{{ $customer->industry_id }}">
                                         {{ $customer->industry->industry_name ?? '-' }}
                                     </option>
@@ -165,9 +176,11 @@
 
                             <!-- Lĩnh vực -->
                             <div class="d-flex align-items-center">
-                                <label for="field" class="form-label mb-0 me-2" style="width: 250px;">Lĩnh vực</label>
+                                <label for="field" class="form-label mb-0 me-2" style="width: 250px;">Lĩnh
+                                    vực</label>
                                 <select id="field" name="field_id"
-                                    class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" disabled>
+                                    class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                                    disabled>
                                     <option value="{{ $customer->field_id }}">
                                         {{ $customer->field->name ?? '-' }}
                                     </option>
@@ -178,18 +191,25 @@
                             </div>
                         </div>
 
-                        <h3 class="p-2" style="font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 700; line-height: 38.4px; color: #803B03;">4. Thông tin tài khoản</h3>
+                        <h3 class="p-2"
+                            style="font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 700; line-height: 38.4px; color: #803B03;">
+                            4. Thông tin tài khoản</h3>
                         <div class="border" style="border-radius: 10px; padding: 20px;">
                             <div class="d-flex align-items-center mb-3">
-                                <label for="activity_status" class="form-label mb-0 me-2" style="width: 250px;">Thông tin đăng nhập</label>
-                                <input type="text" id="activity_status" name="activity_status" value="{{ old('activity_status', $customer->login_code) }}" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" {{ isset($customer) ? 'disabled' : '' }}>
+                                <label for="activity_status" class="form-label mb-0 me-2" style="width: 250px;">Thông
+                                    tin đăng nhập</label>
+                                <input type="text" id="activity_status" name="activity_status"
+                                    value="{{ old('activity_status', $customer->login_code) }}"
+                                    class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                                    {{ isset($customer) ? 'disabled' : '' }}>
                                 @if ($errors->has('activity_status'))
                                     <span class="text-danger ms-2">{{ $errors->first('activity_status') }}</span>
                                 @endif
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <label for="activity_status" class="form-label mb-0 me-2" style="width: 180px;">Tình trạng hoạt động</label>
+                                <label for="activity_status" class="form-label mb-0 me-2" style="width: 180px;">Tình
+                                    trạng hoạt động</label>
                                 <span class="badge {{ $customer->status ? 'bg-success' : 'bg-danger' }}">
                                     {{ $customer->status ? 'Đang hoạt động' : 'Ngưng hoạt động' }}
                                 </span>
@@ -201,10 +221,12 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center gap-3">
-                    <a href="{{ route('club.individual_customer.index', $club->id) }}"
-                        class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Đóng</a>
-                    <a href="{{ route('club.individual_customer.edit', [$club->id,$customer->id]) }}"
-                        class="btn btn-primary w-48 py-3 sm:rounded-lg">Chỉnh sửa</a>
+                    <x-cancel-button :route="route('club.individual_customer.index', $club->id)">
+                        Đóng
+                    </x-cancel-button>
+                    <x-primary-button :route="route('club.individual_customer.edit', [$club->id, $customer->id])">
+                        Chỉnh sửa
+                    </x-primary-button>
                 </div>
             </form>
         </div>

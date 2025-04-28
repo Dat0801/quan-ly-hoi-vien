@@ -308,9 +308,12 @@
                     </div>
                     <!-- Nút Lưu và Hủy -->
                     <div class="d-flex justify-content-center gap-3">
-                        <a href="{{ route('business_partner.index') }}"
-                            class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Hủy</a>
-                        <button type="submit" class="btn btn-primary w-48 py-3 sm:rounded-lg">Lưu</button>
+                        <x-cancel-button :route="route('business_partner.index')">
+                            Hủy
+                        </x-cancel-button>
+                        <x-primary-button >
+                            Thêm
+                        </x-primary-button>
                     </div>
                 </div>
             </form>

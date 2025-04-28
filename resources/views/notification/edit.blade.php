@@ -52,7 +52,7 @@
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" id="send_time_immediate"
                                             {{ $notification->sent_at <= now() ? 'checked' : '' }}
-                                            name="send_time_option" value="immediate" >
+                                            name="send_time_option" value="immediate">
                                         <label class="form-check-label" for="send_time_immediate">Gửi ngay lập
                                             tức</label>
                                     </div>
@@ -265,8 +265,8 @@
                                                 <td>
                                                     <input type="email"
                                                         name="external_participants[{{ $index }}][email]"
-                                                        value="{{ $participant->email ?? '' }}"
-                                                        class="form-control" placeholder="Nhập email" required>
+                                                        value="{{ $participant->email ?? '' }}" class="form-control"
+                                                        placeholder="Nhập email" required>
                                                 </td>
                                                 <td></td>
                                                 <td></td>
@@ -286,9 +286,12 @@
                 </div>
 
                 <div class="d-flex justify-content-center gap-3 mt-4">
-                    <a href="{{ route('notification.index') }}"
-                        class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Hủy</a>
-                    <button type="submit" form="meetingForm" class="btn btn-primary w-48 py-3 sm:rounded-lg">Lưu</button>
+                    <x-cancel-button :route="route('notification.index')">
+                        Hủy
+                    </x-cancel-button>
+                    <x-primary-button>
+                        Lưu
+                    </x-primary-button>
                 </div>
             </form>
 
@@ -296,7 +299,7 @@
     </div>
 </x-app-layout>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const sendTimeImmediate = document.getElementById('send_time_immediate');
         const sendTimeCustom = document.getElementById('send_time_custom');
         const customSendTimeInput = document.getElementById('custom_send_time');

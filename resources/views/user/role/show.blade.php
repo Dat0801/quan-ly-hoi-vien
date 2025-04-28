@@ -80,8 +80,12 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center gap-3 mt-4">
-                    <a href="{{ route('role.index') }}" class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Đóng</a>
-                    <a href="{{ route('role.edit', $role->id) }}" class="btn btn-primary w-48 py-3 sm:rounded-lg">Chỉnh sửa</a>
+                    <x-cancel-button :route="route('role.index')">
+                        Đóng
+                    </x-cancel-button>
+                    <x-primary-button :route="route('role.edit', $role->id)">
+                        Chỉnh sửa
+                    </x-primary-button>
                 </div>
             </form>
         </div>

@@ -381,10 +381,12 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center gap-3">
-                    <a href="{{ route('business_partner.index') }}"
-                        class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Đóng</a>
-                    <a href="{{ route('business_partner.edit', $businessPartner->id) }}"
-                        class="btn btn-primary w-48 py-3 sm:rounded-lg">Chỉnh sửa</a>
+                    <x-cancel-button :route="route('business_partner.index')">
+                        Đóng
+                    </x-cancel-button>
+                    <x-primary-button :route="route('business_partner.edit', $businessPartner->id)">
+                        Chỉnh sửa
+                    </x-primary-button>
                 </div>
             </form>
         </div>

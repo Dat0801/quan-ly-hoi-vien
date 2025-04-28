@@ -40,10 +40,12 @@
                 </div>
 
                 <div class="d-flex justify-content-center gap-3">
-                    <a href="{{ route('market.index') }}" class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Đóng</a>
-                    <a href="{{ route('market.edit', $market->id) }}" class="btn btn-primary w-48 py-3 sm:rounded-lg" style="cursor: pointer;">
+                    <x-cancel-button :route="route('market.index')">
+                        Đóng
+                    </x-cancel-button>
+                    <x-primary-button :route="route('market.edit', $market->id)">
                         Chỉnh sửa
-                    </a>
+                    </x-primary-button>
                 </div>
             </form>
         </div>

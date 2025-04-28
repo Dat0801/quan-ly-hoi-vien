@@ -152,9 +152,13 @@
             </div>
 
             <div class="d-flex justify-content-center gap-3 mt-4">
-                <a href="{{ route('meeting.index') }}" class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Đóng</a>
+                <x-cancel-button :route="route('meeting.index')">
+                    Đóng
+                </x-cancel-button>
                 @if ($status !== 'Đang diễn ra')
-                    <a href="{{ route('meeting.edit', $meeting->id) }}" class="btn btn-primary w-48 py-3 sm:rounded-lg">Chỉnh sửa</a>
+                    <x-primary-button :route="route('meeting.edit', $meeting->id)">
+                        Chỉnh sửa
+                    </x-primary-button>
                 @endif
             </div>
         </div>

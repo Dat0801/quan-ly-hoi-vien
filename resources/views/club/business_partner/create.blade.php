@@ -57,7 +57,8 @@
 
                             <!-- Tên doanh nghiệp (Tiếng Việt) -->
                             <div class="d-flex align-items-center mb-3">
-                                <label for="business_name_vi" class="form-label mb-0 me-2" style="width: 250px;">Tên doanh nghiệp
+                                <label for="business_name_vi" class="form-label mb-0 me-2" style="width: 250px;">Tên
+                                    doanh nghiệp
                                     (Tiếng Việt) <span class="text-danger">*</span></label>
                                 <input type="text" id="business_name_vi" name="business_name_vi"
                                     value="{{ old('business_name_vi') }}" placeholder="Nhập tên tiếng Việt"
@@ -70,7 +71,8 @@
 
                             <!-- Tên doanh nghiệp (Tiếng Anh) -->
                             <div class="d-flex align-items-center mb-3">
-                                <label for="business_name_en" class="form-label mb-0 me-2" style="width: 250px;">Tên doanh nghiệp
+                                <label for="business_name_en" class="form-label mb-0 me-2" style="width: 250px;">Tên
+                                    doanh nghiệp
                                     (Tiếng Anh)</label>
                                 <input type="text" id="business_name_en" name="business_name_en"
                                     value="{{ old('business_name_en') }}" placeholder="Nhập tên tiếng Anh (nếu có)"
@@ -82,7 +84,8 @@
 
                             <!-- Tên viết tắt -->
                             <div class="d-flex align-items-center mb-3">
-                                <label for="business_name_abbr" class="form-label mb-0 me-2" style="width: 250px;">Tên doanh nghiệp
+                                <label for="business_name_abbr" class="form-label mb-0 me-2" style="width: 250px;">Tên
+                                    doanh nghiệp
                                     (Tên viết tắt)</label>
                                 <input type="text" id="business_name_abbr" name="business_name_abbr"
                                     value="{{ old('business_name_abbr') }}" placeholder="Nhập tên viết tắt (nếu có)"
@@ -308,9 +311,12 @@
                     </div>
                     <!-- Nút Lưu và Hủy -->
                     <div class="d-flex justify-content-center gap-3">
-                        <a href="{{ route('club.business_partner.index', $club->id) }}"
-                            class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Hủy</a>
-                        <button type="submit" class="btn btn-primary w-48 py-3 sm:rounded-lg">Lưu</button>
+                        <x-cancel-button :route="route('club.business_partner.index', $club->id)">
+                            Hủy
+                        </x-cancel-button>
+                        <x-primary-button>
+                            Thêm
+                        </x-primary-button>
                     </div>
                 </div>
             </form>

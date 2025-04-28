@@ -235,10 +235,12 @@
                 </div>
 
                 <div class="d-flex justify-content-center gap-3 mt-4">
-                    <a href="{{ route('meeting.index') }}"
-                        class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Hủy</a>
-                    <button type="submit" form="meetingForm"
-                        class="btn btn-primary w-48 py-3 sm:rounded-lg">Thêm</button>
+                    <x-cancel-button :route="route('meeting.index')">
+                        Hủy
+                    </x-cancel-button>
+                    <x-primary-button>
+                        Thêm
+                    </x-primary-button>
                 </div>
             </form>
         </div>

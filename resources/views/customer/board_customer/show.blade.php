@@ -178,7 +178,9 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center gap-3">
-                    <a href="{{ route('board_customer.index') }}" class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Đóng</a>
+                    <x-cancel-button :route="route('board_customer.index')">
+                        Đóng
+                    </x-cancel-button>
                 </div>
             </form>
         </div>

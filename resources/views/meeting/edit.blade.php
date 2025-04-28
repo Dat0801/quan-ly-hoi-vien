@@ -70,7 +70,7 @@
                                 class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
                                 required>
                         </div>
-                        
+
                     </div>
 
                     <div class="col-lg-12">
@@ -279,13 +279,15 @@
                 </div>
 
                 <div class="d-flex justify-content-center gap-3 mt-4">
-                    <a href="{{ route('meeting.index') }}"
-                        class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Hủy</a>
-                    <button type="submit" form="meetingForm" class="btn btn-primary w-48 py-3 sm:rounded-lg">Cập
-                        nhật</button>
+                    <x-cancel-button :route="route('meeting.index')">
+                        Hủy
+                    </x-cancel-button>
+                    <x-primary-button>
+                        Lưu
+                    </x-primary-button>
                 </div>
             </form>
-            
+
         </div>
     </div>
 </x-app-layout>

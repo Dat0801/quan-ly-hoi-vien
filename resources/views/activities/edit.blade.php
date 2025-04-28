@@ -30,8 +30,8 @@
                         <div class="d-flex align-items-center mb-3">
                             <label for="name" class="form-label mb-0 me-2" style="width: 250px;">Tên hoạt động <span
                                     class="text-danger">*</span></label>
-                            <input type="text" id="name" name="name" value="{{ old('name', $activity->name) }}"
-                                placeholder="Nhập tên hoạt động"
+                            <input type="text" id="name" name="name"
+                                value="{{ old('name', $activity->name) }}" placeholder="Nhập tên hoạt động"
                                 class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
                                 required>
                         </div>
@@ -57,8 +57,8 @@
                         <div class="d-flex align-items-center mb-3">
                             <label for="location" class="form-label mb-0 me-2" style="width: 250px;">Địa điểm <span
                                     class="text-danger">*</span></label>
-                            <input type="text" id="location" name="location" value="{{ old('location', $activity->location) }}"
-                                placeholder="Nhập địa điểm"
+                            <input type="text" id="location" name="location"
+                                value="{{ old('location', $activity->location) }}" placeholder="Nhập địa điểm"
                                 class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
                                 required>
                         </div>
@@ -70,17 +70,18 @@
                         </div>
 
                         <div class="d-flex align-items-center mb-3">
-                            <label for="attachment" class="form-label mb-0 me-2" style="width: 180px;">Tệp đính kèm</label>
+                            <label for="attachment" class="form-label mb-0 me-2" style="width: 180px;">Tệp đính
+                                kèm</label>
                             @if ($activity->attachment)
                                 <div class="d-flex align-items-center flex-grow-1">
                                     <a href="{{ asset('storage/' . $activity->attachment) }}" target="_blank"
                                         class="me-3 text-decoration-none">Xem tệp đính kèm</a>
-                                    
-                                    <input type="file" name="attachment" id="attachment" 
+
+                                    <input type="file" name="attachment" id="attachment"
                                         class="form-control border-gray-300 shadow-sm focus:ring-indigo-500">
                                 </div>
                             @else
-                                <input type="file" name="attachment" id="attachment" 
+                                <input type="file" name="attachment" id="attachment"
                                     class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1">
                             @endif
                         </div>
@@ -92,9 +93,12 @@
                             <select id="participants" name="participants[]"
                                 class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
                                 multiple>
-                                <option value="all" {{ in_array('all', old('participants', $activity->participants->pluck('participantable_type')->toArray())) ? 'selected' : '' }}>Tất cả</option>
+                                <option value="all"
+                                    {{ in_array('all', old('participants', $activity->participants->pluck('participantable_type')->toArray())) ? 'selected' : '' }}>
+                                    Tất cả</option>
                                 @foreach ($participantTypes as $type => $label)
-                                    <option value="{{ $type }}" {{ in_array($type, old('participants', $activity->participants->pluck('participantable_type')->toArray())) ? 'selected' : '' }}>
+                                    <option value="{{ $type }}"
+                                        {{ in_array($type, old('participants', $activity->participants->pluck('participantable_type')->toArray())) ? 'selected' : '' }}>
                                         {{ $label }}
                                     </option>
                                 @endforeach
@@ -128,13 +132,18 @@
                                     @foreach ($externalParticipants as $index => $participant)
                                         <tr>
                                             <td style="text-align: center">{{ $index + 1 }}</td>
-                                            <td><input type="text" name="external_participants[{{ $index }}][name]" 
-                                                value="{{ $participant['name'] }}" 
-                                                class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"></td>
-                                            <td><input type="email" name="external_participants[{{ $index }}][email]" 
-                                                value="{{ $participant['email'] }}" 
-                                                class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"></td>
-                                            <td><button type="button" class="btn btn-danger removeRowButton"><i class="fas fa-trash-alt"></i></button></td>
+                                            <td><input type="text"
+                                                    name="external_participants[{{ $index }}][name]"
+                                                    value="{{ $participant['name'] }}"
+                                                    class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1">
+                                            </td>
+                                            <td><input type="email"
+                                                    name="external_participants[{{ $index }}][email]"
+                                                    value="{{ $participant['email'] }}"
+                                                    class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1">
+                                            </td>
+                                            <td><button type="button" class="btn btn-danger removeRowButton"><i
+                                                        class="fas fa-trash-alt"></i></button></td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -143,10 +152,12 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center gap-3 mt-4">
-                    <a href="{{ route('activity.index') }}"
-                        class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Hủy</a>
-                    <button type="submit" form="activityForm"
-                        class="btn btn-primary w-48 py-3 sm:rounded-lg">Cập nhật</button>
+                    <x-cancel-button :route="route('activity.index')">
+                        Hủy
+                    </x-cancel-button>
+                    <x-primary-button>
+                        Lưu
+                    </x-primary-button>
                 </div>
             </form>
         </div>

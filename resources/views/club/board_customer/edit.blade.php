@@ -97,8 +97,12 @@
 
                     <!-- Nút Lưu -->
                     <div class="d-flex justify-content-center gap-3">
-                        <a href="{{ route('club.board_customer.index', $club->id) }}" class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Hủy</a>
-                        <button type="submit" class="btn btn-primary w-48 py-3 sm:rounded-lg">Lưu</button>
+                        <x-cancel-button :route="route('club.board_customer.index', $club->id)">
+                            Hủy
+                        </x-cancel-button>
+                        <x-primary-button >
+                            Lưu
+                        </x-primary-button>
                     </div>
                 </div>
             </form>

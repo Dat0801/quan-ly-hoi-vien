@@ -21,8 +21,7 @@
                 Thêm hoạt động
             </h1>
 
-            <form id="activityForm" action="{{ route('activity.store') }}" method="POST"
-                enctype="multipart/form-data">
+            <form id="activityForm" action="{{ route('activity.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-lg-6">
@@ -68,8 +67,10 @@
                         </div>
 
                         <div class="d-flex align-items-center mb-3">
-                            <label for="attachment" class="form-label mb-0 me-2" style="width: 250px;">Tệp đính kèm</label>
-                            <input type="file" id="attachment" name="attachment" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1">
+                            <label for="attachment" class="form-label mb-0 me-2" style="width: 250px;">Tệp đính
+                                kèm</label>
+                            <input type="file" id="attachment" name="attachment"
+                                class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1">
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -115,10 +116,12 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center gap-3 mt-4">
-                    <a href="{{ route('activity.index') }}"
-                        class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Hủy</a>
-                    <button type="submit" form="activityForm"
-                        class="btn btn-primary w-48 py-3 sm:rounded-lg">Thêm</button>
+                    <x-cancel-button :route="route('activity.index')">
+                        Hủy
+                    </x-cancel-button>
+                    <x-primary-button>
+                        Thêm
+                    </x-primary-button>
                 </div>
             </form>
         </div>

@@ -138,9 +138,12 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center gap-3">
-                    <a href="{{ route('sponsorship.index') }}"
-                        class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Hủy</a>
-                    <button type="submit" class="btn btn-primary w-48 py-3 sm:rounded-lg">Thêm</button>
+                    <x-cancel-button :route="route('sponsorship.index')">
+                        Hủy
+                    </x-cancel-button>
+                    <x-primary-button>
+                        Thêm
+                    </x-primary-button>
                 </div>
             </form>
         </div>

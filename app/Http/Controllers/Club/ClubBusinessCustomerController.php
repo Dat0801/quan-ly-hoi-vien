@@ -191,7 +191,6 @@ class ClubBusinessCustomerController extends Controller
         $targetCustomerGroups = TargetCustomerGroup::all();
         $certificates = Certificate::all();
         $clubs = Club::all();
-
         return view('club.business_customer.edit', compact('club', 'customer', 'industries', 'fields', 'markets', 'targetCustomerGroups', 'certificates', 'clubs'));
     }
     public function update(Request $request, Club $club, $id)

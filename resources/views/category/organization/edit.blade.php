@@ -1,4 +1,4 @@
-<x-app-layout :hideSidebar="true">
+<x-app-layout>
     <div style="margin-right: 110px;">
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -50,8 +50,12 @@
                 </div>
 
                 <div class="d-flex justify-content-center gap-3">
-                    <a href="{{ route('organization.show', $organization->id) }}" class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Hủy</a>
-                    <button type="submit" class="btn btn-primary w-48 py-3 sm:rounded-lg">Lưu</button>
+                    <x-cancel-button :route="route('organization.show', $organization->id)">
+                        Hủy
+                    </x-cancel-button>
+                    <x-primary-button>
+                        Lưu
+                    </x-primary-button>
                 </div>
             </form>
         </div>

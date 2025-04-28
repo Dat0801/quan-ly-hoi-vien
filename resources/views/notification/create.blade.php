@@ -1,12 +1,28 @@
 <x-app-layout>
-    <div class="d-flex align-items-start" style="margin-right: 20px;">
+    <div style="margin-right: 110px;">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+    </div>
+
+    <div class="d-flex align-items-start" style="margin-right: 110px;">
         <div class="p-4 bg-white shadow-sm rounded-lg w-100" style="max-height: 85vh; overflow-y: auto;">
             <h1 style="font-family: 'Roboto', sans-serif; font-size: 32px; font-weight: 700; line-height: 38.4px; color: #803B03;"
                 class="mb-3">
                 Tạo thông báo mới
             </h1>
 
-            <form id="meetingForm" action="{{ route('notification.store') }}" method="POST" enctype="multipart/form-data">
+            <form id="meetingForm" action="{{ route('notification.store') }}" method="POST"
+                enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-lg-12">
@@ -27,35 +43,38 @@
                                         class="text-danger">*</span></label>
                                 <div class="flex-grow-1">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" id="format_email" name="format" value="email"
-                                            {{ old('format') === 'email' ? 'checked' : '' }} required>
+                                        <input class="form-check-input" type="radio" id="format_email" name="format"
+                                            value="email" {{ old('format') === 'email' ? 'checked' : '' }} required>
                                         <label class="form-check-label" for="format_email">Email</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" id="format_notification" name="format"
-                                            value="notification" {{ old('format') === 'notification' ? 'checked' : '' }} required>
+                                        <input class="form-check-input" type="radio" id="format_notification"
+                                            name="format" value="notification"
+                                            {{ old('format') === 'notification' ? 'checked' : '' }} required>
                                         <label class="form-check-label" for="format_notification">Notification</label>
                                     </div>
                                 </div>
                             </div>
-                    
+
                             <div class="col-lg-4 d-flex align-items-center mb-3">
-                                <label for="send_time_option" class="form-label mb-0 me-2" style="width: 140px;">Thời gian gửi <span
-                                        class="text-danger">*</span></label>
+                                <label for="send_time_option" class="form-label mb-0 me-2" style="width: 140px;">Thời
+                                    gian gửi <span class="text-danger">*</span></label>
                                 <div class="flex-grow-1">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" id="send_time_immediate" name="send_time_option"
-                                            value="immediate" checked>
-                                        <label class="form-check-label" for="send_time_immediate">Gửi ngay lập tức</label>
+                                        <input class="form-check-input" type="radio" id="send_time_immediate"
+                                            name="send_time_option" value="immediate" checked>
+                                        <label class="form-check-label" for="send_time_immediate">Gửi ngay lập
+                                            tức</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" id="send_time_custom" name="send_time_option"
-                                            value="custom">
-                                        <label class="form-check-label" for="send_time_custom">Tùy chọn thời gian</label>
+                                        <input class="form-check-input" type="radio" id="send_time_custom"
+                                            name="send_time_option" value="custom">
+                                        <label class="form-check-label" for="send_time_custom">Tùy chọn thời
+                                            gian</label>
                                     </div>
                                     <input type="datetime-local" id="custom_send_time" name="send_time"
-                                        value="{{ old('send_time') }}" class="form-control border-gray-300 shadow-sm mt-2"
-                                        style="display: none;">
+                                        value="{{ old('send_time') }}"
+                                        class="form-control border-gray-300 shadow-sm mt-2" style="display: none;">
                                 </div>
                             </div>
                         </div>
@@ -246,13 +265,16 @@
                                 id="addExternalParticipantButton">Thêm người</button>
                         </div>
                     </div>
+
                 </div>
 
-                <div class="d-flex justify-content-center gap-3 mt-4">
-                    <a href="{{ route('notification.index') }}"
-                        class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Hủy</a>
-                    <button type="submit" form="meetingForm"
-                        class="btn btn-primary w-48 py-3 sm:rounded-lg">Thêm</button>
+                <div class="d-flex justify-content-center gap-3">
+                    <x-cancel-button :route="route('notification.index')">
+                        Hủy
+                    </x-cancel-button>
+                    <x-primary-button>
+                        Thêm
+                    </x-primary-button>
                 </div>
             </form>
         </div>
@@ -260,7 +282,7 @@
 </x-app-layout>
 
 <script>
-     document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const sendTimeImmediate = document.getElementById('send_time_immediate');
         const sendTimeCustom = document.getElementById('send_time_custom');
         const customSendTimeInput = document.getElementById('custom_send_time');

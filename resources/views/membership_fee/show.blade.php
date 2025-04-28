@@ -31,7 +31,9 @@
             </div>
 
             <div class="d-flex justify-content-center gap-3">
-                <a href="{{ route('membership_fee.index') }}" class="btn btn-outline-primary w-32 py-2 sm:rounded-lg">Đóng</a>
+                <x-cancel-button :route="route('membership_fee.index')">
+                    Đóng
+                </x-cancel-button>
             </div>
         </div>
         <div class="d-flex flex-column justify-content-between ms-4 bg-white sm:rounded-lg" id="addNewButtonContainer">

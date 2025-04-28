@@ -117,8 +117,9 @@
             </div>
 
             <div class="d-flex justify-content-center gap-3 mt-4">
-                <a href="{{ route('notification.index') }}"
-                    class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Đóng</a>
+                <x-cancel-button :route="route('notification.index')">
+                    Đóng
+                </x-cancel-button>
             </div>
         </div>
     </div>

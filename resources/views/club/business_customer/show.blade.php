@@ -585,18 +585,25 @@
                             </div>
                         </div>
 
-                        <h3 class="p-2" style="font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 700; line-height: 38.4px; color: #803B03;">10. Thông tin tài khoản</h3>
+                        <h3 class="p-2"
+                            style="font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 700; line-height: 38.4px; color: #803B03;">
+                            10. Thông tin tài khoản</h3>
                         <div class="border" style="border-radius: 10px; padding: 20px;">
                             <div class="d-flex align-items-center mb-3">
-                                <label for="activity_status" class="form-label mb-0 me-2" style="width: 250px;">Thông tin đăng nhập</label>
-                                <input type="text" id="activity_status" name="activity_status" value="{{ old('activity_status', $customer->login_code) }}" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" {{ isset($customer) ? 'disabled' : '' }}>
+                                <label for="activity_status" class="form-label mb-0 me-2" style="width: 250px;">Thông
+                                    tin đăng nhập</label>
+                                <input type="text" id="activity_status" name="activity_status"
+                                    value="{{ old('activity_status', $customer->login_code) }}"
+                                    class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1"
+                                    {{ isset($customer) ? 'disabled' : '' }}>
                                 @if ($errors->has('activity_status'))
                                     <span class="text-danger ms-2">{{ $errors->first('activity_status') }}</span>
                                 @endif
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <label for="activity_status" class="form-label mb-0 me-2" style="width: 180px;">Tình trạng hoạt động</label>
+                                <label for="activity_status" class="form-label mb-0 me-2" style="width: 180px;">Tình
+                                    trạng hoạt động</label>
                                 <span class="badge {{ $customer->status ? 'bg-success' : 'bg-danger' }}">
                                     {{ $customer->status ? 'Đang hoạt động' : 'Ngưng hoạt động' }}
                                 </span>
@@ -607,10 +614,12 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-center gap-3">
-                        <a href="{{ route('club.business_customer.index', $club->id) }}"
-                            class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Đóng</a>
-                        <a href="{{ route('club.business_customer.edit', [$club->id, $customer->id]) }}"
-                            class="btn btn-primary w-48 py-3 sm:rounded-lg">Chỉnh sửa</a>
+                        <x-cancel-button :route="route('club.business_customer.index', $club->id)">
+                            Đóng
+                        </x-cancel-button>
+                        <x-primary-button :route="route('club.business_customer.edit', [$club->id, $customer->id])">
+                            Chỉnh sửa
+                        </x-primary-button>
                     </div>
                 </div>
             </form>

@@ -81,7 +81,9 @@
                 </div>
 
                 <div class="d-flex justify-content-center gap-3">
-                    <a href="{{ route('club.board_customer.index', $club->id) }}" class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Đóng</a>
+                    <x-cancel-button :route="route('club.board_customer.index', $club->id)">
+                        Đóng
+                    </x-cancel-button>
                 </div>
             </div>
         </div>

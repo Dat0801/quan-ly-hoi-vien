@@ -78,8 +78,12 @@
 
                 <!-- Nút hành động -->
                 <div class="d-flex justify-content-center gap-3">
-                    <a href="{{ route('field.show', $field->id) }}" class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Hủy</a>
-                    <button type="submit" class="btn btn-primary w-48 py-3 sm:rounded-lg">Lưu</button>
+                    <x-cancel-button :route="route('field.show', $field->id)">
+                        Hủy
+                    </x-cancel-button>
+                    <x-primary-button>
+                        Lưu
+                    </x-primary-button>
                 </div>
             </form>
         </div>

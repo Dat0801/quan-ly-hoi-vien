@@ -40,7 +40,7 @@
     ];
 @endphp
 
-<div class="bg-white text-gray-500" id="sidebar" style="width: 240px; height: 100vh;">
+<div class="bg-white text-gray-500" id="sidebar" style="width: 240px; height: 100vh; flex-shrink: 0;">
     <!-- Logo -->
     <div class="d-flex justify-content-center align-items-center py-3">
         <a href="{{ route('dashboard') }}">

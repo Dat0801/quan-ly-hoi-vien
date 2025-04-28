@@ -51,7 +51,9 @@
                                     <input type="date" id="end_date" name="end_date" class="form-control me-3"
                                         value="{{ request('end_date') }}" style="max-width: 200px;">
 
-                                    <button type="submit" class="btn btn-primary">Lọc</button>
+                                    <x-primary-button :height="42">
+                                        Lọc
+                                    </x-primary-button>
                                 </div>
                             </form>
 

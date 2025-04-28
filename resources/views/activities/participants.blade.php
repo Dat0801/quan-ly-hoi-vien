@@ -71,7 +71,9 @@
                                         @endforeach
                                     </select>
 
-                                    <button type="submit" class="btn btn-primary ms-3">Lọc</button>
+                                    <x-primary-button :height="38" :width="50" class="ms-3">
+                                        Lọc
+                                    </x-primary-button>
                                 </div>
                             </form>
                         </div>

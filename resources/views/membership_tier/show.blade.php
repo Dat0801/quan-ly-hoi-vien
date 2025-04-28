@@ -48,10 +48,12 @@
                 </div>
 
                 <div class="d-flex justify-content-center gap-3">
-                    <a href="{{ route('membership_tier.index') }}"
-                        class="btn btn-outline-primary w-48 py-3 sm:rounded-lg">Đóng</a>
-                    <a href="{{ route('membership_tier.edit', $membershipTier->id) }}"
-                        class="btn btn-primary w-48 py-3 sm:rounded-lg">Chỉnh sửa</a>
+                    <x-cancel-button :route="route('membership_tier.index')">
+                        Đóng
+                    </x-cancel-button>
+                    <x-primary-button :route="route('membership_tier.edit', $membershipTier->id)">
+                        Chỉnh sửa
+                    </x-primary-button>
                 </div>
             </div>
         </div>
