@@ -10,12 +10,14 @@
                     </ul>
                 </div>
             @endif
-            @if(session('success'))
+            @if (session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
-            <h1 style="font-family: 'Roboto', sans-serif; font-size: 32px; font-weight: 700; line-height: 38.4px; color: #803B03;">Chỉnh sửa câu lạc bộ</h1>
+            <h1
+                style="font-family: 'Roboto', sans-serif; font-size: 32px; font-weight: 700; line-height: 38.4px; color: #803B03;">
+                Chỉnh sửa câu lạc bộ</h1>
 
-            <form action="{{ route('club.update', $club->id) }}" method="POST">
+            {{-- <form action="{{ route('club.update', $club->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -150,7 +152,7 @@
                         <h3 class="p-2" style="font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 700; line-height: 38.4px; color: #803B03;">4. Phụ trách kết nối</h3>
                         <div class="border" style="padding: 20px; border-radius: 10px;">
                             <div id="responsible_people">
-                                @if($club->connector && $club->connector->isNotEmpty())
+                                @if ($club->connector && $club->connector->isNotEmpty())
                                     @foreach ($club->connector as $key => $person)
                                         <div class="d-flex align-items-center mb-3">
                                             <label for="name" class="form-label mb-0 me-2" style="width: 250px;">Họ và tên</label>
@@ -240,18 +242,21 @@
                         </x-primary-button>
                     </div>
                 </div>
-            </form>
+            </form> --}}
+
+            <x-club.club-form :action="route('club.update', $club->id)" :method="'PUT'" :readonly="false" :submitText="'Lưu'" :cancelRoute="route('club.index')"
+                :industries="$industries" :fields="$fields" :markets="$markets" :club="$club" />
         </div>
     </div>
 </x-app-layout>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-    let responsiblePeopleCount = 1; // Bắt đầu với 1 người phụ trách
+{{-- <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let responsiblePeopleCount = 1; // Bắt đầu với 1 người phụ trách
 
-    // Hàm thêm người phụ trách
-    window.addResponsiblePerson = function () {
-        let responsibleContainer = document.getElementById("responsible_people");
-        let newPerson = `
+        // Hàm thêm người phụ trách
+        window.addResponsiblePerson = function() {
+            let responsibleContainer = document.getElementById("responsible_people");
+            let newPerson = `
             <div class="d-flex align-items-center mb-3">
                 <label for="name" class="form-label mb-0 me-2" style="width: 250px;">Họ và tên</label>
                 <input type="text" id="name" name="responsible_name[]" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" 
@@ -287,9 +292,9 @@
             </div>
             <hr class="my-4" style="border: 1px solid #FF7506;">
         `;
-        // Chèn người phụ trách mới vào trước nút "Thêm người phụ trách"
-        responsibleContainer.insertAdjacentHTML("beforeend", newPerson);
-        responsiblePeopleCount++;
-    };
-});
-</script>
+            // Chèn người phụ trách mới vào trước nút "Thêm người phụ trách"
+            responsibleContainer.insertAdjacentHTML("beforeend", newPerson);
+            responsiblePeopleCount++;
+        };
+    });
+</script> --}}

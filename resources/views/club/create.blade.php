@@ -1,26 +1,11 @@
 <x-app-layout>
-    <div style="margin-right: 110px;">
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-    </div>
-
     <div class="d-flex align-items-start" style="margin-right: 110px;">
         <div class="p-4 bg-white shadow-sm rounded-lg w-100" style="max-height: 85vh; overflow-y: auto;">
             <h1
                 style="font-family: 'Roboto', sans-serif; font-size: 32px; font-weight: 700; line-height: 38.4px; color: #803B03;">
                 Thêm câu lạc bộ</h1>
 
-            <form action="{{ route('club.store') }}" method="POST">
+            {{-- <form action="{{ route('club.store') }}" method="POST">
                 @csrf
                 <div class="row">
                     <!-- Ô 1: Thông tin cơ bản -->
@@ -314,57 +299,10 @@
                         </x-primary-button>
                     </div>
                 </div>
-            </form>
+            </form> --}}
+
+            <x-club.club-form :action="route('club.store')" :method="'POST'" :readonly="false" :submitText="'Thêm'" :cancelRoute="route('club.index')"
+                :industries="$industries" :fields="$fields" :markets="$markets" />
         </div>
     </div>
 </x-app-layout>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        let responsiblePeopleCount = 1; // Bắt đầu với 1 người phụ trách
-
-        // Hàm thêm người phụ trách
-        window.addResponsiblePerson = function() {
-            let responsibleContainer = document.getElementById("responsible_people");
-            let newPerson = `
-            <div class="d-flex align-items-center mb-3">
-                <label for="name" class="form-label mb-0 me-2" style="width: 250px;">Họ và tên</label>
-                <input type="text" id="name" name="responsible_name[]" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" 
-                        placeholder="Nhập họ và tên" value="{{ old('responsible_name.0') }}">
-            </div>
-
-            <div class="d-flex align-items-center mb-3">
-                <label for="position" class="form-label mb-0 me-2" style="width: 250px;">Chức vụ</label>
-                <input type="text" id="position" name="responsible_position[]" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" 
-                        placeholder="Nhập chức vụ" value="{{ old('responsible_position.0') }}">
-            </div>
-
-            <div class="d-flex align-items-center mb-3">
-                <label for="phone" class="form-label mb-0 me-2" style="width: 250px;">Số điện thoại</label>
-                <input type="text" id="phone" name="responsible_phone[]" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" 
-                        placeholder="Nhập số điện thoại" value="{{ old('responsible_phone.0') }}">
-            </div>
-            <div class="d-flex align-items-center mb-3">
-                <label class="form-label mb-0 me-2" style="width: 180px;">Giới tính</label>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="responsible_gender[]" id="gender_male${responsiblePeopleCount}" value="male">
-                    <label class="form-check-label" for="gender_male${responsiblePeopleCount}">Nam</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="responsible_gender[]" id="gender_female${responsiblePeopleCount}" value="female">
-                    <label class="form-check-label" for="gender_female${responsiblePeopleCount}">Nữ</label>
-                </div>
-            </div>
-            <div class="d-flex align-items-center mb-3">
-                <label for="email" class="form-label mb-0 me-2" style="width: 250px;">Email liên hệ trực tiếp</label>
-                <input type="email" id="email" name="responsible_email[]" class="form-control border-gray-300 shadow-sm focus:ring-indigo-500 flex-grow-1" 
-                        placeholder="Nhập email liên hệ" value="{{ old('responsible_email.0') }}">
-            </div>
-            <hr class="my-4" style="border: 1px solid #FF7506;">
-        `;
-            // Chèn người phụ trách mới vào trước nút "Thêm người phụ trách"
-            responsibleContainer.insertAdjacentHTML("beforeend", newPerson);
-            responsiblePeopleCount++;
-        };
-    });
-</script>
